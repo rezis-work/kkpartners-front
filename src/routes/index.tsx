@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="w-screen h-screen bg-red-600">
       <div id="section-first" className="w-full">
-        <Header bgColor={'transparent'} />
+        <Header bgColor={'white'} darkOrLight="dark" iconColor="black" />
         <img src="./public/tets-img-luka.jpg" />
       </div>
     </div>
