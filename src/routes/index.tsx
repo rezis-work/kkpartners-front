@@ -7,10 +7,18 @@ export const Route = createFileRoute('/')({
 
 function App() {
   return (
-    <div className="w-screen h-screen bg-red-600">
+    <div className="w-screen h-screen overflow-x-hidden relative">
       <div id="section-first" className="w-full">
-        <Header bgColor={'white'} darkOrLight="dark" iconColor="black" />
-        <img src="./public/tets-img-luka.jpg" />
+        <Header
+          bgColor={'transparent'}
+          darkOrLight="light"
+          iconColor="white"
+          isBlured={true}
+          desktopHeaderBgColor="transparent"
+          desktopHeaderTextColor="white"
+          desktopHeaderBgColor2="transparent"
+        />
+        <img className="w-full" src="./public/tets-img-luka.jpg" />
       </div>
     </div>
   )
