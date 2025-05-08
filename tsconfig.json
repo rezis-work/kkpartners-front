@@ -4,7 +4,10 @@
     "**/*.tsx",
     "eslint.config.js",
     "prettier.config.js",
-    "vite.config.js"
+    "vite.config.js",
+    "src/components/Footer/Footer.jsx",
+    "src/components/FooterComponent/Footer_Top.js",
+    "public/EmailKey.js"
   ],
 
   "compilerOptions": {
