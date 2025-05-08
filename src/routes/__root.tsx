@@ -5,6 +5,8 @@ import Header from '../components/Header'
 
 import TanstackQueryLayout from '../integrations/tanstack-query/layout'
 
+
+
 import type { QueryClient } from '@tanstack/react-query'
 
 interface MyRouterContext {
@@ -17,9 +19,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <Header />
 
       <Outlet />
+
+      
       <TanStackRouterDevtools />
 
       <TanstackQueryLayout />
     </>
   ),
 })
+
+export const rootRoute = Route;
