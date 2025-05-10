@@ -17,7 +17,7 @@ function EmailSend() {
         toast.success('Sent successfully')
         console.log('ელფოსტა წარმატებით გაიგზავნა', res.status, res.text)
 
-        setMessage('')
+        setMessage('') // შეტყობინების გასუფთავება
       })
       .catch((err: any) => {
         toast.error('Something went wrong, try again.')
