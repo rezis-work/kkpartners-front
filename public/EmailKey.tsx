@@ -1,0 +1,6 @@
+const Keys = {
+  seriviceId: 'service_uzumhpt',
+  templateId: 'template_7s25g3m',
+  publicKey: 'aJjcFuW0r81HP4q8I',
+}
+export default Keys

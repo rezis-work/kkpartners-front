@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { Toaster } from 'react-hot-toast'
 import './styles.css'
 import * as TanstackQuery from './integrations/tanstack-query/root-provider'
 
@@ -37,6 +38,7 @@ if (rootElement && !rootElement.innerHTML) {
     <StrictMode>
       <TanstackQuery.Provider>
         <RouterProvider router={router} />
+        <Toaster position="bottom-center" />
       </TanstackQuery.Provider>
     </StrictMode>,
   )

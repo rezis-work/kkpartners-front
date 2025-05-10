@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import logo from '../logo.svg'
+import FooterComponent from '@/components/Footer'
 import HeaderMain from '../components/header/HeaderMain'
 
 export const Route = createFileRoute('/')({
