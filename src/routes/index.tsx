@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
 import FooterComponent from '@/components/Footer'
 import HeaderMain from '../components/header/HeaderMain'
 
@@ -20,7 +19,8 @@ function App() {
           desktopHeaderTextColor="black"
           desktopHeaderBgColor2="transparent"
         />
-        {/* <img className="w-full" src="./public/tets-img-luka.jpg" /> */}
+        <img className="w-full" src="./public/tets-img-luka.jpg" />
+        <FooterComponent />
       </div>
     </div>
   )
