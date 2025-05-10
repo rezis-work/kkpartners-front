@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import logo from '../logo.svg'
 import FooterComponent from '@/components/Footer'
+import HeaderMain from '../components/header/HeaderMain'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -8,34 +9,19 @@ export const Route = createFileRoute('/')({
 
 function App() {
   return (
-    <div className="text-center">
-      <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-        <img
-          src={logo}
-          className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]"
-          alt="logo"
+    <div className="w-screen h-screen overflow-x-hidden relative">
+      <div id="section-first" className="w-full">
+        <HeaderMain
+          bgColor={'rgb(247,243,239)'}
+          darkOrLight="dark"
+          iconColor="rgb(41,22,22)"
+          isBlured={true}
+          desktopHeaderBgColor="transparent"
+          desktopHeaderTextColor="black"
+          desktopHeaderBgColor2="transparent"
         />
-        <p>
-          Edit <code>src/routes/index.tsx</code> and save to reload.
-        </p>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://tanstack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn TanStack
-        </a>
-      </header>
-      <FooterComponent />
+        {/* <img className="w-full" src="./public/tets-img-luka.jpg" /> */}
+      </div>
     </div>
   )
 }
