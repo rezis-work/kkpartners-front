@@ -1,10 +1,11 @@
-// 380-680px ერთი სვეტი,1024px-1200px ოთხი სვეტი, 1200px-დან 5 სვეტი
+// 380-680px ერთი სვეტი,680-1024 ორი სვეტი, 1024px-1200px ოთხი სვეტი, 1200px-დან 5 სვეტი
 
 import { createLazyFileRoute } from '@tanstack/react-router'
 import HeaderMain from '@/components/header/HeaderMain'
 import FooterComponent from '@/components/Footer'
 import { useQuery } from '@tanstack/react-query'
 import { getClients } from '@/api/getClients'
+import '../globalStyles.css'
 export const Route = createLazyFileRoute('/our-clients')({
   component: RouteComponent,
 })
@@ -41,21 +42,29 @@ function RouteComponent() {
           }}
           className="min-h-[460px]"
         ></div>
-        <div className="w-full px-6  mb-[60px]">
-          <p className="mt-[58px] mb-[48px] text-[38px] font-medium text-white">
+        <div className="w-full px-6  mb-[60px] md:px-9 lg:px-10 xl:px-17 xl:mb-[120px]">
+          <p className="mt-[58px] mb-[48px] text-[38px] font-medium text-white max-w-[300px]">
             For others is business,{' '}
             <span className="opacity-[0.43]">for us is personal</span>
           </p>
-          {data &&
-            data.map((card, index) => (
-              <div
-                key={index}
-                style={{ border: '1px solid rgba(255,255,255,.15)' }}
-                className="w-full h-[382px] flex items-center justify-center"
-              >
-                <img className="w-[170px]" src={card.icon} />
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+            {data &&
+              data.map((card, index) => (
+                <div
+                  key={index}
+                  style={{
+                    border: '1px solid rgba(255,255,255,.15)',
+                  }}
+                  className="card-container w-full relative h-[340px] flex items-center justify-center overflow-hidden"
+                >
+                  <img
+                    className="card-bg-img w-full h-full absolute left-0 top-0"
+                    src={card.image}
+                  />
+                  <img className="w-[170px] absolute z-10" src={card.icon} />
+                </div>
+              ))}
+          </div>
         </div>
 
         <FooterComponent />
