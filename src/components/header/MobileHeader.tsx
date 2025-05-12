@@ -39,7 +39,7 @@ function MobileHeader({ darkOrLight, iconColor }: HeaderProps) {
   return (
     <>
       {/* Mobile Header */}
-      <div className="w-full flex items-center justify-between px-6 py-4 lg:hidden">
+      <div className="w-full flex items-center justify-between px-6 py-4 lg:hidden md:px-10">
         <Link to="/">
           <img
             className="h-[38px]"

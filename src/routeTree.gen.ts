@@ -19,9 +19,16 @@ import { Route as DemoTableImport } from './routes/demo.table'
 
 // Create Virtual Routes
 
+const WhatWeDoLazyImport = createFileRoute('/what-we-do')()
 const OurClientsLazyImport = createFileRoute('/our-clients')()
 
 // Create/Update Routes
+
+const WhatWeDoLazyRoute = WhatWeDoLazyImport.update({
+  id: '/what-we-do',
+  path: '/what-we-do',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/what-we-do.lazy').then((d) => d.Route))
 
 const OurClientsLazyRoute = OurClientsLazyImport.update({
   id: '/our-clients',
@@ -65,6 +72,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OurClientsLazyImport
       parentRoute: typeof rootRoute
     }
+    '/what-we-do': {
+      id: '/what-we-do'
+      path: '/what-we-do'
+      fullPath: '/what-we-do'
+      preLoaderRoute: typeof WhatWeDoLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/demo/table': {
       id: '/demo/table'
       path: '/demo/table'
@@ -87,6 +101,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/our-clients': typeof OurClientsLazyRoute
+  '/what-we-do': typeof WhatWeDoLazyRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
@@ -94,6 +109,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/our-clients': typeof OurClientsLazyRoute
+  '/what-we-do': typeof WhatWeDoLazyRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
@@ -102,22 +118,40 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/our-clients': typeof OurClientsLazyRoute
+  '/what-we-do': typeof WhatWeDoLazyRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/our-clients' | '/demo/table' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/our-clients'
+    | '/what-we-do'
+    | '/demo/table'
+    | '/demo/tanstack-query'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/our-clients' | '/demo/table' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/our-clients' | '/demo/table' | '/demo/tanstack-query'
+  to:
+    | '/'
+    | '/our-clients'
+    | '/what-we-do'
+    | '/demo/table'
+    | '/demo/tanstack-query'
+  id:
+    | '__root__'
+    | '/'
+    | '/our-clients'
+    | '/what-we-do'
+    | '/demo/table'
+    | '/demo/tanstack-query'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   OurClientsLazyRoute: typeof OurClientsLazyRoute
+  WhatWeDoLazyRoute: typeof WhatWeDoLazyRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
@@ -125,6 +159,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   OurClientsLazyRoute: OurClientsLazyRoute,
+  WhatWeDoLazyRoute: WhatWeDoLazyRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
@@ -141,6 +176,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/our-clients",
+        "/what-we-do",
         "/demo/table",
         "/demo/tanstack-query"
       ]
@@ -150,6 +186,9 @@ export const routeTree = rootRoute
     },
     "/our-clients": {
       "filePath": "our-clients.lazy.jsx"
+    },
+    "/what-we-do": {
+      "filePath": "what-we-do.lazy.tsx"
     },
     "/demo/table": {
       "filePath": "demo.table.tsx"
