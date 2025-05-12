@@ -20,7 +20,7 @@ function App() {
           desktopHeaderBgColor2="transparent"
         />
         <img className="w-full" src="./public/tets-img-luka.jpg" />
-        <FooterComponent />
+        {/* <FooterComponent /> */}
       </div>
     </div>
   )

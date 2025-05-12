@@ -1,8 +1,5 @@
-// 380-680px ერთი სვეტი,680-1024 ორი სვეტი, 1024px-1200px ოთხი სვეტი, 1200px-დან 5 სვეტი
-
 import { createLazyFileRoute } from '@tanstack/react-router'
 import HeaderMain from '@/components/header/HeaderMain'
-import FooterComponent from '@/components/Footer'
 import { useQuery } from '@tanstack/react-query'
 import { getClients } from '@/api/getClients'
 import '../globalStyles.css'
@@ -42,7 +39,7 @@ function RouteComponent() {
           }}
           className="min-h-[460px]"
         ></div>
-        <div className="w-full px-6  mb-[60px] md:px-9 lg:px-10 xl:px-17 xl:mb-[120px]">
+        <div className="w-full px-6  pb-[60px] md:px-9 lg:px-10 xl:px-17 xl:pb-[120px]">
           <p className="mt-[58px] mb-[48px] text-[38px] font-medium text-white max-w-[300px]">
             For others is business,{' '}
             <span className="opacity-[0.43]">for us is personal</span>
@@ -66,8 +63,6 @@ function RouteComponent() {
               ))}
           </div>
         </div>
-
-        <FooterComponent />
       </div>
     </>
   )

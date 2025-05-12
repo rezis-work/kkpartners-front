@@ -6,6 +6,7 @@ import TanstackQueryLayout from '../integrations/tanstack-query/layout'
 import type { QueryClient } from '@tanstack/react-query'
 import ErrorBoundary from '@/components/ErrorBoundaries'
 import NotFound from '@/components/NotFound'
+import FooterComponent from '@/components/Footer'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -16,6 +17,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     <>
       <ErrorBoundary>
         <Outlet />
+        <FooterComponent />
       </ErrorBoundary>
       <TanStackRouterDevtools />
 
