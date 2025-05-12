@@ -12,15 +12,15 @@ function App() {
       <div id="section-first" className="w-full">
         <HeaderMain
           bgColor={'rgb(247,243,239)'}
-          darkOrLight="dark"
-          iconColor="rgb(41,22,22)"
+          darkOrLight="light"
+          iconColor="white"
           isBlured={true}
           desktopHeaderBgColor="transparent"
-          desktopHeaderTextColor="black"
+          desktopHeaderTextColor="white"
           desktopHeaderBgColor2="transparent"
         />
         <img className="w-full" src="./public/tets-img-luka.jpg" />
-        <FooterComponent />
+        {/* <FooterComponent /> */}
       </div>
     </div>
   )
