@@ -1,6 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
-import FooterComponent from '@/components/Footer'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import 'leaflet/dist/leaflet.css'
+import logo from '../logo.svg'
 import HeaderMain from '../components/header/HeaderMain'
+import FooterComponent from '@/components/Footer'
 
 export const Route = createFileRoute('/')({
   component: App,

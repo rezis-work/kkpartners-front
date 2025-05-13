@@ -19,6 +19,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         <Outlet />
         <FooterComponent />
       </ErrorBoundary>
+      <Outlet />
+
       <TanStackRouterDevtools />
 
       <TanstackQueryLayout />
@@ -26,3 +28,5 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   ),
   notFoundComponent: NotFound,
 })
+
+export const rootRoute = Route

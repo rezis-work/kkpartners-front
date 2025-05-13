@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { Toaster } from 'react-hot-toast'
 import './styles.css'
+import 'leaflet/dist/leaflet.css'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import * as TanstackQuery from './integrations/tanstack-query/root-provider'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
-import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
 
 // Create a new router instance
@@ -39,6 +41,7 @@ if (rootElement && !rootElement.innerHTML) {
       <TanstackQuery.Provider>
         <RouterProvider router={router} />
         <Toaster position="bottom-center" />
+        <ToastContainer />
       </TanstackQuery.Provider>
     </StrictMode>,
   )
