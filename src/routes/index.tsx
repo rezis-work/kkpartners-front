@@ -1,4 +1,5 @@
-import { createFileRoute,Link } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import 'leaflet/dist/leaflet.css'
 import logo from '../logo.svg'
 
 export const Route = createFileRoute('/')({
@@ -34,9 +35,14 @@ function App() {
           Learn TanStack
         </a>
 
-        <Link to="/faq" className="mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        <Link
+          to="/faq"
+          className="mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
           Go to FAQ
         </Link>
+
+        <Link to="/contact">map</Link>
       </header>
     </div>
   )

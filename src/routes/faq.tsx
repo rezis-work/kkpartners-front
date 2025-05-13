@@ -29,7 +29,7 @@ function Faq() {
     data: faqData,
     isLoading,
     error,
-  } = useQuery<FaqItem[]>({
+  } = useQuery({
     queryKey: ['faqs'],
     queryFn: getFaqs,
   })
@@ -39,7 +39,9 @@ function Faq() {
 
   const numbers: string[] = ['01', '02', '03', '04', '05', '06', '07', '08']
 
-  console.log(faqData)
+  if (faqData === undefined) {
+    return <div>no faqs found</div>
+  }
 
   return (
     <div className="mx-[20px] mt-[50px] md:mx-[45px] lg:mx-[50px] lg:grid lg:grid-cols-2  ">
@@ -49,7 +51,7 @@ function Faq() {
       />
 
       <div className="mt-[25px] ">
-        {faqData?.map((item, index) => (
+        {faqData.map((item: FaqItem, index: number) => (
           <div key={index} className="px-2 md:px-4 lg:px-6">
             <button
               className="w-full flex justify-between items-center py-6"
