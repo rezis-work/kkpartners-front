@@ -1,6 +1,5 @@
 import { createRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-
 import { CiFacebook } from 'react-icons/ci'
 import { FaLinkedinIn, FaPinterestP } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
@@ -11,10 +10,11 @@ import AddressCard from '../components/AddressCard'
 
 import { fetchAddresses } from '../api/address'
 import { rootRoute } from './__root'
+import type { Address } from '../api/address'
 import 'leaflet/dist/leaflet.css'
 
 const Contact = () => {
-  const [addresses, setAddresses] = useState<Address[]>([])
+  const [addresses, setAddresses] = useState<Array<Address>>([])
 
   useEffect(() => {
     const loadAddresses = async () => {

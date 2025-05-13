@@ -6,7 +6,7 @@ export interface Address {
   email: string
 }
 
-export const fetchAddresses = async (): Promise<Address[]> => {
+export const fetchAddresses = async (): Promise<Array<Address>> => {
   try {
     const response = await fetch('http://localhost:4000/api/address')
     const data = await response.json()
