@@ -1,12 +1,31 @@
+import { getPracticeAreas } from '@/api/getPracticeAreas'
 import HeaderMain from '@/components/header/HeaderMain'
-import WhatWeDoGridLayout from '@/components/WhatWeDoGridLayout'
+import WhatWeDoGridLayout from '@/components/what we do page/WhatWeDoGridLayout'
+import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
+import WhatWeDoCardsMobile from '@/components/what we do page/WhatWeDoCardsMobile'
 
 export const Route = createLazyFileRoute('/what-we-do')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const [openCardIndex, setOpenCardIndex] = useState<number | null>(null)
+
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['clients'],
+    queryFn: getPracticeAreas,
+  })
+
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error: {error.message}</div>
+  if (!data || !Array.isArray(data)) return <div>No data available</div>
+
+  const toggleCard = (index: number) => {
+    setOpenCardIndex((prevIndex) => (prevIndex === index ? null : index))
+  }
+
   return (
     <>
       <div className="w-screen">
@@ -15,7 +34,7 @@ function RouteComponent() {
           darkOrLight="light"
           iconColor="white"
           isBlured={true}
-          desktopHeaderBgColor="transparent"
+          desktopHeaderBgColor="rgba(0,0,0,0.1)"
           desktopHeaderTextColor="white"
           desktopHeaderBgColor2="transparent"
         />
@@ -34,6 +53,11 @@ function RouteComponent() {
           </p>
           <WhatWeDoGridLayout />
         </div>
+        <WhatWeDoCardsMobile
+          data={data}
+          openCardIndex={openCardIndex}
+          toggleCard={toggleCard}
+        />
       </div>
     </>
   )

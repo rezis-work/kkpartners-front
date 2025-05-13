@@ -26,6 +26,7 @@
     "@tanstack/router-plugin": "^1.114.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.11.0",
     "icons": "^1.0.0",
     "lightningcss": "^1.29.3",
     "lucide-react": "^0.476.0",

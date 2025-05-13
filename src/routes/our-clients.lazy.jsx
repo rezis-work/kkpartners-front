@@ -16,8 +16,6 @@ function RouteComponent() {
   if (isError) return <div>Error: {error.message}</div>
   if (!data || !Array.isArray(data)) return <div>No data available</div>
 
-  console.log(data)
-
   return (
     <>
       <div className="w-screen bg-[#041E22]">
@@ -26,7 +24,7 @@ function RouteComponent() {
           darkOrLight="light"
           iconColor="white"
           isBlured={true}
-          desktopHeaderBgColor="transparent"
+          desktopHeaderBgColor="rgba(0,0,0,0.1)"
           desktopHeaderTextColor="white"
           desktopHeaderBgColor2="transparent"
         />
