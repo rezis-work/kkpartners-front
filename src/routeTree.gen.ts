@@ -11,14 +11,14 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ComingSoonRouteImport } from './routes/coming-soon.route'
+import { Route as ComingSoonImport } from './routes/coming-soon'
 import { Route as IndexImport } from './routes/index'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 import { Route as DemoTableImport } from './routes/demo.table'
 
 // Create/Update Routes
 
-const ComingSoonRouteRoute = ComingSoonRouteImport.update({
+const ComingSoonRoute = ComingSoonImport.update({
   id: '/coming-soon',
   path: '/coming-soon',
   getParentRoute: () => rootRoute,
@@ -57,7 +57,7 @@ declare module '@tanstack/react-router' {
       id: '/coming-soon'
       path: '/coming-soon'
       fullPath: '/coming-soon'
-      preLoaderRoute: typeof ComingSoonRouteImport
+      preLoaderRoute: typeof ComingSoonImport
       parentRoute: typeof rootRoute
     }
     '/demo/table': {
@@ -81,14 +81,14 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/coming-soon': typeof ComingSoonRouteRoute
+  '/coming-soon': typeof ComingSoonRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/coming-soon': typeof ComingSoonRouteRoute
+  '/coming-soon': typeof ComingSoonRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
@@ -96,7 +96,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/coming-soon': typeof ComingSoonRouteRoute
+  '/coming-soon': typeof ComingSoonRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
@@ -112,14 +112,14 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ComingSoonRouteRoute: typeof ComingSoonRouteRoute
+  ComingSoonRoute: typeof ComingSoonRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ComingSoonRouteRoute: ComingSoonRouteRoute,
+  ComingSoonRoute: ComingSoonRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
@@ -144,7 +144,7 @@ export const routeTree = rootRoute
       "filePath": "index.tsx"
     },
     "/coming-soon": {
-      "filePath": "coming-soon.route.tsx"
+      "filePath": "coming-soon.tsx"
     },
     "/demo/table": {
       "filePath": "demo.table.tsx"

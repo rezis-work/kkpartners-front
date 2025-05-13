@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 
 interface TimeLeft {
@@ -31,23 +29,19 @@ export default function CountdownTimer() {
     }, 1000)
     return () => clearInterval(interval)
   }, [targetDate])
+
   return (
-    <div className="flex   gap-8 text-lg md:text-xl">
-      <div style={{ fontSize: '48px' }} className="text-center">
-        {timeLeft.weeks} <span className="block text-sm">Weeks</span>
-      </div>
-      <div style={{ fontSize: '48px' }} className="text-center">
-        {timeLeft.days} <span className="block text-sm">Days</span>
-      </div>
-      <div style={{ fontSize: '48px' }} className="text-center">
-        {timeLeft.hours} <span className="block text-sm">Hours</span>
-      </div>
-      <div style={{ fontSize: '48px' }} className="text-center">
-        {timeLeft.minutes} <span className="block text-sm">Minutes</span>
-      </div>
-      <div style={{ fontSize: '48px' }} className="text-center">
-        {timeLeft.seconds} <span className="block text-sm">Seconds</span>
-      </div>
+    <div className="grid grid-cols-3 sm:flex sm:flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 text-base sm:text-lg md:text-xl">
+      {Object.entries(timeLeft).map(([label, value]) => (
+        <div
+          key={label}
+          className="w-full sm:w-20 md:w-auto text-center"
+          style={{ fontSize: '40px' }}
+        >
+          {value}
+          <span className="block text-xs sm:text-sm capitalize">{label}</span>
+        </div>
+      ))}
     </div>
   )
 }
