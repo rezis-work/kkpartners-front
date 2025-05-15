@@ -1,17 +1,18 @@
 import { getPracticeAreas } from '@/api/getPracticeAreas'
 import HeaderMain from '@/components/header/HeaderMain'
-import WhatWeDoGridLayout from '@/components/what we do page/WhatWeDoGridLayout'
+import WhatWeDoGridLayout from '@/components/WhatWeDo/WhatWeDoGridLayout'
 import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
-import WhatWeDoCardsMobile from '@/components/what we do page/WhatWeDoCardsMobile'
-
+import WhatWeDoCardsMobile from '@/components/WhatWeDo/WhatWeDoCardsMobile'
+import WhatWeDoCardsDesktop from '@/components/WhatWeDo/WhatWeDoCardsDesktop'
 export const Route = createLazyFileRoute('/what-we-do')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
   const [openCardIndex, setOpenCardIndex] = useState<number | null>(null)
+  const [activeCardIndex, setActiveCardIndex] = useState<number | null>(0)
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['clients'],
@@ -21,6 +22,10 @@ function RouteComponent() {
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error: {error.message}</div>
   if (!data || !Array.isArray(data)) return <div>No data available</div>
+
+  const toggleDesktopCard = (index: number) => {
+    setActiveCardIndex((prevIndex) => (prevIndex !== index ? index : prevIndex))
+  }
 
   const toggleCard = (index: number) => {
     setOpenCardIndex((prevIndex) => (prevIndex === index ? null : index))
@@ -57,6 +62,11 @@ function RouteComponent() {
           data={data}
           openCardIndex={openCardIndex}
           toggleCard={toggleCard}
+        />
+        <WhatWeDoCardsDesktop
+          data={data}
+          activeCardIndex={activeCardIndex}
+          toggleDesktopCard={toggleDesktopCard}
         />
       </div>
     </>

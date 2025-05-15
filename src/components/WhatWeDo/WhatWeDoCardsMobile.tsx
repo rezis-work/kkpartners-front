@@ -1,12 +1,6 @@
+import type { Card } from '@/types'
 import { AnimatePresence, motion } from 'framer-motion'
 import { GoArrowUpRight } from 'react-icons/go'
-
-interface Card {
-  position: string
-  image: string
-  title: string
-  description: string
-}
 
 function WhatWeDoCardsMobile({
   data,
@@ -18,7 +12,7 @@ function WhatWeDoCardsMobile({
   toggleCard: (index: number) => void
 }) {
   return (
-    <div className="w-full bg-[#4B2524] py-[55px] px-6">
+    <div className="w-full bg-[#4B2524] py-[55px] px-6 lg:hidden">
       <h1 className="text-white text-[38px] font-semibold mb-[80px]">
         Practice areas
       </h1>
