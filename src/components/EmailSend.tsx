@@ -1,7 +1,7 @@
 import emailjs from '@emailjs/browser'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import Keys from '../../public/EmailKey'
+import EmailKeys from '../components/emailservice/EmailService'
 
 function EmailSend() {
   const [message, setMessage] = useState('') // ახალი state შეტყობინებისთვის
@@ -12,7 +12,12 @@ function EmailSend() {
       message: message, // შეტყობინების დამატება
     }
     emailjs
-      .send(Keys.seriviceId, Keys.templateId, templateParams, Keys.publicKey)
+      .send(
+        import.meta.env.VITE_SERVICE_ID,
+        import.meta.env.VITE_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_PUBLIC_KEY,
+      )
       .then((res: { status: any; text: any }) => {
         toast.success('Sent successfully')
         console.log('ელფოსტა წარმატებით გაიგზავნა', res.status, res.text)
@@ -23,6 +28,9 @@ function EmailSend() {
         toast.error('Something went wrong, try again.')
         console.error('ელფოსტის გაგზავნის შეცდომა', err)
       })
+    if (!EmailKeys.serviceId || !EmailKeys.publicKey || !EmailKeys.templateId) {
+      throw new Error('email keys error')
+    }
   }
 
   return (

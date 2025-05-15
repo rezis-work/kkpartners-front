@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import FooterComponent from '@/components/Footer'
 import HeaderMain from '../components/header/HeaderMain'
+import FooterComponent from '@/components/Footer'
+import HomePage from '@/components/homepagecomponents/HomePage'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -20,6 +21,7 @@ function App() {
           desktopHeaderBgColor2="transparent"
         />
         <img className="w-full" src="./public/tets-img-luka.jpg" />
+        <HomePage />
         <FooterComponent />
       </div>
     </div>
