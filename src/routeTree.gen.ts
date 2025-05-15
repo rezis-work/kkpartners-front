@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as OurTeamImport } from './routes/our-team'
 import { Route as FaqImport } from './routes/faq'
 import { Route as ContactImport } from './routes/contact'
 import { Route as IndexImport } from './routes/index'
@@ -30,6 +31,12 @@ const OurClientsLazyRoute = OurClientsLazyImport.update({
   path: '/our-clients',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/our-clients.lazy').then((d) => d.Route))
+
+const OurTeamRoute = OurTeamImport.update({
+  id: '/our-team',
+  path: '/our-team',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const FaqRoute = FaqImport.update({
   id: '/faq',
@@ -86,6 +93,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqImport
       parentRoute: typeof rootRoute
     }
+    '/our-team': {
+      id: '/our-team'
+      path: '/our-team'
+      fullPath: '/our-team'
+      preLoaderRoute: typeof OurTeamImport
+      parentRoute: typeof rootRoute
+    }
     '/our-clients': {
       id: '/our-clients'
       path: '/our-clients'
@@ -116,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/our-team': typeof OurTeamRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -125,6 +140,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/our-team': typeof OurTeamRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -135,6 +151,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/our-team': typeof OurTeamRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -146,6 +163,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/faq'
+    | '/our-team'
     | '/our-clients'
     | '/demo/table'
     | '/demo/tanstack-query'
@@ -154,6 +172,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/faq'
+    | '/our-team'
     | '/our-clients'
     | '/demo/table'
     | '/demo/tanstack-query'
@@ -162,6 +181,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/faq'
+    | '/our-team'
     | '/our-clients'
     | '/demo/table'
     | '/demo/tanstack-query'
@@ -172,6 +192,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  OurTeamRoute: typeof OurTeamRoute
   OurClientsLazyRoute: typeof OurClientsLazyRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
@@ -181,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  OurTeamRoute: OurTeamRoute,
   OurClientsLazyRoute: OurClientsLazyRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
@@ -199,6 +221,7 @@ export const routeTree = rootRoute
         "/",
         "/contact",
         "/faq",
+        "/our-team",
         "/our-clients",
         "/demo/table",
         "/demo/tanstack-query"
@@ -212,6 +235,9 @@ export const routeTree = rootRoute
     },
     "/faq": {
       "filePath": "faq.tsx"
+    },
+    "/our-team": {
+      "filePath": "our-team.tsx"
     },
     "/our-clients": {
       "filePath": "our-clients.lazy.jsx"
