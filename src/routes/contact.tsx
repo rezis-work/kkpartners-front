@@ -13,7 +13,13 @@ import { rootRoute } from './__root'
 import type { Address } from '../api/address'
 import 'leaflet/dist/leaflet.css'
 
-const Contact = () => {
+export const Route = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/contact',
+  component: Contact,
+})
+
+ function Contact() {
   const [addresses, setAddresses] = useState<Array<Address>>([])
 
   useEffect(() => {
@@ -67,42 +73,3 @@ const Contact = () => {
     </div>
   )
 }
-
-export const Route = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/contact',
-  component: Contact,
-})
-
-//  <div className="mt-[40px] grid grid-cols-2 gap-4">
-//             <div>
-//               <h3 className="font-bold text-[20px]">New York</h3>
-//               <p className="mt-[20px]">Old Westbury 256, New York, USA</p>
-//               <p className="mt-[5px]">+000 123 456 789</p>
-//               <p className="mt-[5px]">dictum@example.com</p>
-//             </div>
-
-//             <div>
-//               <h3 className="font-bold text-[20px]">London</h3>
-//               <p className="mt-[20px]">650 Birmingham Street, London, UK</p>
-//               <p className="mt-[5px]">+000 123 456 789</p>
-//               <p className="mt-[5px]">dictum@example.com</p>
-//             </div>
-
-//             <div className="mt-[5px]">
-//               <h3 className="font-bold text-[20px]">Los Angeles</h3>
-//               <p className="mt-[20px]">+000 123 456 789</p>
-//               <p className="mt-[5px]">70 Brighton Street, LA, USA</p>
-//               <p className="mt-[5px]">dictum@example.com</p>
-//             </div>
-
-//             <div className="mt-[5px]">
-//               <h3 className="font-bold text-[20px]">Follow Us</h3>
-//               <div className="flex gap-3 mt-[20px]">
-//                 <CiFacebook />
-//                 <FaXTwitter />
-//                 <FaLinkedinIn />
-//                 <FaPinterestP />
-//               </div>
-//             </div>
-//           </div>
