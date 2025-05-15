@@ -24,7 +24,7 @@ function FooterComponent() {
             <div className="flex items-center gap-2 cursor-pointer">
               <img
                 className="w-4 h-5"
-                src="../../public/footerimage/tel.png"
+                src="../../footerimage/tel.png"
                 alt="Tel icon"
               />
               <span className="border-b-1 border-transparent hover:border-white transition ease-in-out duration-1500">
@@ -34,7 +34,7 @@ function FooterComponent() {
             <div className="flex items-center gap-2 cursor-pointer">
               <img
                 className="w-4 h-5"
-                src="../../public/footerimage/email-box.png"
+                src="../../footerimage/email-box.png"
                 alt="Email icon"
               />
               <span className="border-b-1 border-transparent hover:border-white transition ease-in-out duration-1500">
@@ -50,7 +50,7 @@ function FooterComponent() {
           <div className="w-full ">
             <Link to="/" className="DCTM-a">
               <img
-                src="../../public/footerimage/logo-light.png "
+                src="../../footerimage/logo-light.png "
                 alt="DCTM"
                 className="w-50"
               />
