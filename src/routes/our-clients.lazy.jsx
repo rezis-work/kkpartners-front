@@ -3,6 +3,7 @@ import HeaderMain from '@/components/header/HeaderMain'
 import { useQuery } from '@tanstack/react-query'
 import { getClients } from '@/api/getClients'
 import '../globalStyles.css'
+import FooterComponent from '@/components/Footer'
 export const Route = createLazyFileRoute('/our-clients')({
   component: RouteComponent,
 })
@@ -61,6 +62,7 @@ function RouteComponent() {
               ))}
           </div>
         </div>
+        <FooterComponent />
       </div>
     </>
   )

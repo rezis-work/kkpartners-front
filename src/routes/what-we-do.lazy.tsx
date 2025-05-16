@@ -6,6 +6,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import WhatWeDoCardsMobile from '@/components/WhatWeDo/WhatWeDoCardsMobile'
 import WhatWeDoCardsDesktop from '@/components/WhatWeDo/WhatWeDoCardsDesktop'
+import FooterComponent from '@/components/Footer'
 export const Route = createLazyFileRoute('/what-we-do')({
   component: RouteComponent,
 })
@@ -68,6 +69,7 @@ function RouteComponent() {
           activeCardIndex={activeCardIndex}
           toggleDesktopCard={toggleDesktopCard}
         />
+        <FooterComponent />
       </div>
     </>
   )

@@ -5,7 +5,7 @@ import HeaderMain from '../components/header/HeaderMain'
 import FooterComponent from '@/components/Footer'
 
 import HomePage from '@/components/homepagecomponents/HomePage'
-
+import HomePageCarousel from '@/components/homepagecomponents/HomePageCarousel'
 export const Route = createFileRoute('/')({
   component: App,
 })
@@ -15,7 +15,7 @@ function App() {
     <div className="w-screen h-screen overflow-x-hidden relative">
       <div id="section-first" className="w-full">
         <HeaderMain
-          bgColor={'rgb(247,243,239)'}
+          bgColor={'transparent'}
           darkOrLight="light"
           iconColor="white"
           isBlured={true}
@@ -23,8 +23,7 @@ function App() {
           desktopHeaderTextColor="white"
           desktopHeaderBgColor2="transparent"
         />
-        <img className="w-full" src="./public/tets-img-luka.jpg" />
-        {/* <FooterComponent /> */}
+        <HomePageCarousel />
         <HomePage />
         <FooterComponent />
       </div>
