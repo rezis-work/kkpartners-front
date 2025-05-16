@@ -1,8 +1,13 @@
+
 import CountdownTimer from './CountdownTimer'
+import Header from './Header'
 
 export default function ComingSoon() {
   return (
-    <div
+    <>
+    <Header/>
+    
+     <div
       className="min-h-screen bg-cover bg-center relative text-white px-4"
       style={{ backgroundImage: "url('/images/coming-soon.jpg')" }}
     >
@@ -23,5 +28,7 @@ export default function ComingSoon() {
         </button>
       </div>
     </div>
+    </>
+   
   )
 }
