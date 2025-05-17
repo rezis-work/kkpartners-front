@@ -21,7 +21,7 @@ class ErrorBoundary extends Component {
       return (
         <div
           style={{
-            backgroundImage: "url('./public/error-page-bg-picture.png')",
+            backgroundImage: "url('./public/images/error-page-bg-picture.png')",
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',

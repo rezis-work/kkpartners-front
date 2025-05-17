@@ -46,7 +46,7 @@ function RouteComponent() {
         />
         <div
           style={{
-            backgroundImage: `url(./public/what-we-do-bg-img.jpg)`,
+            backgroundImage: `url(./public/images/what-we-do-bg-img.jpg)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
