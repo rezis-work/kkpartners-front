@@ -1,7 +1,19 @@
 import CountdownTimer from './CountdownTimer'
+import HeaderMain from './header/HeaderMain'
 
 export default function ComingSoon() {
   return (
+
+    <>
+    <HeaderMain
+        bgColor={'transparent'}
+        darkOrLight="light"
+        iconColor="white"
+        isBlured={true}
+        desktopHeaderBgColor="rgba(0,0,0,0.1)"
+        desktopHeaderTextColor="white"
+        desktopHeaderBgColor2="transparent"
+      />
     <div
       className="min-h-screen bg-cover bg-center relative text-white px-4"
       style={{ backgroundImage: "url('/images/coming-soon.jpg')" }}
@@ -23,5 +35,9 @@ export default function ComingSoon() {
         </button>
       </div>
     </div>
+
+    </>
+
+    
   )
 }
