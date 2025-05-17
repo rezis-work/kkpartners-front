@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as OurTeamImport } from './routes/our-team'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
 import { Route as IndexImport } from './routes/index'
@@ -42,6 +43,12 @@ const FaqPageLazyRoute = FaqPageLazyImport.update({
   path: '/faq-page',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/faq-page.lazy').then((d) => d.Route))
+
+const OurTeamRoute = OurTeamImport.update({
+  id: '/our-team',
+  path: '/our-team',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const ContactRoute = ContactImport.update({
   id: '/contact',
@@ -86,6 +93,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactImport
       parentRoute: typeof rootRoute
     }
+    '/our-team': {
+      id: '/our-team'
+      path: '/our-team'
+      fullPath: '/our-team'
+      preLoaderRoute: typeof OurTeamImport
+      parentRoute: typeof rootRoute
+    }
     '/faq-page': {
       id: '/faq-page'
       path: '/faq-page'
@@ -116,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
+  '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
@@ -125,6 +140,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
+  '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
@@ -135,6 +151,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
+  '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
@@ -146,6 +163,7 @@ export interface FileRouteTypes {
     | '/'
     | '/coming-soon'
     | '/contact'
+    | '/our-team'
     | '/faq-page'
     | '/our-clients'
     | '/what-we-do'
@@ -154,6 +172,7 @@ export interface FileRouteTypes {
     | '/'
     | '/coming-soon'
     | '/contact'
+    | '/our-team'
     | '/faq-page'
     | '/our-clients'
     | '/what-we-do'
@@ -162,6 +181,7 @@ export interface FileRouteTypes {
     | '/'
     | '/coming-soon'
     | '/contact'
+    | '/our-team'
     | '/faq-page'
     | '/our-clients'
     | '/what-we-do'
@@ -172,6 +192,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ComingSoonRoute: typeof ComingSoonRoute
   ContactRoute: typeof ContactRoute
+  OurTeamRoute: typeof OurTeamRoute
   FaqPageLazyRoute: typeof FaqPageLazyRoute
   OurClientsLazyRoute: typeof OurClientsLazyRoute
   WhatWeDoLazyRoute: typeof WhatWeDoLazyRoute
@@ -181,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ComingSoonRoute: ComingSoonRoute,
   ContactRoute: ContactRoute,
+  OurTeamRoute: OurTeamRoute,
   FaqPageLazyRoute: FaqPageLazyRoute,
   OurClientsLazyRoute: OurClientsLazyRoute,
   WhatWeDoLazyRoute: WhatWeDoLazyRoute,
@@ -199,6 +221,7 @@ export const routeTree = rootRoute
         "/",
         "/coming-soon",
         "/contact",
+        "/our-team",
         "/faq-page",
         "/our-clients",
         "/what-we-do"
@@ -212,6 +235,9 @@ export const routeTree = rootRoute
     },
     "/contact": {
       "filePath": "contact.tsx"
+    },
+    "/our-team": {
+      "filePath": "our-team.tsx"
     },
     "/faq-page": {
       "filePath": "faq-page.lazy.jsx"
