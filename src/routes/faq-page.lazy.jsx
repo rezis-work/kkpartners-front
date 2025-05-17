@@ -4,6 +4,7 @@ import FooterComponent from '@/components/Footer'
 import { useQuery } from '@tanstack/react-query'
 import { getFaqs } from '@/api/getFaqs'
 import { useState } from 'react'
+import FaqTitle from '@/components/FaqTitle'
 export const Route = createLazyFileRoute('/faq-page')({
   component: RouteComponent,
 })
@@ -41,15 +42,10 @@ function RouteComponent() {
       ></div>
       <div className="max-w-[2000px] mx-auto">
         <div className="w-full mt-[80px] px-6 pb-[60px] md:px-9 lg:px-10 lg:flex lg:gap-x-[100px] lg:items-start xl:px-17 xl:pb-[80px] lg:mt-[50px]">
-          <div>
-            <h2 className="text-[38px] font-medium text-black mb-4 leading-[45px] lg:mt-[32px] lg:text-[48px] lg:max-w-[350px] lg:leading-[55px]">
-              Frequently asked <span className="opacity-[0.5]">questions</span>
-            </h2>
-            <p className="text-black text-[18px] leading-[25px] font-normal max-w-[700px] mb-[30px] lg:mb-0 lg:text-[20px]">
-              Sed ut Perspiciatis unde Omnis Iste Sed ut Pers piciatis unde
-              Omnis Iste
-            </p>
-          </div>
+          <FaqTitle
+            title="Frequently asked questions"
+            subtitle="Sed ut perspiciatis unde omnis iste, sed ut perspiciatis unde omnis iste."
+          />
           <div className="w-full">
             {data.map((faq, index) => (
               <div
