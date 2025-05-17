@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "framework": "react",
   "typescript": true,
@@ -12,5 +11,3 @@
   "version": 1,
   "existingAddOns": ["shadcn", "table", "tanstack-query", "t3env"]
 }
-=======
->>>>>>> nika

@@ -73,7 +73,7 @@ export default function Message() {
         <textarea
           name="message"
           placeholder="Message"
-          rows={8}
+          rows={6}
           className="border-b p-1 outline-none bg-transparent"
           value={formData.message}
           onChange={handleChange}

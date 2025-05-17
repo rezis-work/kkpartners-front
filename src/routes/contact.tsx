@@ -26,7 +26,7 @@ const Contact = () => {
   }, [])
 
   return (
-    <div className="p-4 bg-[#f5f5f5] ">
+    <div className="p-4 bg-[#f5f5f5] pb-[100px] ">
       <Map />
 
       <div className="mt-[100px] lg:grid grid-cols-2 lg:gap-30 md:mx-[45px]">

@@ -1,4 +1,12 @@
+import type { JSX } from 'react/jsx-runtime'
+
 export type FaqItem = {
+  map(
+    arg0: (
+      item: { question: string; answer: string },
+      index: number,
+    ) => JSX.Element,
+  ): import('react').ReactNode
   question: string
   answer: string
 }
