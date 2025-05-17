@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getPartners } from '../api/getOurPartners'
 import type { Partner as ApiPartner } from '../api/getOurPartners'
-// import HeaderMain from './header/HeaderMain'
 import PartnerCard from './PartnerCard'
-import DesktopHeader from './header/DesktopHeader'
+import HeaderMain from './header/HeaderMain'
 
 type Partner = ApiPartner
 
@@ -16,7 +15,15 @@ export function TeamPage() {
 
   return (
     <>
-      <DesktopHeader />
+      <HeaderMain
+          bgColor={'rgb(247,243,239)'}
+          darkOrLight="light"
+          iconColor="white"
+          isBlured={true}
+          desktopHeaderBgColor="transparent"
+          desktopHeaderTextColor="white"
+          desktopHeaderBgColor2="transparent"
+        />
 
       <div className="p-6  max-w-6xl pt-24 mx-auto">
         <div className="text-center mb-10">
