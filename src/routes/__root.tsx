@@ -19,7 +19,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         <Outlet />
         <FooterComponent />
       </ErrorBoundary>
-      <Outlet />
 
       <TanStackRouterDevtools />
 
