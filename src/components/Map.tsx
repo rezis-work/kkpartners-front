@@ -20,8 +20,3 @@ export function Map() {
     </div>
   )
 }
-
-interface mapTitleProps {
-  title: string
-  subTitle: string
-}

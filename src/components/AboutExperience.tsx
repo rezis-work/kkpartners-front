@@ -1,11 +1,3 @@
-interface About {
-  company: string
-  date: string
-  title: string
-
-  paragraphs: Array<string>
-}
-
 interface Signer {
   subtitle: string
   sign: string

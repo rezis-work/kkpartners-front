@@ -1,4 +1,3 @@
-import { fetchAddresses } from '../api/address'
 import type { Address } from '../api/address'
 
 const AddressCard: React.FC<Address> = ({ city, street, phone, email }) => (

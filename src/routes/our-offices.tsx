@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { IoCallOutline, IoLocationSharp } from 'react-icons/io5'
 
@@ -10,7 +9,6 @@ import AddressCard from '../components/AddressCard'
 
 import { fetchAddresses } from '../api/address'
 
-import type { Address } from '../api/address'
 import 'leaflet/dist/leaflet.css'
 import HeaderMain from '@/components/header/HeaderMain'
 

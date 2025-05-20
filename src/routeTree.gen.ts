@@ -14,7 +14,6 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as OurOfficesImport } from './routes/our-offices'
-import { Route as FaqImport } from './routes/faq'
 import { Route as ContactImport } from './routes/contact'
 import { Route as AboutMeImport } from './routes/about-me'
 import { Route as IndexImport } from './routes/index'
@@ -36,12 +35,6 @@ const OurClientsLazyRoute = OurClientsLazyImport.update({
 const OurOfficesRoute = OurOfficesImport.update({
   id: '/our-offices',
   path: '/our-offices',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const FaqRoute = FaqImport.update({
-  id: '/faq',
-  path: '/faq',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -100,13 +93,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactImport
       parentRoute: typeof rootRoute
     }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqImport
-      parentRoute: typeof rootRoute
-    }
     '/our-offices': {
       id: '/our-offices'
       path: '/our-offices'
@@ -144,7 +130,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
   '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
   '/our-offices': typeof OurOfficesRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/demo/table': typeof DemoTableRoute
@@ -155,7 +140,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
   '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
   '/our-offices': typeof OurOfficesRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/demo/table': typeof DemoTableRoute
@@ -167,7 +151,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
   '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
   '/our-offices': typeof OurOfficesRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/demo/table': typeof DemoTableRoute
@@ -180,7 +163,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about-me'
     | '/contact'
-    | '/faq'
     | '/our-offices'
     | '/our-clients'
     | '/demo/table'
@@ -190,7 +172,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about-me'
     | '/contact'
-    | '/faq'
     | '/our-offices'
     | '/our-clients'
     | '/demo/table'
@@ -200,7 +181,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about-me'
     | '/contact'
-    | '/faq'
     | '/our-offices'
     | '/our-clients'
     | '/demo/table'
@@ -212,7 +192,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutMeRoute: typeof AboutMeRoute
   ContactRoute: typeof ContactRoute
-  FaqRoute: typeof FaqRoute
   OurOfficesRoute: typeof OurOfficesRoute
   OurClientsLazyRoute: typeof OurClientsLazyRoute
   DemoTableRoute: typeof DemoTableRoute
@@ -223,7 +202,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutMeRoute: AboutMeRoute,
   ContactRoute: ContactRoute,
-  FaqRoute: FaqRoute,
   OurOfficesRoute: OurOfficesRoute,
   OurClientsLazyRoute: OurClientsLazyRoute,
   DemoTableRoute: DemoTableRoute,
@@ -243,7 +221,6 @@ export const routeTree = rootRoute
         "/",
         "/about-me",
         "/contact",
-        "/faq",
         "/our-offices",
         "/our-clients",
         "/demo/table",
@@ -258,9 +235,6 @@ export const routeTree = rootRoute
     },
     "/contact": {
       "filePath": "contact.tsx"
-    },
-    "/faq": {
-      "filePath": "faq.tsx"
     },
     "/our-offices": {
       "filePath": "our-offices.tsx"
