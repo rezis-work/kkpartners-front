@@ -1,2 +1,12 @@
 @import 'tailwindcss';
 
+.card-bg-img {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.57s cubic-bezier(0.62, 0.83, 0.34, 0.93);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-container:hover .card-bg-img {
+  clip-path: inset(0 0 0 0);
+}

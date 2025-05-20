@@ -1,11 +1,14 @@
-import { getPracticeAreas } from '@/api/getPracticeAreas'
-import HeaderMain from '@/components/header/HeaderMain'
-import WhatWeDoGridLayout from '@/components/WhatWeDo/WhatWeDoGridLayout'
 import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
-import WhatWeDoCardsMobile from '@/components/WhatWeDo/WhatWeDoCardsMobile'
 import WhatWeDoCardsDesktop from '@/components/WhatWeDo/WhatWeDoCardsDesktop'
+
+import { getPracticeAreas } from '@/api/getPracticeAreas'
+import HeaderMain from '@/components/header/HeaderMain'
+import WhatWeDoGridLayout from '@/components/WhatWeDo/WhatWeDoGridLayout'
+
+import WhatWeDoCardsMobile from '@/components/WhatWeDo/WhatWeDoCardsMobile'
+
 export const Route = createLazyFileRoute('/what-we-do')({
   component: RouteComponent,
 })

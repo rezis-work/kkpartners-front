@@ -1,8 +1,10 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import HeaderMain from '@/components/header/HeaderMain'
 import { useQuery } from '@tanstack/react-query'
+import HeaderMain from '@/components/header/HeaderMain'
+
 import { getClients } from '@/api/getClients'
 import '../globalStyles.css'
+
 export const Route = createLazyFileRoute('/our-clients')({
   component: RouteComponent,
 })
@@ -43,22 +45,21 @@ function RouteComponent() {
             <span className="opacity-[0.43]">for us is personal</span>
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-            {data &&
-              data.map((card, index) => (
-                <div
-                  key={index}
-                  style={{
-                    border: '1px solid rgba(255,255,255,.15)',
-                  }}
-                  className="card-container w-full relative h-[340px] flex items-center justify-center overflow-hidden"
-                >
-                  <img
-                    className="card-bg-img w-full h-full absolute left-0 top-0"
-                    src={card.image}
-                  />
-                  <img className="w-[170px] absolute z-10" src={card.icon} />
-                </div>
-              ))}
+            {data.map((card, index) => (
+              <div
+                key={index}
+                style={{
+                  border: '1px solid rgba(255,255,255,.15)',
+                }}
+                className="card-container w-full relative h-[340px] flex items-center justify-center overflow-hidden"
+              >
+                <img
+                  className="card-bg-img w-full h-full absolute left-0 top-0"
+                  src={card.image}
+                />
+                <img className="w-[170px] absolute z-10" src={card.icon} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
