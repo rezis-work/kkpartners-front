@@ -14,8 +14,10 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as OurTeamImport } from './routes/our-team'
+import { Route as OurOfficesImport } from './routes/our-offices'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
+import { Route as AboutMeImport } from './routes/about-me'
 import { Route as IndexImport } from './routes/index'
 
 // Create Virtual Routes
@@ -50,6 +52,12 @@ const OurTeamRoute = OurTeamImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const OurOfficesRoute = OurOfficesImport.update({
+  id: '/our-offices',
+  path: '/our-offices',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ContactRoute = ContactImport.update({
   id: '/contact',
   path: '/contact',
@@ -59,6 +67,12 @@ const ContactRoute = ContactImport.update({
 const ComingSoonRoute = ComingSoonImport.update({
   id: '/coming-soon',
   path: '/coming-soon',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AboutMeRoute = AboutMeImport.update({
+  id: '/about-me',
+  path: '/about-me',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -79,6 +93,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/about-me': {
+      id: '/about-me'
+      path: '/about-me'
+      fullPath: '/about-me'
+      preLoaderRoute: typeof AboutMeImport
+      parentRoute: typeof rootRoute
+    }
     '/coming-soon': {
       id: '/coming-soon'
       path: '/coming-soon'
@@ -91,6 +112,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactImport
+      parentRoute: typeof rootRoute
+    }
+    '/our-offices': {
+      id: '/our-offices'
+      path: '/our-offices'
+      fullPath: '/our-offices'
+      preLoaderRoute: typeof OurOfficesImport
       parentRoute: typeof rootRoute
     }
     '/our-team': {
@@ -128,8 +156,10 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about-me': typeof AboutMeRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
+  '/our-offices': typeof OurOfficesRoute
   '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
@@ -138,8 +168,10 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about-me': typeof AboutMeRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
+  '/our-offices': typeof OurOfficesRoute
   '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
@@ -149,8 +181,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/about-me': typeof AboutMeRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
+  '/our-offices': typeof OurOfficesRoute
   '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
@@ -161,8 +195,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about-me'
     | '/coming-soon'
     | '/contact'
+    | '/our-offices'
     | '/our-team'
     | '/faq-page'
     | '/our-clients'
@@ -170,8 +206,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about-me'
     | '/coming-soon'
     | '/contact'
+    | '/our-offices'
     | '/our-team'
     | '/faq-page'
     | '/our-clients'
@@ -179,8 +217,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about-me'
     | '/coming-soon'
     | '/contact'
+    | '/our-offices'
     | '/our-team'
     | '/faq-page'
     | '/our-clients'
@@ -190,8 +230,10 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutMeRoute: typeof AboutMeRoute
   ComingSoonRoute: typeof ComingSoonRoute
   ContactRoute: typeof ContactRoute
+  OurOfficesRoute: typeof OurOfficesRoute
   OurTeamRoute: typeof OurTeamRoute
   FaqPageLazyRoute: typeof FaqPageLazyRoute
   OurClientsLazyRoute: typeof OurClientsLazyRoute
@@ -200,8 +242,10 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutMeRoute: AboutMeRoute,
   ComingSoonRoute: ComingSoonRoute,
   ContactRoute: ContactRoute,
+  OurOfficesRoute: OurOfficesRoute,
   OurTeamRoute: OurTeamRoute,
   FaqPageLazyRoute: FaqPageLazyRoute,
   OurClientsLazyRoute: OurClientsLazyRoute,
@@ -219,8 +263,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/about-me",
         "/coming-soon",
         "/contact",
+        "/our-offices",
         "/our-team",
         "/faq-page",
         "/our-clients",
@@ -230,11 +276,17 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/about-me": {
+      "filePath": "about-me.tsx"
+    },
     "/coming-soon": {
       "filePath": "coming-soon.tsx"
     },
     "/contact": {
       "filePath": "contact.tsx"
+    },
+    "/our-offices": {
+      "filePath": "our-offices.tsx"
     },
     "/our-team": {
       "filePath": "our-team.tsx"
