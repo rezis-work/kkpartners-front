@@ -295,7 +295,7 @@ export const routeTree = rootRoute
       "filePath": "faq-page.lazy.jsx"
     },
     "/our-clients": {
-      "filePath": "our-clients.lazy.jsx"
+      "filePath": "our-clients.lazy.tsx"
     },
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"

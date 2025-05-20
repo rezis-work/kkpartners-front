@@ -6,7 +6,7 @@ import FooterBottom from './FooterComponent/Footer_bottom'
 
 function FooterComponent() {
   return (
-    <footer className="Footer">
+    <footer className=" w-full h-full">
       <div className="bg-[#291616] w-full flex items-start justify-start p-4">
         <div className="w-full p-6 flex flex-col lg:flex-row items-start text-start md:items-start justify-between gap-6">
           {/* Links container aligned left */}
