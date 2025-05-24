@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { getPartners } from '../api/getOurPartners'
-import type { Partner as ApiPartner } from '../api/getOurPartners'
+
 import PartnerCard from './PartnerCard'
 import HeaderMain from './header/HeaderMain'
+import type { Partner as ApiPartner } from '../api/getOurPartners'
 
 type Partner = ApiPartner
 
 export function TeamPage() {
-  const [partners, setPartners] = useState<Partner[]>([])
+  const [partners, setPartners] = useState<Array<Partner>>([])
 
   useEffect(() => {
     getPartners().then(setPartners)
@@ -16,18 +17,20 @@ export function TeamPage() {
   return (
     <>
       <HeaderMain
-          bgColor={'rgb(247,243,239)'}
-          darkOrLight="light"
-          iconColor="white"
-          isBlured={true}
-          desktopHeaderBgColor="transparent"
-          desktopHeaderTextColor="white"
-          desktopHeaderBgColor2="transparent"
-        />
+        bgColor={'rgb(247,243,239)'}
+        darkOrLight="light"
+        iconColor="white"
+        isBlured={true}
+        desktopHeaderBgColor="transparent"
+        desktopHeaderTextColor="white"
+        desktopHeaderBgColor2="transparent"
+      />
 
       <div className="p-6  max-w-6xl pt-24 mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-5xl text-[#291616] font-semibold mb-4">Meet our team</h1>
+          <h1 className="text-5xl text-[#291616] font-semibold mb-4">
+            Meet our team
+          </h1>
           <p className="text-[#291616] pt-6">Lorem ipsum dolor sit amet</p>
         </div>
 
