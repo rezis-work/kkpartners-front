@@ -3,6 +3,7 @@ import HomeSlider from './swiper/HomeSlider'
 import LawService from './LawServie'
 import HistorySlider from './swiper/historySlide'
 import HomeTeam from './HomeTeam'
+
 function HomePage() {
   return (
     <>
