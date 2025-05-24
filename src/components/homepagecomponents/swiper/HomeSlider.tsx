@@ -72,7 +72,7 @@ const HomeSwiper = () => {
         {/* სურათის ქვედა ნაწილი — მარცხნივ დაბლარული, მარჯვნივ მკაფიო */}
 
         {/* მკაფიო მარჯვენა ნაწილი */}
-        <div className="w-full h-fit flex justify-end lg:relative bottom-100">
+        <div className="w-full h-fit flex justify-end lg:relative ">
           <img
             src="/public/slideblure-image.jpg"
             alt="clear"

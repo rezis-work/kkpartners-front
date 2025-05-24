@@ -7,7 +7,6 @@ import FooterComponent from '@/components/Footer'
 
 import HomePage from '@/components/homepagecomponents/HomePage'
 import HomePageCarousel from '@/components/homepagecomponents/HomePageCarousel'
-import HomeTeam from '@/components/homepagecomponents/HomeTeam'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -28,7 +27,7 @@ function App() {
         />
         <HomePageCarousel />
         <HomePage />
-        <HomeTeam />
+
         <FooterComponent />
       </div>
     </div>
