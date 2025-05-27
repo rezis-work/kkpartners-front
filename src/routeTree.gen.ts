@@ -17,6 +17,7 @@ import { Route as OurTeamImport } from './routes/our-team'
 import { Route as OurOfficesImport } from './routes/our-offices'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
+import { Route as AboutUsImport } from './routes/about-us'
 import { Route as AboutMeImport } from './routes/about-me'
 import { Route as IndexImport } from './routes/index'
 
@@ -70,6 +71,12 @@ const ComingSoonRoute = ComingSoonImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AboutUsRoute = AboutUsImport.update({
+  id: '/about-us',
+  path: '/about-us',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AboutMeRoute = AboutMeImport.update({
   id: '/about-me',
   path: '/about-me',
@@ -98,6 +105,13 @@ declare module '@tanstack/react-router' {
       path: '/about-me'
       fullPath: '/about-me'
       preLoaderRoute: typeof AboutMeImport
+      parentRoute: typeof rootRoute
+    }
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsImport
       parentRoute: typeof rootRoute
     }
     '/coming-soon': {
@@ -157,6 +171,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
+  '/about-us': typeof AboutUsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -169,6 +184,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
+  '/about-us': typeof AboutUsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -182,6 +198,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
+  '/about-us': typeof AboutUsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -196,6 +213,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about-me'
+    | '/about-us'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -207,6 +225,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about-me'
+    | '/about-us'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -218,6 +237,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about-me'
+    | '/about-us'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -231,6 +251,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutMeRoute: typeof AboutMeRoute
+  AboutUsRoute: typeof AboutUsRoute
   ComingSoonRoute: typeof ComingSoonRoute
   ContactRoute: typeof ContactRoute
   OurOfficesRoute: typeof OurOfficesRoute
@@ -243,6 +264,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutMeRoute: AboutMeRoute,
+  AboutUsRoute: AboutUsRoute,
   ComingSoonRoute: ComingSoonRoute,
   ContactRoute: ContactRoute,
   OurOfficesRoute: OurOfficesRoute,
@@ -264,6 +286,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about-me",
+        "/about-us",
         "/coming-soon",
         "/contact",
         "/our-offices",
@@ -278,6 +301,9 @@ export const routeTree = rootRoute
     },
     "/about-me": {
       "filePath": "about-me.tsx"
+    },
+    "/about-us": {
+      "filePath": "about-us.tsx"
     },
     "/coming-soon": {
       "filePath": "coming-soon.tsx"

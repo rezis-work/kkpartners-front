@@ -2,9 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import WhatWeDoCardsDesktop from '@/components/WhatWeDo/WhatWeDoCardsDesktop'
-<<<<<<< HEAD
+
 import FooterComponent from '@/components/Footer'
-=======
 
 import { getPracticeAreas } from '@/api/getPracticeAreas'
 import HeaderMain from '@/components/header/HeaderMain'
@@ -12,7 +11,6 @@ import WhatWeDoGridLayout from '@/components/WhatWeDo/WhatWeDoGridLayout'
 
 import WhatWeDoCardsMobile from '@/components/WhatWeDo/WhatWeDoCardsMobile'
 
->>>>>>> homeSlider
 export const Route = createLazyFileRoute('/what-we-do')({
   component: RouteComponent,
 })
