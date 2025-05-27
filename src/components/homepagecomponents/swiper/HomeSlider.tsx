@@ -27,7 +27,7 @@ const HomeSwiper = () => {
   return (
     <>
       <div className="w-full h-full">
-        <div className=" w-full h-full lg:h-[965px] relative bg-[#4B2524] text-white overflow-hidden">
+        <div className=" w-full h-full lg:h-full relative bg-[#4B2524] text-white overflow-hidden">
           <Swiper
             modules={[Navigation, Autoplay]}
             navigation={{
@@ -44,7 +44,7 @@ const HomeSwiper = () => {
             {data.map((quote: Quotes, index: number) => (
               <SwiperSlide
                 key={index}
-                className="flex flex-col items-start h-full w-full justify-center px-10 pb-15 lg:px-40 pt-20  "
+                className="flex flex-col items-start h-full w-full justify-center px-10 pb-10 lg:px-40 pt-20  "
               >
                 <div className=" text-2xl md:text-4xl max-w-7xl leading-snug">
                   {quote.quote}
@@ -59,7 +59,7 @@ const HomeSwiper = () => {
           </Swiper>
 
           {/* ისრები */}
-          <div className="absolute z-20 gap-4 -translate-y-1/2  right-2/8 top-2/7 hidden md:flex  md:right-1/8 md:top-5/6 lg:right-1/9 lg:top-2/6">
+          <div className="absolute z-20 gap-4 -translate-y-1/  right-2/8 top-2/7 hidden md:flex  md:right-1/8 md:top-5/6 lg:right-1/9 lg:top-3/5">
             <button className="custom-prev md:text-8xl font-light text-white">
               ←
             </button>
@@ -72,11 +72,11 @@ const HomeSwiper = () => {
         {/* სურათის ქვედა ნაწილი — მარცხნივ დაბლარული, მარჯვნივ მკაფიო */}
 
         {/* მკაფიო მარჯვენა ნაწილი */}
-        <div className="w-full h-fit flex justify-end lg:relative bottom-100">
+        <div className="w-full h-fit flex justify-end ">
           <img
             src="/public/slideblure-image.jpg"
             alt="clear"
-            className=" top-10 lg:w-13/14 h-full object-cover"
+            className=" top-10 lg:w-13/14 h-full object-cover lg:top-0    "
           />
           <div className="absolute bottom-15 left-60 text-white text-lg z-20">
             Contributing Important <p>Global Initiatives</p>

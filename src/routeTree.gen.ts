@@ -23,6 +23,7 @@ import { Route as IndexImport } from './routes/index'
 // Create Virtual Routes
 
 const WhatWeDoLazyImport = createFileRoute('/what-we-do')()
+const OurExpertiseLazyImport = createFileRoute('/our-expertise')()
 const OurClientsLazyImport = createFileRoute('/our-clients')()
 const FaqPageLazyImport = createFileRoute('/faq-page')()
 
@@ -33,6 +34,12 @@ const WhatWeDoLazyRoute = WhatWeDoLazyImport.update({
   path: '/what-we-do',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/what-we-do.lazy').then((d) => d.Route))
+
+const OurExpertiseLazyRoute = OurExpertiseLazyImport.update({
+  id: '/our-expertise',
+  path: '/our-expertise',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/our-expertise.lazy').then((d) => d.Route))
 
 const OurClientsLazyRoute = OurClientsLazyImport.update({
   id: '/our-clients',
@@ -142,6 +149,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OurClientsLazyImport
       parentRoute: typeof rootRoute
     }
+    '/our-expertise': {
+      id: '/our-expertise'
+      path: '/our-expertise'
+      fullPath: '/our-expertise'
+      preLoaderRoute: typeof OurExpertiseLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/what-we-do': {
       id: '/what-we-do'
       path: '/what-we-do'
@@ -163,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
+  '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
 }
 
@@ -175,6 +190,7 @@ export interface FileRoutesByTo {
   '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
+  '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
 }
 
@@ -188,6 +204,7 @@ export interface FileRoutesById {
   '/our-team': typeof OurTeamRoute
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
+  '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
 }
 
@@ -202,6 +219,7 @@ export interface FileRouteTypes {
     | '/our-team'
     | '/faq-page'
     | '/our-clients'
+    | '/our-expertise'
     | '/what-we-do'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -213,6 +231,7 @@ export interface FileRouteTypes {
     | '/our-team'
     | '/faq-page'
     | '/our-clients'
+    | '/our-expertise'
     | '/what-we-do'
   id:
     | '__root__'
@@ -224,6 +243,7 @@ export interface FileRouteTypes {
     | '/our-team'
     | '/faq-page'
     | '/our-clients'
+    | '/our-expertise'
     | '/what-we-do'
   fileRoutesById: FileRoutesById
 }
@@ -237,6 +257,7 @@ export interface RootRouteChildren {
   OurTeamRoute: typeof OurTeamRoute
   FaqPageLazyRoute: typeof FaqPageLazyRoute
   OurClientsLazyRoute: typeof OurClientsLazyRoute
+  OurExpertiseLazyRoute: typeof OurExpertiseLazyRoute
   WhatWeDoLazyRoute: typeof WhatWeDoLazyRoute
 }
 
@@ -249,6 +270,7 @@ const rootRouteChildren: RootRouteChildren = {
   OurTeamRoute: OurTeamRoute,
   FaqPageLazyRoute: FaqPageLazyRoute,
   OurClientsLazyRoute: OurClientsLazyRoute,
+  OurExpertiseLazyRoute: OurExpertiseLazyRoute,
   WhatWeDoLazyRoute: WhatWeDoLazyRoute,
 }
 
@@ -270,6 +292,7 @@ export const routeTree = rootRoute
         "/our-team",
         "/faq-page",
         "/our-clients",
+        "/our-expertise",
         "/what-we-do"
       ]
     },
@@ -296,6 +319,9 @@ export const routeTree = rootRoute
     },
     "/our-clients": {
       "filePath": "our-clients.lazy.tsx"
+    },
+    "/our-expertise": {
+      "filePath": "our-expertise.lazy.tsx"
     },
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
