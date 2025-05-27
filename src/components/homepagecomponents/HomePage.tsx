@@ -2,7 +2,10 @@ import Banners from './Banner'
 import HomeSlider from './swiper/HomeSlider'
 import LawService from './LawServie'
 import HistorySlider from './swiper/historySlide'
+
 import HomeTeam from './HomeTeam'
+
+import LatestNewsBlogs from './LatestNews'
 
 function HomePage() {
   return (
@@ -47,6 +50,8 @@ function HomePage() {
         <HomeTeam />
 
         <HistorySlider />
+
+        <LatestNewsBlogs />
       </main>
     </>
   )
