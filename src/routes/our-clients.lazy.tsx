@@ -2,13 +2,10 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import HeaderMain from '@/components/header/HeaderMain'
 
+import FooterComponent from '@/components/Footer'
 import { getClients } from '@/api/getClients'
 import '../globalStyles.css'
-<<<<<<< HEAD:src/routes/our-clients.lazy.jsx
-import FooterComponent from '@/components/Footer'
-=======
 
->>>>>>> homeSlider:src/routes/our-clients.lazy.tsx
 export const Route = createLazyFileRoute('/our-clients')({
   component: RouteComponent,
 })
