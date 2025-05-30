@@ -1,25 +1,23 @@
 export interface Partner {
-    _id?: string 
-    fullname: string
-    position: string
-    about: string
-    biography: string
-    image: string
-    cover: string
-    contact: Contact
-    services: string[]
-  }
-  
-  export interface Contact {
+  _id: string
+  fullname: string
+  position: string
+  about: string
+  biography: string
+  image: string
+  cover: string
+  contact: {
     linkedin: string
     phone: string
     email: string
   }
+  services: string[]
+}
   
   ////get partners
   export const getPartners = async (): Promise<Partner[]> => {
     try {
-      const response = await fetch('http://localhost:4000/api/partner')
+      const response = await fetch(`http://localhost:4000/api/partner`)
       const result = await response.json()
       return result.data || []
     } catch (error) {
@@ -27,22 +25,12 @@ export interface Partner {
       return []
     }
   }
+//each partner info
+  export const getPartnerById = async (id: string): Promise<Partner | null> => {
+    const res = await fetch(`http://localhost:4000/api/partner/${id}`)
+    const result = await res.json()
+    return result.data || null
+  }
   
- //add partners
-//   export const postPartner = async (partner: Partner): Promise<Partner> => {
-//     const response = await fetch('http://localhost:4000/api/partner', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(partner),
-//     })
-  
-//     if (!response.ok) {
-//       throw new Error('Failed to post partner')
-//     }
-  
-//     const result = await response.json()
-//     return result.data
-//   }
+ 
   

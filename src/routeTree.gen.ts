@@ -17,6 +17,8 @@ import { Route as OurTeamImport } from './routes/our-team'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
 import { Route as IndexImport } from './routes/index'
+import { Route as TeamBioIndexImport } from './routes/team-bio/index'
+import { Route as TeamBioIdImport } from './routes/team-bio/$id'
 
 // Create Virtual Routes
 
@@ -65,6 +67,18 @@ const ComingSoonRoute = ComingSoonImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TeamBioIndexRoute = TeamBioIndexImport.update({
+  id: '/team-bio/',
+  path: '/team-bio/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TeamBioIdRoute = TeamBioIdImport.update({
+  id: '/team-bio/$id',
+  path: '/team-bio/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -121,6 +135,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
+    '/team-bio/$id': {
+      id: '/team-bio/$id'
+      path: '/team-bio/$id'
+      fullPath: '/team-bio/$id'
+      preLoaderRoute: typeof TeamBioIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/team-bio/': {
+      id: '/team-bio/'
+      path: '/team-bio'
+      fullPath: '/team-bio'
+      preLoaderRoute: typeof TeamBioIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -134,6 +162,8 @@ export interface FileRoutesByFullPath {
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio': typeof TeamBioIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -144,6 +174,8 @@ export interface FileRoutesByTo {
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio': typeof TeamBioIndexRoute
 }
 
 export interface FileRoutesById {
@@ -155,6 +187,8 @@ export interface FileRoutesById {
   '/faq-page': typeof FaqPageLazyRoute
   '/our-clients': typeof OurClientsLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio/': typeof TeamBioIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -167,6 +201,8 @@ export interface FileRouteTypes {
     | '/faq-page'
     | '/our-clients'
     | '/what-we-do'
+    | '/team-bio/$id'
+    | '/team-bio'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -176,6 +212,8 @@ export interface FileRouteTypes {
     | '/faq-page'
     | '/our-clients'
     | '/what-we-do'
+    | '/team-bio/$id'
+    | '/team-bio'
   id:
     | '__root__'
     | '/'
@@ -185,6 +223,8 @@ export interface FileRouteTypes {
     | '/faq-page'
     | '/our-clients'
     | '/what-we-do'
+    | '/team-bio/$id'
+    | '/team-bio/'
   fileRoutesById: FileRoutesById
 }
 
@@ -196,6 +236,8 @@ export interface RootRouteChildren {
   FaqPageLazyRoute: typeof FaqPageLazyRoute
   OurClientsLazyRoute: typeof OurClientsLazyRoute
   WhatWeDoLazyRoute: typeof WhatWeDoLazyRoute
+  TeamBioIdRoute: typeof TeamBioIdRoute
+  TeamBioIndexRoute: typeof TeamBioIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -206,6 +248,8 @@ const rootRouteChildren: RootRouteChildren = {
   FaqPageLazyRoute: FaqPageLazyRoute,
   OurClientsLazyRoute: OurClientsLazyRoute,
   WhatWeDoLazyRoute: WhatWeDoLazyRoute,
+  TeamBioIdRoute: TeamBioIdRoute,
+  TeamBioIndexRoute: TeamBioIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -224,7 +268,9 @@ export const routeTree = rootRoute
         "/our-team",
         "/faq-page",
         "/our-clients",
-        "/what-we-do"
+        "/what-we-do",
+        "/team-bio/$id",
+        "/team-bio/"
       ]
     },
     "/": {
@@ -247,6 +293,12 @@ export const routeTree = rootRoute
     },
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
+    },
+    "/team-bio/$id": {
+      "filePath": "team-bio/$id.tsx"
+    },
+    "/team-bio/": {
+      "filePath": "team-bio/index.tsx"
     }
   }
 }

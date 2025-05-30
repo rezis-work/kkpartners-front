@@ -17,15 +17,15 @@ export function TeamPage() {
     <>
       <HeaderMain
           bgColor={'rgb(247,243,239)'}
-          darkOrLight="light"
-          iconColor="white"
+          darkOrLight="dark"
+          iconColor="black"
           isBlured={true}
           desktopHeaderBgColor="transparent"
-          desktopHeaderTextColor="white"
+          desktopHeaderTextColor="black"
           desktopHeaderBgColor2="transparent"
         />
 
-      <div className="p-6  max-w-6xl pt-24 mx-auto">
+      <div className="p-6 w-screen  max-w-6xl pt-24 mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-5xl text-[#291616] font-semibold mb-4">Meet our team</h1>
           <p className="text-[#291616] pt-6">Lorem ipsum dolor sit amet</p>
