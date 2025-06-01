@@ -1,6 +1,7 @@
 import CountdownTimer from './CountdownTimer'
 import HeaderMain from './header/HeaderMain'
 
+
 export default function ComingSoon() {
   return (
 
@@ -35,6 +36,7 @@ export default function ComingSoon() {
         </button>
       </div>
     </div>
+    
 
     </>
 

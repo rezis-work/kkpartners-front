@@ -17,9 +17,12 @@ import { Route as OurTeamImport } from './routes/our-team'
 import { Route as OurOfficesImport } from './routes/our-offices'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
+import { Route as AdminSettingsImport } from './routes/admin-settings'
 import { Route as AboutUsImport } from './routes/about-us'
 import { Route as AboutMeImport } from './routes/about-me'
 import { Route as IndexImport } from './routes/index'
+import { Route as TeamBioIndexImport } from './routes/team-bio/index'
+import { Route as TeamBioIdImport } from './routes/team-bio/$id'
 
 // Create Virtual Routes
 
@@ -78,6 +81,12 @@ const ComingSoonRoute = ComingSoonImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminSettingsRoute = AdminSettingsImport.update({
+  id: '/admin-settings',
+  path: '/admin-settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AboutUsRoute = AboutUsImport.update({
   id: '/about-us',
   path: '/about-us',
@@ -93,6 +102,18 @@ const AboutMeRoute = AboutMeImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TeamBioIndexRoute = TeamBioIndexImport.update({
+  id: '/team-bio/',
+  path: '/team-bio/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TeamBioIdRoute = TeamBioIdImport.update({
+  id: '/team-bio/$id',
+  path: '/team-bio/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -119,6 +140,13 @@ declare module '@tanstack/react-router' {
       path: '/about-us'
       fullPath: '/about-us'
       preLoaderRoute: typeof AboutUsImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin-settings': {
+      id: '/admin-settings'
+      path: '/admin-settings'
+      fullPath: '/admin-settings'
+      preLoaderRoute: typeof AdminSettingsImport
       parentRoute: typeof rootRoute
     }
     '/coming-soon': {
@@ -177,6 +205,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
+    '/team-bio/$id': {
+      id: '/team-bio/$id'
+      path: '/team-bio/$id'
+      fullPath: '/team-bio/$id'
+      preLoaderRoute: typeof TeamBioIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/team-bio/': {
+      id: '/team-bio/'
+      path: '/team-bio'
+      fullPath: '/team-bio'
+      preLoaderRoute: typeof TeamBioIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -186,6 +228,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
+  '/admin-settings': typeof AdminSettingsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -194,12 +237,15 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio': typeof TeamBioIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
+  '/admin-settings': typeof AdminSettingsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -208,6 +254,8 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio': typeof TeamBioIndexRoute
 }
 
 export interface FileRoutesById {
@@ -215,6 +263,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
+  '/admin-settings': typeof AdminSettingsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -223,6 +272,8 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio/': typeof TeamBioIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -231,6 +282,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about-me'
     | '/about-us'
+    | '/admin-settings'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -239,11 +291,14 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/team-bio/$id'
+    | '/team-bio'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about-me'
     | '/about-us'
+    | '/admin-settings'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -252,11 +307,14 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/team-bio/$id'
+    | '/team-bio'
   id:
     | '__root__'
     | '/'
     | '/about-me'
     | '/about-us'
+    | '/admin-settings'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -265,6 +323,8 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/team-bio/$id'
+    | '/team-bio/'
   fileRoutesById: FileRoutesById
 }
 
@@ -272,6 +332,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutMeRoute: typeof AboutMeRoute
   AboutUsRoute: typeof AboutUsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   ComingSoonRoute: typeof ComingSoonRoute
   ContactRoute: typeof ContactRoute
   OurOfficesRoute: typeof OurOfficesRoute
@@ -280,12 +341,15 @@ export interface RootRouteChildren {
   OurClientsLazyRoute: typeof OurClientsLazyRoute
   OurExpertiseLazyRoute: typeof OurExpertiseLazyRoute
   WhatWeDoLazyRoute: typeof WhatWeDoLazyRoute
+  TeamBioIdRoute: typeof TeamBioIdRoute
+  TeamBioIndexRoute: typeof TeamBioIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutMeRoute: AboutMeRoute,
   AboutUsRoute: AboutUsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   ComingSoonRoute: ComingSoonRoute,
   ContactRoute: ContactRoute,
   OurOfficesRoute: OurOfficesRoute,
@@ -294,6 +358,8 @@ const rootRouteChildren: RootRouteChildren = {
   OurClientsLazyRoute: OurClientsLazyRoute,
   OurExpertiseLazyRoute: OurExpertiseLazyRoute,
   WhatWeDoLazyRoute: WhatWeDoLazyRoute,
+  TeamBioIdRoute: TeamBioIdRoute,
+  TeamBioIndexRoute: TeamBioIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -309,6 +375,7 @@ export const routeTree = rootRoute
         "/",
         "/about-me",
         "/about-us",
+        "/admin-settings",
         "/coming-soon",
         "/contact",
         "/our-offices",
@@ -316,7 +383,9 @@ export const routeTree = rootRoute
         "/faq-page",
         "/our-clients",
         "/our-expertise",
-        "/what-we-do"
+        "/what-we-do",
+        "/team-bio/$id",
+        "/team-bio/"
       ]
     },
     "/": {
@@ -327,6 +396,9 @@ export const routeTree = rootRoute
     },
     "/about-us": {
       "filePath": "about-us.tsx"
+    },
+    "/admin-settings": {
+      "filePath": "admin-settings.tsx"
     },
     "/coming-soon": {
       "filePath": "coming-soon.tsx"
@@ -351,6 +423,12 @@ export const routeTree = rootRoute
     },
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
+    },
+    "/team-bio/$id": {
+      "filePath": "team-bio/$id.tsx"
+    },
+    "/team-bio/": {
+      "filePath": "team-bio/index.tsx"
     }
   }
 }
