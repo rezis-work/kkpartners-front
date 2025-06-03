@@ -26,7 +26,7 @@ export function TeamPage() {
         desktopHeaderBgColor2="transparent"
       />
 
-      <div className="p-6  max-w-6xl pt-24 mx-auto">
+      <div className="p-6 w-screen  max-w-6xl pt-24 mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-5xl text-[#291616] font-semibold mb-4">
             Meet our team
