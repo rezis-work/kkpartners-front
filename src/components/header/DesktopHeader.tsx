@@ -19,6 +19,7 @@ function DesktopHeader({
     { pageName: 'FAQ Page', pageLink: '/faq-page' },
     { pageName: 'Contact Us', pageLink: '/contact-us' },
     { pageName: 'Coming Soon', pageLink: '/coming-soon' },
+    { pageName: 'Dishboard', pageLink: '/_authenticated/dashboard' },
   ]
 
   const personelDropdownArray = [
@@ -30,7 +31,7 @@ function DesktopHeader({
     <>
       {/* Desktop header */}
       <div
-        className={`hidden lg:flex items-center justify-between w-full px-12 py-2 absolute z-100 ${isBlured ? 'backdrop-blur-sm' : 'backdrop-blur-none'}`}
+        className={`hidden lg:flex items-center justify-between w-full px-12 py-2 absolute z-100 box-border ${isBlured ? 'backdrop-blur-sm' : 'backdrop-blur-none'}`}
         style={isBlured ? { backgroundColor: desktopHeaderBgColor } : {}}
       >
         <div className="flex items-center gap-2">
@@ -90,10 +91,12 @@ function DesktopHeader({
             <Link to="/">
               <p className="cursor-pointer hover:underline">Home</p>
             </Link>
+
             <p className="cursor-pointer hover:underline">Blog</p>
 
             <div className="relative group cursor-pointer">
               <p className="hover:underline leading-[80px]">Pages</p>
+
               <div className="absolute left-0 top-full w-48 bg-white text-black shadow-md rounded p-3 opacity-1 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-[15px]">
                 {pagesDropdownArray.map((page) => (
                   <Link to={page.pageLink} key={page.pageName}>
@@ -117,6 +120,13 @@ function DesktopHeader({
                 ))}
               </div>
             </div>
+            <Link to="/auth">
+              <p className="cursor-pointer hover:underline">auth</p>
+            </Link>
+
+            <Link to="/dashboard">
+              <p className="cursor-pointer hover:underline">dashboard</p>
+            </Link>
           </div>
           <button className="bg-white px-6 py-3 font-semibold text-[15px] cursor-pointer hover:underline">
             Get in touch

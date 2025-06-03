@@ -17,8 +17,12 @@ import { Route as OurTeamImport } from './routes/our-team'
 import { Route as OurOfficesImport } from './routes/our-offices'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
+import { Route as AuthImport } from './routes/auth'
 import { Route as AboutMeImport } from './routes/about-me'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthenticatedTestImport } from './routes/_authenticated/test'
+import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
 
 // Create Virtual Routes
 
@@ -77,9 +81,20 @@ const ComingSoonRoute = ComingSoonImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthRoute = AuthImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AboutMeRoute = AboutMeImport.update({
   id: '/about-me',
   path: '/about-me',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -87,6 +102,18 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedTestRoute = AuthenticatedTestImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -100,11 +127,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
+      parentRoute: typeof rootRoute
+    }
     '/about-me': {
       id: '/about-me'
       path: '/about-me'
       fullPath: '/about-me'
       preLoaderRoute: typeof AboutMeImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
     '/coming-soon': {
@@ -163,14 +204,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/test': {
+      id: '/_authenticated/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof AuthenticatedTestImport
+      parentRoute: typeof AuthenticatedImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedTestRoute: typeof AuthenticatedTestRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedTestRoute: AuthenticatedTestRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
+  '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -179,11 +250,15 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/test': typeof AuthenticatedTestRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
+  '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -192,12 +267,16 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/test': typeof AuthenticatedTestRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
+  '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -206,13 +285,17 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/test': typeof AuthenticatedTestRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | ''
     | '/about-me'
+    | '/auth'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -221,10 +304,14 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/dashboard'
+    | '/test'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | ''
     | '/about-me'
+    | '/auth'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -233,10 +320,14 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/dashboard'
+    | '/test'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about-me'
+    | '/auth'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -245,12 +336,16 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/test'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutMeRoute: typeof AboutMeRoute
+  AuthRoute: typeof AuthRoute
   ComingSoonRoute: typeof ComingSoonRoute
   ContactRoute: typeof ContactRoute
   OurOfficesRoute: typeof OurOfficesRoute
@@ -263,7 +358,9 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutMeRoute: AboutMeRoute,
+  AuthRoute: AuthRoute,
   ComingSoonRoute: ComingSoonRoute,
   ContactRoute: ContactRoute,
   OurOfficesRoute: OurOfficesRoute,
@@ -285,7 +382,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_authenticated",
         "/about-me",
+        "/auth",
         "/coming-soon",
         "/contact",
         "/our-offices",
@@ -299,8 +398,18 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/dashboard",
+        "/_authenticated/test"
+      ]
+    },
     "/about-me": {
       "filePath": "about-me.tsx"
+    },
+    "/auth": {
+      "filePath": "auth.tsx"
     },
     "/coming-soon": {
       "filePath": "coming-soon.tsx"
@@ -325,6 +434,14 @@ export const routeTree = rootRoute
     },
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
+    },
+    "/_authenticated/dashboard": {
+      "filePath": "_authenticated/dashboard.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/test": {
+      "filePath": "_authenticated/test.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

@@ -12,19 +12,19 @@ import * as TanstackQuery from './integrations/tanstack-query/root-provider'
 import { routeTree } from './routeTree.gen'
 
 import reportWebVitals from './reportWebVitals.ts'
+import getCurrentUser from './hooks/getUser.ts'
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
   context: {
-    ...TanstackQuery.getContext(),
+    getCurrentUser,
   },
   defaultPreload: 'intent',
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
 })
-
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
@@ -35,8 +35,10 @@ declare module '@tanstack/react-router' {
 
 // Render the app
 const rootElement = document.getElementById('app')
+
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
+
   root.render(
     <StrictMode>
       <TanstackQuery.Provider>

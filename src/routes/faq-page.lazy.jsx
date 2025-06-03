@@ -21,7 +21,7 @@ function RouteComponent() {
   if (isError) return <div>Error: {error.message}</div>
   if (!data || !Array.isArray(data)) return <div>No data available</div>
   return (
-    <div className="w-screen">
+    <div className="w-full">
       <HeaderMain
         bgColor={'transparent'}
         darkOrLight="light"
