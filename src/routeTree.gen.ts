@@ -18,6 +18,7 @@ import { Route as OurOfficesImport } from './routes/our-offices'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
 import { Route as AuthImport } from './routes/auth'
+import { Route as AboutUsImport } from './routes/about-us'
 import { Route as AboutMeImport } from './routes/about-me'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
@@ -87,6 +88,12 @@ const AuthRoute = AuthImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AboutUsRoute = AboutUsImport.update({
+  id: '/about-us',
+  path: '/about-us',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AboutMeRoute = AboutMeImport.update({
   id: '/about-me',
   path: '/about-me',
@@ -139,6 +146,13 @@ declare module '@tanstack/react-router' {
       path: '/about-me'
       fullPath: '/about-me'
       preLoaderRoute: typeof AboutMeImport
+      parentRoute: typeof rootRoute
+    }
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsImport
       parentRoute: typeof rootRoute
     }
     '/auth': {
@@ -241,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
+  '/about-us': typeof AboutUsRoute
   '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
@@ -258,6 +273,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
+  '/about-us': typeof AboutUsRoute
   '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
@@ -276,6 +292,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
+  '/about-us': typeof AboutUsRoute
   '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
@@ -295,6 +312,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/about-me'
+    | '/about-us'
     | '/auth'
     | '/coming-soon'
     | '/contact'
@@ -311,6 +329,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/about-me'
+    | '/about-us'
     | '/auth'
     | '/coming-soon'
     | '/contact'
@@ -327,6 +346,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/about-me'
+    | '/about-us'
     | '/auth'
     | '/coming-soon'
     | '/contact'
@@ -345,6 +365,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutMeRoute: typeof AboutMeRoute
+  AboutUsRoute: typeof AboutUsRoute
   AuthRoute: typeof AuthRoute
   ComingSoonRoute: typeof ComingSoonRoute
   ContactRoute: typeof ContactRoute
@@ -360,6 +381,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutMeRoute: AboutMeRoute,
+  AboutUsRoute: AboutUsRoute,
   AuthRoute: AuthRoute,
   ComingSoonRoute: ComingSoonRoute,
   ContactRoute: ContactRoute,
@@ -384,6 +406,7 @@ export const routeTree = rootRoute
         "/",
         "/_authenticated",
         "/about-me",
+        "/about-us",
         "/auth",
         "/coming-soon",
         "/contact",
@@ -407,6 +430,9 @@ export const routeTree = rootRoute
     },
     "/about-me": {
       "filePath": "about-me.tsx"
+    },
+    "/about-us": {
+      "filePath": "about-us.tsx"
     },
     "/auth": {
       "filePath": "auth.tsx"
