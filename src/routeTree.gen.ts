@@ -18,10 +18,13 @@ import { Route as OurOfficesImport } from './routes/our-offices'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
 import { Route as AuthImport } from './routes/auth'
+import { Route as AdminSettingsImport } from './routes/admin-settings'
 import { Route as AboutUsImport } from './routes/about-us'
 import { Route as AboutMeImport } from './routes/about-me'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
+import { Route as TeamBioIndexImport } from './routes/team-bio/index'
+import { Route as TeamBioIdImport } from './routes/team-bio/$id'
 import { Route as AuthenticatedTestImport } from './routes/_authenticated/test'
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
 
@@ -88,6 +91,12 @@ const AuthRoute = AuthImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminSettingsRoute = AdminSettingsImport.update({
+  id: '/admin-settings',
+  path: '/admin-settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AboutUsRoute = AboutUsImport.update({
   id: '/about-us',
   path: '/about-us',
@@ -108,6 +117,18 @@ const AuthenticatedRoute = AuthenticatedImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TeamBioIndexRoute = TeamBioIndexImport.update({
+  id: '/team-bio/',
+  path: '/team-bio/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TeamBioIdRoute = TeamBioIdImport.update({
+  id: '/team-bio/$id',
+  path: '/team-bio/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -153,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/about-us'
       fullPath: '/about-us'
       preLoaderRoute: typeof AboutUsImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin-settings': {
+      id: '/admin-settings'
+      path: '/admin-settings'
+      fullPath: '/admin-settings'
+      preLoaderRoute: typeof AdminSettingsImport
       parentRoute: typeof rootRoute
     }
     '/auth': {
@@ -232,6 +260,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTestImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/team-bio/$id': {
+      id: '/team-bio/$id'
+      path: '/team-bio/$id'
+      fullPath: '/team-bio/$id'
+      preLoaderRoute: typeof TeamBioIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/team-bio/': {
+      id: '/team-bio/'
+      path: '/team-bio'
+      fullPath: '/team-bio'
+      preLoaderRoute: typeof TeamBioIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -256,6 +298,7 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
+  '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
@@ -267,6 +310,8 @@ export interface FileRoutesByFullPath {
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/test': typeof AuthenticatedTestRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio': typeof TeamBioIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -274,6 +319,7 @@ export interface FileRoutesByTo {
   '': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
+  '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
@@ -285,6 +331,8 @@ export interface FileRoutesByTo {
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/test': typeof AuthenticatedTestRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio': typeof TeamBioIndexRoute
 }
 
 export interface FileRoutesById {
@@ -293,6 +341,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
+  '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
@@ -304,6 +353,8 @@ export interface FileRoutesById {
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/test': typeof AuthenticatedTestRoute
+  '/team-bio/$id': typeof TeamBioIdRoute
+  '/team-bio/': typeof TeamBioIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -313,6 +364,7 @@ export interface FileRouteTypes {
     | ''
     | '/about-me'
     | '/about-us'
+    | '/admin-settings'
     | '/auth'
     | '/coming-soon'
     | '/contact'
@@ -324,12 +376,15 @@ export interface FileRouteTypes {
     | '/what-we-do'
     | '/dashboard'
     | '/test'
+    | '/team-bio/$id'
+    | '/team-bio'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
     | '/about-me'
     | '/about-us'
+    | '/admin-settings'
     | '/auth'
     | '/coming-soon'
     | '/contact'
@@ -341,12 +396,15 @@ export interface FileRouteTypes {
     | '/what-we-do'
     | '/dashboard'
     | '/test'
+    | '/team-bio/$id'
+    | '/team-bio'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/about-me'
     | '/about-us'
+    | '/admin-settings'
     | '/auth'
     | '/coming-soon'
     | '/contact'
@@ -358,6 +416,8 @@ export interface FileRouteTypes {
     | '/what-we-do'
     | '/_authenticated/dashboard'
     | '/_authenticated/test'
+    | '/team-bio/$id'
+    | '/team-bio/'
   fileRoutesById: FileRoutesById
 }
 
@@ -366,6 +426,7 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutMeRoute: typeof AboutMeRoute
   AboutUsRoute: typeof AboutUsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AuthRoute: typeof AuthRoute
   ComingSoonRoute: typeof ComingSoonRoute
   ContactRoute: typeof ContactRoute
@@ -375,6 +436,8 @@ export interface RootRouteChildren {
   OurClientsLazyRoute: typeof OurClientsLazyRoute
   OurExpertiseLazyRoute: typeof OurExpertiseLazyRoute
   WhatWeDoLazyRoute: typeof WhatWeDoLazyRoute
+  TeamBioIdRoute: typeof TeamBioIdRoute
+  TeamBioIndexRoute: typeof TeamBioIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -382,6 +445,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutMeRoute: AboutMeRoute,
   AboutUsRoute: AboutUsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AuthRoute: AuthRoute,
   ComingSoonRoute: ComingSoonRoute,
   ContactRoute: ContactRoute,
@@ -391,6 +455,8 @@ const rootRouteChildren: RootRouteChildren = {
   OurClientsLazyRoute: OurClientsLazyRoute,
   OurExpertiseLazyRoute: OurExpertiseLazyRoute,
   WhatWeDoLazyRoute: WhatWeDoLazyRoute,
+  TeamBioIdRoute: TeamBioIdRoute,
+  TeamBioIndexRoute: TeamBioIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -407,6 +473,7 @@ export const routeTree = rootRoute
         "/_authenticated",
         "/about-me",
         "/about-us",
+        "/admin-settings",
         "/auth",
         "/coming-soon",
         "/contact",
@@ -415,7 +482,9 @@ export const routeTree = rootRoute
         "/faq-page",
         "/our-clients",
         "/our-expertise",
-        "/what-we-do"
+        "/what-we-do",
+        "/team-bio/$id",
+        "/team-bio/"
       ]
     },
     "/": {
@@ -433,6 +502,9 @@ export const routeTree = rootRoute
     },
     "/about-us": {
       "filePath": "about-us.tsx"
+    },
+    "/admin-settings": {
+      "filePath": "admin-settings.tsx"
     },
     "/auth": {
       "filePath": "auth.tsx"
@@ -468,6 +540,12 @@ export const routeTree = rootRoute
     "/_authenticated/test": {
       "filePath": "_authenticated/test.tsx",
       "parent": "/_authenticated"
+    },
+    "/team-bio/$id": {
+      "filePath": "team-bio/$id.tsx"
+    },
+    "/team-bio/": {
+      "filePath": "team-bio/index.tsx"
     }
   }
 }
