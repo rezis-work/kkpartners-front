@@ -8,6 +8,9 @@ export interface Partner {
   cover: string
   contact: Contact
   services: Array<string>
+  linkedin: string
+  phone: string
+  email: string
 }
 
 export interface Contact {
