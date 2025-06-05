@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { getPartners } from '../api/getOurPartners'
-
 import PartnerCard from './PartnerCard'
 import HeaderMain from './header/HeaderMain'
 import type { Partner as ApiPartner } from '../api/getOurPartners'
