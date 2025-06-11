@@ -25,8 +25,9 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeamBioIndexImport } from './routes/team-bio/index'
 import { Route as TeamBioIdImport } from './routes/team-bio/$id'
-import { Route as AuthenticatedTestImport } from './routes/_authenticated/test'
+import { Route as AuthenticatedMessageImport } from './routes/_authenticated/message'
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCommentsImport } from './routes/_authenticated/comments'
 
 // Create Virtual Routes
 
@@ -132,15 +133,21 @@ const TeamBioIdRoute = TeamBioIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedTestRoute = AuthenticatedTestImport.update({
-  id: '/test',
-  path: '/test',
+const AuthenticatedMessageRoute = AuthenticatedMessageImport.update({
+  id: '/message',
+  path: '/message',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedCommentsRoute = AuthenticatedCommentsImport.update({
+  id: '/comments',
+  path: '/comments',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
@@ -246,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/comments': {
+      id: '/_authenticated/comments'
+      path: '/comments'
+      fullPath: '/comments'
+      preLoaderRoute: typeof AuthenticatedCommentsImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -253,11 +267,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/_authenticated/test': {
-      id: '/_authenticated/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof AuthenticatedTestImport
+    '/_authenticated/message': {
+      id: '/_authenticated/message'
+      path: '/message'
+      fullPath: '/message'
+      preLoaderRoute: typeof AuthenticatedMessageImport
       parentRoute: typeof AuthenticatedImport
     }
     '/team-bio/$id': {
@@ -280,13 +294,15 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedCommentsRoute: typeof AuthenticatedCommentsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedTestRoute: typeof AuthenticatedTestRoute
+  AuthenticatedMessageRoute: typeof AuthenticatedMessageRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCommentsRoute: AuthenticatedCommentsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedTestRoute: AuthenticatedTestRoute,
+  AuthenticatedMessageRoute: AuthenticatedMessageRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -308,8 +324,9 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/comments': typeof AuthenticatedCommentsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/test': typeof AuthenticatedTestRoute
+  '/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
 }
@@ -329,8 +346,9 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/comments': typeof AuthenticatedCommentsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/test': typeof AuthenticatedTestRoute
+  '/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
 }
@@ -351,8 +369,9 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/_authenticated/comments': typeof AuthenticatedCommentsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/test': typeof AuthenticatedTestRoute
+  '/_authenticated/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio/': typeof TeamBioIndexRoute
 }
@@ -374,8 +393,9 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/comments'
     | '/dashboard'
-    | '/test'
+    | '/message'
     | '/team-bio/$id'
     | '/team-bio'
   fileRoutesByTo: FileRoutesByTo
@@ -394,8 +414,9 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/comments'
     | '/dashboard'
-    | '/test'
+    | '/message'
     | '/team-bio/$id'
     | '/team-bio'
   id:
@@ -414,8 +435,9 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/_authenticated/comments'
     | '/_authenticated/dashboard'
-    | '/_authenticated/test'
+    | '/_authenticated/message'
     | '/team-bio/$id'
     | '/team-bio/'
   fileRoutesById: FileRoutesById
@@ -493,8 +515,9 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/comments",
         "/_authenticated/dashboard",
-        "/_authenticated/test"
+        "/_authenticated/message"
       ]
     },
     "/about-me": {
@@ -533,12 +556,16 @@ export const routeTree = rootRoute
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
     },
+    "/_authenticated/comments": {
+      "filePath": "_authenticated/comments.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/dashboard": {
       "filePath": "_authenticated/dashboard.tsx",
       "parent": "/_authenticated"
     },
-    "/_authenticated/test": {
-      "filePath": "_authenticated/test.tsx",
+    "/_authenticated/message": {
+      "filePath": "_authenticated/message.tsx",
       "parent": "/_authenticated"
     },
     "/team-bio/$id": {

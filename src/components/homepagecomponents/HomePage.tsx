@@ -1,3 +1,7 @@
+import { IoCallOutline, IoLocationSharp } from 'react-icons/io5'
+
+import UserMessages from '../UserMessages'
+
 import Banners from './Banner'
 import HomeSlider from './swiper/HomeSlider'
 import LawService from './LawServie'
@@ -52,6 +56,35 @@ function HomePage() {
         <HistorySlider />
 
         <LatestNewsBlogs />
+        <div
+          style={{
+            backgroundImage: `url(./public/our-offices-image/h1-img6.jpg)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+          className="h-[1000px] relative"
+        >
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 md:h-150 lg:mt-[100px] lg:right-auto lg:translate-x-0 lg:h-180 h-180 bg-black/70 text-white">
+            <div className="lg:p-12 p-4">
+              <h2 className="text-[30px] font-bold mb-4">
+                Contact Us{' '}
+                <span className="text-[30px] text-gray-400">Get in Touch</span>
+              </h2>
+              <p className="flex items-center gap-2 mb-2 mt-[40px] text-white">
+                <IoLocationSharp className="text-xl" />
+                Old Westbury 256, New York 11201, USA
+              </p>
+              <p className="flex items-center gap-2 text-white">
+                <IoCallOutline className="text-white text-xl" />
+                +123 456 789 000
+              </p>
+            </div>
+            <div className="w-full flex items-center justify-center p-4 lg:p-8">
+              <UserMessages />
+            </div>
+          </div>
+        </div>
       </main>
     </>
   )
