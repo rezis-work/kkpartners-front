@@ -20,6 +20,7 @@ function DesktopHeader({
     { pageName: 'Contact Us', pageLink: '/contact-us' },
     { pageName: 'Coming Soon', pageLink: '/coming-soon' },
     { pageName: 'Dishboard', pageLink: '/_authenticated/dashboard' },
+    { pageName: 'message', pageLink: '/_authenticated/message' },
   ]
 
   const personelDropdownArray = [

@@ -1,5 +1,8 @@
 async function QuotesFetch() {
-  const responce = await fetch('http://localhost:4000/api/quotes')
+  console.log('Fetching quotes...')
+  const responce = await fetch('http://localhost:4000/api/quotes', {
+    credentials: 'include',
+  })
   if (!responce.ok) {
     throw new Error('Swiper fetching problem')
   }
