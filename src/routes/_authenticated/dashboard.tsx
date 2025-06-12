@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
@@ -33,11 +33,14 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen md:grid md:grid-cols-[240px_1fr] bg-gray-100">
-      <aside className="hidden md:block bg-[#2f3e47] text-white p-6 min-h-screen">
+      <aside className="hidden grid-rows-1 md:block bg-[#2f3e47] text-white p-6 min-h-screen">
         <h1 className="text-2xl font-bold mb-6">UBOLD</h1>
-        <nav className="space-y-2">
+        <nav className="space-y-2 grid-rows-1">
           <div className="hover:text-gray-300 cursor-pointer">Tables</div>
           <div className="hover:text-gray-300 cursor-pointer">Law</div>
+          <Link className="block" to="/our-team">
+            Team
+          </Link>
         </nav>
       </aside>
 
@@ -59,6 +62,7 @@ function Dashboard() {
             <nav className="space-y-2">
               <div className="hover:text-gray-300 cursor-pointer">Tables</div>
               <div className="hover:text-gray-300 cursor-pointer">Law</div>
+              <Link to="/our-team">Team</Link>
             </nav>
           </aside>
         </div>
