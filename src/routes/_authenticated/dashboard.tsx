@@ -41,7 +41,6 @@ function Dashboard() {
           <Link className="block" to="/our-team">
             Team
           </Link>
-          <Link to="/comments">comments</Link>
         </nav>
       </aside>
 
