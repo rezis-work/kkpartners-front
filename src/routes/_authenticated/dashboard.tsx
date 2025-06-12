@@ -38,8 +38,8 @@ function Dashboard() {
         <nav className="space-y-2 grid-rows-1">
           <div className="hover:text-gray-300 cursor-pointer">Tables</div>
           <div className="hover:text-gray-300 cursor-pointer">Law</div>
-          <Link className="block" to="/message">
-            message
+          <Link className="block" to="/our-team">
+            Team
           </Link>
           <Link to="/comments">comments</Link>
         </nav>
@@ -63,7 +63,7 @@ function Dashboard() {
             <nav className="space-y-2">
               <div className="hover:text-gray-300 cursor-pointer">Tables</div>
               <div className="hover:text-gray-300 cursor-pointer">Law</div>
-              <Link to="/message">message</Link>
+              <Link to="/our-team">Team</Link>
             </nav>
           </aside>
         </div>
