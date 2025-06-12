@@ -28,6 +28,7 @@ import { Route as TeamBioIdImport } from './routes/team-bio/$id'
 import { Route as AuthenticatedMessageImport } from './routes/_authenticated/message'
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCommentsImport } from './routes/_authenticated/comments'
+import { Route as AuthenticatedCarouselImport } from './routes/_authenticated/carousel'
 
 // Create Virtual Routes
 
@@ -151,6 +152,12 @@ const AuthenticatedCommentsRoute = AuthenticatedCommentsImport.update({
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
+const AuthenticatedCarouselRoute = AuthenticatedCarouselImport.update({
+  id: '/carousel',
+  path: '/carousel',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -253,6 +260,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/carousel': {
+      id: '/_authenticated/carousel'
+      path: '/carousel'
+      fullPath: '/carousel'
+      preLoaderRoute: typeof AuthenticatedCarouselImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/comments': {
       id: '/_authenticated/comments'
       path: '/comments'
@@ -294,12 +308,14 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedCarouselRoute: typeof AuthenticatedCarouselRoute
   AuthenticatedCommentsRoute: typeof AuthenticatedCommentsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedMessageRoute: typeof AuthenticatedMessageRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCarouselRoute: AuthenticatedCarouselRoute,
   AuthenticatedCommentsRoute: AuthenticatedCommentsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedMessageRoute: AuthenticatedMessageRoute,
@@ -324,6 +340,7 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/carousel': typeof AuthenticatedCarouselRoute
   '/comments': typeof AuthenticatedCommentsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/message': typeof AuthenticatedMessageRoute
@@ -346,6 +363,7 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/carousel': typeof AuthenticatedCarouselRoute
   '/comments': typeof AuthenticatedCommentsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/message': typeof AuthenticatedMessageRoute
@@ -369,6 +387,7 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/_authenticated/carousel': typeof AuthenticatedCarouselRoute
   '/_authenticated/comments': typeof AuthenticatedCommentsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/message': typeof AuthenticatedMessageRoute
@@ -393,6 +412,7 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/carousel'
     | '/comments'
     | '/dashboard'
     | '/message'
@@ -414,6 +434,7 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/carousel'
     | '/comments'
     | '/dashboard'
     | '/message'
@@ -435,6 +456,7 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/_authenticated/carousel'
     | '/_authenticated/comments'
     | '/_authenticated/dashboard'
     | '/_authenticated/message'
@@ -515,6 +537,7 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/carousel",
         "/_authenticated/comments",
         "/_authenticated/dashboard",
         "/_authenticated/message"
@@ -555,6 +578,10 @@ export const routeTree = rootRoute
     },
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
+    },
+    "/_authenticated/carousel": {
+      "filePath": "_authenticated/carousel.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/comments": {
       "filePath": "_authenticated/comments.tsx",
