@@ -25,7 +25,6 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeamBioIndexImport } from './routes/team-bio/index'
 import { Route as TeamBioIdImport } from './routes/team-bio/$id'
-import { Route as AuthenticatedTestImport } from './routes/_authenticated/test'
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
 
 // Create Virtual Routes
@@ -130,12 +129,6 @@ const TeamBioIdRoute = TeamBioIdImport.update({
   id: '/team-bio/$id',
   path: '/team-bio/$id',
   getParentRoute: () => rootRoute,
-} as any)
-
-const AuthenticatedTestRoute = AuthenticatedTestImport.update({
-  id: '/test',
-  path: '/test',
-  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
@@ -253,13 +246,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/_authenticated/test': {
-      id: '/_authenticated/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof AuthenticatedTestImport
-      parentRoute: typeof AuthenticatedImport
-    }
     '/team-bio/$id': {
       id: '/team-bio/$id'
       path: '/team-bio/$id'
@@ -281,12 +267,10 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedTestRoute: typeof AuthenticatedTestRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedTestRoute: AuthenticatedTestRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -309,7 +293,6 @@ export interface FileRoutesByFullPath {
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/test': typeof AuthenticatedTestRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
 }
@@ -330,7 +313,6 @@ export interface FileRoutesByTo {
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/test': typeof AuthenticatedTestRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
 }
@@ -352,7 +334,6 @@ export interface FileRoutesById {
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/test': typeof AuthenticatedTestRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio/': typeof TeamBioIndexRoute
 }
@@ -375,7 +356,6 @@ export interface FileRouteTypes {
     | '/our-expertise'
     | '/what-we-do'
     | '/dashboard'
-    | '/test'
     | '/team-bio/$id'
     | '/team-bio'
   fileRoutesByTo: FileRoutesByTo
@@ -395,7 +375,6 @@ export interface FileRouteTypes {
     | '/our-expertise'
     | '/what-we-do'
     | '/dashboard'
-    | '/test'
     | '/team-bio/$id'
     | '/team-bio'
   id:
@@ -415,7 +394,6 @@ export interface FileRouteTypes {
     | '/our-expertise'
     | '/what-we-do'
     | '/_authenticated/dashboard'
-    | '/_authenticated/test'
     | '/team-bio/$id'
     | '/team-bio/'
   fileRoutesById: FileRoutesById
@@ -493,8 +471,7 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/dashboard",
-        "/_authenticated/test"
+        "/_authenticated/dashboard"
       ]
     },
     "/about-me": {
@@ -535,10 +512,6 @@ export const routeTree = rootRoute
     },
     "/_authenticated/dashboard": {
       "filePath": "_authenticated/dashboard.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/test": {
-      "filePath": "_authenticated/test.tsx",
       "parent": "/_authenticated"
     },
     "/team-bio/$id": {
