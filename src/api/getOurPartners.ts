@@ -19,23 +19,19 @@ export interface Contact {
   email: string
 }
 
-  ////get partners
-  export const getPartners = async (): Promise<Partner[]> => {
-    try {
-      const response = await fetch(`http://localhost:4000/api/partner`)
-      const result = await response.json()
-      return result.data || []
-    } catch (error) {
-      console.error('Failed to fetch partners:', error)
-      return []
-    }
+export const getPartners = async (): Promise<Array<Partner>> => {
+  try {
+    const response = await fetch(`http://localhost:4000/api/partner`)
+    const result = await response.json()
+    return result.data || []
+  } catch (error) {
+    console.error('Failed to fetch partners:', error)
+    return []
   }
-//each partner info
-  export const getPartnerById = async (id: string): Promise<Partner | null> => {
-    const res = await fetch(`http://localhost:4000/api/partner/${id}`)
-    const result = await res.json()
-    return result.data || null
-  }
-  
- 
-  
+}
+
+export const getPartnerById = async (id: string): Promise<Partner | null> => {
+  const res = await fetch(`http://localhost:4000/api/partner/${id}`)
+  const result = await res.json()
+  return result.data || null
+}

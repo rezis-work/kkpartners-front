@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
@@ -9,6 +9,7 @@ export const Route = createFileRoute('/_authenticated/dashboard')({
 })
 
 function Dashboard() {
+  const navigate = useNavigate()
   const { data, isLoading, isError } = useQuery({
     queryKey: ['dashboard'],
     queryFn: getPartners,
@@ -38,6 +39,12 @@ function Dashboard() {
         <nav className="space-y-2">
           <div className="hover:text-gray-300 cursor-pointer">Tables</div>
           <div className="hover:text-gray-300 cursor-pointer">Law</div>
+          <div
+            className="hover:text-gray-300 cursor-pointer"
+            onClick={() => navigate({ to: '/createPartner' })}
+          >
+            Add Partner
+          </div>
         </nav>
       </aside>
 
@@ -59,6 +66,7 @@ function Dashboard() {
             <nav className="space-y-2">
               <div className="hover:text-gray-300 cursor-pointer">Tables</div>
               <div className="hover:text-gray-300 cursor-pointer">Law</div>
+              <div>Add Partner</div>
             </nav>
           </aside>
         </div>
@@ -116,25 +124,37 @@ function Dashboard() {
           ))}
         </div>
 
-        <div className="flex justify-center items-center mt-6 space-x-4">
+        <div className="flex justify-center items-center mt-6 flex-wrap gap-2">
           <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+            className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
           >
-            Previous
+            &laquo;
           </button>
-          <span className="text-sm">
-            Page {currentPage} of {totalPages}
-          </span>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`px-3 py-1 rounded ${
+                page === currentPage
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 hover:bg-gray-300'
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+
           <button
             onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              setCurrentPage(Math.min(currentPage + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+            className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
           >
-            Next
+            &raquo;
           </button>
         </div>
       </main>

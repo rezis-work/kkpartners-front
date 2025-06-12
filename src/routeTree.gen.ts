@@ -25,8 +25,8 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeamBioIndexImport } from './routes/team-bio/index'
 import { Route as TeamBioIdImport } from './routes/team-bio/$id'
-import { Route as AuthenticatedTestImport } from './routes/_authenticated/test'
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCreatePartnerImport } from './routes/_authenticated/createPartner'
 
 // Create Virtual Routes
 
@@ -132,17 +132,19 @@ const TeamBioIdRoute = TeamBioIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedTestRoute = AuthenticatedTestImport.update({
-  id: '/test',
-  path: '/test',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
-
 const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+
+const AuthenticatedCreatePartnerRoute = AuthenticatedCreatePartnerImport.update(
+  {
+    id: '/createPartner',
+    path: '/createPartner',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -246,18 +248,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/createPartner': {
+      id: '/_authenticated/createPartner'
+      path: '/createPartner'
+      fullPath: '/createPartner'
+      preLoaderRoute: typeof AuthenticatedCreatePartnerImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/test': {
-      id: '/_authenticated/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof AuthenticatedTestImport
       parentRoute: typeof AuthenticatedImport
     }
     '/team-bio/$id': {
@@ -280,13 +282,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedCreatePartnerRoute: typeof AuthenticatedCreatePartnerRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedTestRoute: typeof AuthenticatedTestRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCreatePartnerRoute: AuthenticatedCreatePartnerRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedTestRoute: AuthenticatedTestRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -308,8 +310,8 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/createPartner': typeof AuthenticatedCreatePartnerRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/test': typeof AuthenticatedTestRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
 }
@@ -329,8 +331,8 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/createPartner': typeof AuthenticatedCreatePartnerRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/test': typeof AuthenticatedTestRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
 }
@@ -351,8 +353,8 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/_authenticated/createPartner': typeof AuthenticatedCreatePartnerRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/test': typeof AuthenticatedTestRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio/': typeof TeamBioIndexRoute
 }
@@ -374,8 +376,8 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/createPartner'
     | '/dashboard'
-    | '/test'
     | '/team-bio/$id'
     | '/team-bio'
   fileRoutesByTo: FileRoutesByTo
@@ -394,8 +396,8 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/createPartner'
     | '/dashboard'
-    | '/test'
     | '/team-bio/$id'
     | '/team-bio'
   id:
@@ -414,8 +416,8 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/_authenticated/createPartner'
     | '/_authenticated/dashboard'
-    | '/_authenticated/test'
     | '/team-bio/$id'
     | '/team-bio/'
   fileRoutesById: FileRoutesById
@@ -493,8 +495,8 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/dashboard",
-        "/_authenticated/test"
+        "/_authenticated/createPartner",
+        "/_authenticated/dashboard"
       ]
     },
     "/about-me": {
@@ -533,12 +535,12 @@ export const routeTree = rootRoute
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
     },
-    "/_authenticated/dashboard": {
-      "filePath": "_authenticated/dashboard.tsx",
+    "/_authenticated/createPartner": {
+      "filePath": "_authenticated/createPartner.tsx",
       "parent": "/_authenticated"
     },
-    "/_authenticated/test": {
-      "filePath": "_authenticated/test.tsx",
+    "/_authenticated/dashboard": {
+      "filePath": "_authenticated/dashboard.tsx",
       "parent": "/_authenticated"
     },
     "/team-bio/$id": {
