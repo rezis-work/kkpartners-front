@@ -25,8 +25,10 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeamBioIndexImport } from './routes/team-bio/index'
 import { Route as TeamBioIdImport } from './routes/team-bio/$id'
-import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedCreatePartnerImport } from './routes/_authenticated/createPartner'
+import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
+import { Route as AuthenticatedDashboardTeamMembersImport } from './routes/_authenticated/dashboard/team-members'
+import { Route as AuthenticatedDashboardLineImport } from './routes/_authenticated/dashboard/line'
+import { Route as AuthenticatedDashboardCreatePartnerImport } from './routes/_authenticated/dashboard/createPartner'
 
 // Create Virtual Routes
 
@@ -132,19 +134,34 @@ const TeamBioIdRoute = TeamBioIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
-const AuthenticatedCreatePartnerRoute = AuthenticatedCreatePartnerImport.update(
+const AuthenticatedDashboardTeamMembersRoute =
+  AuthenticatedDashboardTeamMembersImport.update({
+    id: '/dashboard/team-members',
+    path: '/dashboard/team-members',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedDashboardLineRoute = AuthenticatedDashboardLineImport.update(
   {
-    id: '/createPartner',
-    path: '/createPartner',
+    id: '/dashboard/line',
+    path: '/dashboard/line',
     getParentRoute: () => AuthenticatedRoute,
   } as any,
 )
+
+const AuthenticatedDashboardCreatePartnerRoute =
+  AuthenticatedDashboardCreatePartnerImport.update({
+    id: '/dashboard/createPartner',
+    path: '/dashboard/createPartner',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -248,20 +265,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/createPartner': {
-      id: '/_authenticated/createPartner'
-      path: '/createPartner'
-      fullPath: '/createPartner'
-      preLoaderRoute: typeof AuthenticatedCreatePartnerImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardImport
-      parentRoute: typeof AuthenticatedImport
-    }
     '/team-bio/$id': {
       id: '/team-bio/$id'
       path: '/team-bio/$id'
@@ -276,19 +279,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamBioIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/dashboard/createPartner': {
+      id: '/_authenticated/dashboard/createPartner'
+      path: '/dashboard/createPartner'
+      fullPath: '/dashboard/createPartner'
+      preLoaderRoute: typeof AuthenticatedDashboardCreatePartnerImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/line': {
+      id: '/_authenticated/dashboard/line'
+      path: '/dashboard/line'
+      fullPath: '/dashboard/line'
+      preLoaderRoute: typeof AuthenticatedDashboardLineImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/team-members': {
+      id: '/_authenticated/dashboard/team-members'
+      path: '/dashboard/team-members'
+      fullPath: '/dashboard/team-members'
+      preLoaderRoute: typeof AuthenticatedDashboardTeamMembersImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
   }
 }
 
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedCreatePartnerRoute: typeof AuthenticatedCreatePartnerRoute
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDashboardCreatePartnerRoute: typeof AuthenticatedDashboardCreatePartnerRoute
+  AuthenticatedDashboardLineRoute: typeof AuthenticatedDashboardLineRoute
+  AuthenticatedDashboardTeamMembersRoute: typeof AuthenticatedDashboardTeamMembersRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedCreatePartnerRoute: AuthenticatedCreatePartnerRoute,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDashboardCreatePartnerRoute:
+    AuthenticatedDashboardCreatePartnerRoute,
+  AuthenticatedDashboardLineRoute: AuthenticatedDashboardLineRoute,
+  AuthenticatedDashboardTeamMembersRoute:
+    AuthenticatedDashboardTeamMembersRoute,
+  AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -310,10 +347,12 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
-  '/createPartner': typeof AuthenticatedCreatePartnerRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/dashboard/line': typeof AuthenticatedDashboardLineRoute
+  '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -331,10 +370,12 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
-  '/createPartner': typeof AuthenticatedCreatePartnerRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/dashboard/line': typeof AuthenticatedDashboardLineRoute
+  '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 
 export interface FileRoutesById {
@@ -353,10 +394,12 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
-  '/_authenticated/createPartner': typeof AuthenticatedCreatePartnerRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio/': typeof TeamBioIndexRoute
+  '/_authenticated/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/_authenticated/dashboard/line': typeof AuthenticatedDashboardLineRoute
+  '/_authenticated/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -376,10 +419,12 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
-    | '/createPartner'
-    | '/dashboard'
     | '/team-bio/$id'
     | '/team-bio'
+    | '/dashboard/createPartner'
+    | '/dashboard/line'
+    | '/dashboard/team-members'
+    | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -396,10 +441,12 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
-    | '/createPartner'
-    | '/dashboard'
     | '/team-bio/$id'
     | '/team-bio'
+    | '/dashboard/createPartner'
+    | '/dashboard/line'
+    | '/dashboard/team-members'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
@@ -416,10 +463,12 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
-    | '/_authenticated/createPartner'
-    | '/_authenticated/dashboard'
     | '/team-bio/$id'
     | '/team-bio/'
+    | '/_authenticated/dashboard/createPartner'
+    | '/_authenticated/dashboard/line'
+    | '/_authenticated/dashboard/team-members'
+    | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
 
@@ -495,8 +544,10 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/createPartner",
-        "/_authenticated/dashboard"
+        "/_authenticated/dashboard/createPartner",
+        "/_authenticated/dashboard/line",
+        "/_authenticated/dashboard/team-members",
+        "/_authenticated/dashboard/"
       ]
     },
     "/about-me": {
@@ -535,19 +586,27 @@ export const routeTree = rootRoute
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
     },
-    "/_authenticated/createPartner": {
-      "filePath": "_authenticated/createPartner.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/dashboard": {
-      "filePath": "_authenticated/dashboard.tsx",
-      "parent": "/_authenticated"
-    },
     "/team-bio/$id": {
       "filePath": "team-bio/$id.tsx"
     },
     "/team-bio/": {
       "filePath": "team-bio/index.tsx"
+    },
+    "/_authenticated/dashboard/createPartner": {
+      "filePath": "_authenticated/dashboard/createPartner.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/line": {
+      "filePath": "_authenticated/dashboard/line.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/team-members": {
+      "filePath": "_authenticated/dashboard/team-members.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/": {
+      "filePath": "_authenticated/dashboard/index.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

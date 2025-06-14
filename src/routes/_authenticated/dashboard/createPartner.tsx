@@ -1,15 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 
 import UploadWidget from '@/components/UploadWidget'
 
-export const Route = createFileRoute('/_authenticated/createPartner')({
+export const Route = createFileRoute('/_authenticated/dashboard/createPartner')({
   component: CreatePartner,
 })
 
 function CreatePartner() {
   const [images, setImages] = useState<string | null>(null)
   const [cover, setCover] = useState<string | null>(null)
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     fullname: '',

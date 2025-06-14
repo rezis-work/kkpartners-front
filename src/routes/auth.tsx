@@ -21,7 +21,7 @@ function Auth() {
     mutationFn: (data) => useAuth(data.email, data.password),
     onSuccess: (data) => {
       navigate({
-        to: '/dashboard',
+        to: '/',
       })
     },
     onError: (error) => {
