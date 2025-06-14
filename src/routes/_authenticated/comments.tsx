@@ -47,6 +47,8 @@ function RouteComponent() {
       position,
     })
 
+    setShowModal(false)
+
     // Optional: form reset
     setQuote('')
     setFullname('')

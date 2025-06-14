@@ -29,6 +29,7 @@ import { Route as AuthenticatedMessageImport } from './routes/_authenticated/mes
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCommentsImport } from './routes/_authenticated/comments'
 import { Route as AuthenticatedCarouselImport } from './routes/_authenticated/carousel'
+import { Route as AuthenticatedBlogsFormImport } from './routes/_authenticated/blogsForm'
 
 // Create Virtual Routes
 
@@ -158,6 +159,12 @@ const AuthenticatedCarouselRoute = AuthenticatedCarouselImport.update({
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
+const AuthenticatedBlogsFormRoute = AuthenticatedBlogsFormImport.update({
+  id: '/blogsForm',
+  path: '/blogsForm',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -260,6 +267,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/blogsForm': {
+      id: '/_authenticated/blogsForm'
+      path: '/blogsForm'
+      fullPath: '/blogsForm'
+      preLoaderRoute: typeof AuthenticatedBlogsFormImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/carousel': {
       id: '/_authenticated/carousel'
       path: '/carousel'
@@ -308,6 +322,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedBlogsFormRoute: typeof AuthenticatedBlogsFormRoute
   AuthenticatedCarouselRoute: typeof AuthenticatedCarouselRoute
   AuthenticatedCommentsRoute: typeof AuthenticatedCommentsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -315,6 +330,7 @@ interface AuthenticatedRouteChildren {
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedBlogsFormRoute: AuthenticatedBlogsFormRoute,
   AuthenticatedCarouselRoute: AuthenticatedCarouselRoute,
   AuthenticatedCommentsRoute: AuthenticatedCommentsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
@@ -340,6 +356,7 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/blogsForm': typeof AuthenticatedBlogsFormRoute
   '/carousel': typeof AuthenticatedCarouselRoute
   '/comments': typeof AuthenticatedCommentsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -363,6 +380,7 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/blogsForm': typeof AuthenticatedBlogsFormRoute
   '/carousel': typeof AuthenticatedCarouselRoute
   '/comments': typeof AuthenticatedCommentsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -387,6 +405,7 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/_authenticated/blogsForm': typeof AuthenticatedBlogsFormRoute
   '/_authenticated/carousel': typeof AuthenticatedCarouselRoute
   '/_authenticated/comments': typeof AuthenticatedCommentsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -412,6 +431,7 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/blogsForm'
     | '/carousel'
     | '/comments'
     | '/dashboard'
@@ -434,6 +454,7 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/blogsForm'
     | '/carousel'
     | '/comments'
     | '/dashboard'
@@ -456,6 +477,7 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/_authenticated/blogsForm'
     | '/_authenticated/carousel'
     | '/_authenticated/comments'
     | '/_authenticated/dashboard'
@@ -537,6 +559,7 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/blogsForm",
         "/_authenticated/carousel",
         "/_authenticated/comments",
         "/_authenticated/dashboard",
@@ -578,6 +601,10 @@ export const routeTree = rootRoute
     },
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
+    },
+    "/_authenticated/blogsForm": {
+      "filePath": "_authenticated/blogsForm.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/carousel": {
       "filePath": "_authenticated/carousel.tsx",

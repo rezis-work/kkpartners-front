@@ -41,6 +41,18 @@ function Dashboard() {
           <Link className="block" to="/our-team">
             Team
           </Link>
+          <Link className="block" to="/message">
+            messages
+          </Link>
+          <Link className="block" to="/comments">
+            coments
+          </Link>
+          <Link className="block" to="/carousel">
+            carousel
+          </Link>
+          <Link className="block" to="/blogsForm">
+            add blogs
+          </Link>
         </nav>
       </aside>
 
