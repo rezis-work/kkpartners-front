@@ -19,14 +19,36 @@ export interface Contact {
   email: string
 }
 
-export const getPartners = async (): Promise<Array<Partner>> => {
+export interface PaginatedResponse {
+  data: Partner[]
+  total: number
+  page: number
+  limit: number
+}
+
+export const getPartners = async (
+  currentPage: number,
+  itemsPerPage: number,
+): Promise<PaginatedResponse> => {
   try {
-    const response = await fetch(`http://localhost:4000/api/partner`)
+    const response = await fetch(
+      `http://localhost:4000/api/partner?page=${currentPage}&limit=${itemsPerPage}`,
+    )
     const result = await response.json()
-    return result.data || []
+    return {
+      data: result.data || [],
+      total: result.total || 0,
+      page: currentPage,
+      limit: itemsPerPage,
+    }
   } catch (error) {
     console.error('Failed to fetch partners:', error)
-    return []
+    return {
+      data: [],
+      total: 0,
+      page: currentPage,
+      limit: itemsPerPage,
+    }
   }
 }
 

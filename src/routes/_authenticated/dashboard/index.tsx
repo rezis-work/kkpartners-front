@@ -1,13 +1,12 @@
-import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Outlet, Link } from '@tanstack/react-router'
 import { useState } from 'react'
-import { Layout as LayoutIcon, Menu, X } from 'lucide-react'
+import { Layout as Menu, X } from 'lucide-react'
 
 export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: layout,
 })
 
 function layout() {
-  const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
@@ -16,28 +15,35 @@ function layout() {
       <aside className="hidden md:block bg-[#2f3e47] text-white p-6 min-h-screen">
         <h1 className="text-2xl font-bold mb-6">UBOLD</h1>
         <nav className="space-y-2">
-          <div
-            className="hover:text-gray-300 cursor-pointer"
-            onClick={() => {
-              setSidebarOpen(false)
-              navigate({ to: '/' })
-            }}
+          <Link
+            to="/"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
           >
             Home
-          </div>
-          <div className="hover:text-gray-300 cursor-pointer">Law</div>
-          <div
-            className="hover:text-gray-300 cursor-pointer"
-            onClick={() => navigate({ to: '/create-partner' })}
+          </Link>
+
+          <Link
+            to="/dashboard/createPartner"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
           >
             Add Partner
-          </div>
-          <div
-            className="hover:text-gray-300 cursor-pointer"
-            onClick={() => navigate({ to: '/dashboard' })}
+          </Link>
+          <Link
+            to="/dashboard/team-members"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
           >
-            Dashboard
-          </div>
+            Team-Members
+          </Link>
+          <Link
+            to="/dashboard/clients-page"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Clients-Page
+          </Link>
         </nav>
       </aside>
 
@@ -58,34 +64,34 @@ function layout() {
               </button>
             </div>
             <nav className="space-y-2">
-              <div
-                className="hover:text-gray-300 cursor-pointer"
-                onClick={() => {
-                  setSidebarOpen(false)
-                  navigate({ to: '/layout' })
-                }}
+              <Link
+                to="/"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
               >
                 Home
-              </div>
-              <div className="hover:text-gray-300 cursor-pointer">Law</div>
-              <div
-                className="hover:text-gray-300 cursor-pointer"
-                onClick={() => {
-                  setSidebarOpen(false)
-                  navigate({ to: '/createPartner' })
-                }}
+              </Link>
+              <Link
+                to="/about-us"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                About Us
+              </Link>
+              <Link
+                to="/dashboard/createPartner"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
               >
                 Add Partner
-              </div>
-              <div
-                className="hover:text-gray-300 cursor-pointer"
-                onClick={() => {
-                  setSidebarOpen(false)
-                  navigate({ to: '/dashboard' })
-                }}
+              </Link>
+              <Link
+                to="/dashboard"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
               >
                 Dashboard
-              </div>
+              </Link>
             </nav>
           </aside>
         </div>
@@ -111,7 +117,7 @@ function layout() {
             </h1>
             <p className="text-gray-600 text-md max-w-xl mx-auto">
               Welcome back! You can manage your partners, view team details, and
-              stay organized using the sidebar. Let’s build something great
+              stay organized using the sidebar. Let's build something great
               together.
             </p>
           </div>

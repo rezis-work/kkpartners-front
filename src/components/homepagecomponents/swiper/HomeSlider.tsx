@@ -48,9 +48,13 @@ const HomeSwiper = () => {
               <div className=" text-2xl md:text-4xl max-w-7xl leading-snug">
                 {quote.quote}
               </div>
-              <div className="pt-5 text-lg">{quote.rating}</div>
-              <div className="pt-3 text-xl font-semibold">{quote.fullname}</div>
-              <p className="text-sm">{quote.position}</p>
+              <div className="w-full ">
+                <div className="pt-5 text-lg ">{quote.rating}</div>
+                <div className="pt-3 text-xl font-semibold">
+                  {quote.fullname}
+                </div>
+                <p className="text-sm">{quote.position}</p>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
