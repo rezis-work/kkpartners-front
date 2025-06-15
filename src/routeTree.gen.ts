@@ -28,6 +28,7 @@ import { Route as TeamBioIdImport } from './routes/team-bio/$id'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedDashboardTeamMembersImport } from './routes/_authenticated/dashboard/team-members'
 import { Route as AuthenticatedDashboardCreatePartnerImport } from './routes/_authenticated/dashboard/createPartner'
+import { Route as AuthenticatedDashboardClientsPageImport } from './routes/_authenticated/dashboard/clients-page'
 
 // Create Virtual Routes
 
@@ -154,6 +155,13 @@ const AuthenticatedDashboardCreatePartnerRoute =
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
+const AuthenticatedDashboardClientsPageRoute =
+  AuthenticatedDashboardClientsPageImport.update({
+    id: '/dashboard/clients-page',
+    path: '/dashboard/clients-page',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -270,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamBioIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/dashboard/clients-page': {
+      id: '/_authenticated/dashboard/clients-page'
+      path: '/dashboard/clients-page'
+      fullPath: '/dashboard/clients-page'
+      preLoaderRoute: typeof AuthenticatedDashboardClientsPageImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/dashboard/createPartner': {
       id: '/_authenticated/dashboard/createPartner'
       path: '/dashboard/createPartner'
@@ -297,12 +312,15 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedDashboardClientsPageRoute: typeof AuthenticatedDashboardClientsPageRoute
   AuthenticatedDashboardCreatePartnerRoute: typeof AuthenticatedDashboardCreatePartnerRoute
   AuthenticatedDashboardTeamMembersRoute: typeof AuthenticatedDashboardTeamMembersRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedDashboardClientsPageRoute:
+    AuthenticatedDashboardClientsPageRoute,
   AuthenticatedDashboardCreatePartnerRoute:
     AuthenticatedDashboardCreatePartnerRoute,
   AuthenticatedDashboardTeamMembersRoute:
@@ -331,6 +349,7 @@ export interface FileRoutesByFullPath {
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
@@ -353,6 +372,7 @@ export interface FileRoutesByTo {
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
@@ -376,6 +396,7 @@ export interface FileRoutesById {
   '/what-we-do': typeof WhatWeDoLazyRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio/': typeof TeamBioIndexRoute
+  '/_authenticated/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/_authenticated/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
   '/_authenticated/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
@@ -400,6 +421,7 @@ export interface FileRouteTypes {
     | '/what-we-do'
     | '/team-bio/$id'
     | '/team-bio'
+    | '/dashboard/clients-page'
     | '/dashboard/createPartner'
     | '/dashboard/team-members'
     | '/dashboard'
@@ -421,6 +443,7 @@ export interface FileRouteTypes {
     | '/what-we-do'
     | '/team-bio/$id'
     | '/team-bio'
+    | '/dashboard/clients-page'
     | '/dashboard/createPartner'
     | '/dashboard/team-members'
     | '/dashboard'
@@ -442,6 +465,7 @@ export interface FileRouteTypes {
     | '/what-we-do'
     | '/team-bio/$id'
     | '/team-bio/'
+    | '/_authenticated/dashboard/clients-page'
     | '/_authenticated/dashboard/createPartner'
     | '/_authenticated/dashboard/team-members'
     | '/_authenticated/dashboard/'
@@ -520,6 +544,7 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/dashboard/clients-page",
         "/_authenticated/dashboard/createPartner",
         "/_authenticated/dashboard/team-members",
         "/_authenticated/dashboard/"
@@ -566,6 +591,10 @@ export const routeTree = rootRoute
     },
     "/team-bio/": {
       "filePath": "team-bio/index.tsx"
+    },
+    "/_authenticated/dashboard/clients-page": {
+      "filePath": "_authenticated/dashboard/clients-page.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/dashboard/createPartner": {
       "filePath": "_authenticated/dashboard/createPartner.tsx",

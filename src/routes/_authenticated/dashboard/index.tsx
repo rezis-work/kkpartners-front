@@ -37,6 +37,13 @@ function layout() {
           >
             Team-Members
           </Link>
+          <Link
+            to="/dashboard/clients-page"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Clients-Page
+          </Link>
         </nav>
       </aside>
 

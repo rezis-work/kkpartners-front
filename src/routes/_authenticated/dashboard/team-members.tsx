@@ -3,33 +3,69 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { getPartners } from '@/api/getOurPartners'
+import type { Partner, PaginatedResponse } from '@/api/getOurPartners'
 
 export const Route = createFileRoute('/_authenticated/dashboard/team-members')({
   component: Dashboard,
 })
 
 function Dashboard() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['dashboard'],
-    queryFn: getPartners,
-  })
-
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
 
-  if (isLoading) return <div className="text-center py-8">Loading...</div>
+  const { data, isLoading, isError } = useQuery<PaginatedResponse>({
+    queryKey: ['dashboard', currentPage],
+    queryFn: () => getPartners(currentPage, itemsPerPage),
+    staleTime: 1000 * 60,
+  })
+
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  if (isLoading && !data)
+    return <div className="text-center py-8">Loading...</div>
   if (isError)
     return (
       <div className="text-center text-red-500 py-8">Failed to load team</div>
     )
   if (!data) return null
 
-  const totalPages = Math.ceil(data.length / itemsPerPage)
-  const paginatedData = data.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
-  )
+  const totalPages = Math.ceil(data.total / itemsPerPage)
+
+  const getPaginationNumbers = () => {
+    const numbers = []
+    const maxVisiblePages = 3
+
+    if (totalPages <= maxVisiblePages) {
+      // If total pages are less than or equal to 3, show all pages
+      for (let i = 1; i <= totalPages; i++) {
+        numbers.push(i)
+      }
+    } else {
+      // Always show first page
+      numbers.push(1)
+
+      // Show current page and one page before and after if possible
+      const start = Math.max(2, currentPage - 1)
+      const end = Math.min(currentPage + 1, totalPages - 1)
+
+      if (start > 2) {
+        numbers.push('...')
+      }
+
+      for (let i = start; i <= end; i++) {
+        numbers.push(i)
+      }
+
+      if (end < totalPages - 1) {
+        numbers.push('...')
+      }
+
+      // Always show last page
+      numbers.push(totalPages)
+    }
+
+    return numbers
+  }
 
   return (
     <div className="min-h-screen md:grid md:grid-cols-[240px_1fr] bg-gray-100">
@@ -51,6 +87,13 @@ function Dashboard() {
           <div className="hover:text-gray-300 cursor-pointer">
             <Link to="/dashboard/team-members">Team-Members</Link>
           </div>
+          <Link
+            to="/dashboard/clients-page"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Clients-Page
+          </Link>
         </nav>
       </aside>
 
@@ -95,6 +138,21 @@ function Dashboard() {
               >
                 <Link to="/dashboard">Dashboard</Link>
               </div>
+              <div
+                className="hover:text-gray-300 cursor-pointer"
+                onClick={() => {
+                  setSidebarOpen(false)
+                }}
+              >
+                <Link to="/dashboard"></Link>
+              </div>
+              <Link
+                to="/dashboard/clients-page"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Clients-Page
+              </Link>
             </nav>
           </aside>
         </div>
@@ -120,7 +178,7 @@ function Dashboard() {
         </div>
 
         <div className="space-y-4 mt-4">
-          {paginatedData.map((partner) => (
+          {data.data.map((partner: Partner) => (
             <div
               key={partner._id}
               className="border border-gray-200 rounded-md p-4 bg-white shadow-sm md:shadow-none md:border-0 md:border-b md:grid md:grid-cols-4 md:items-center md:text-sm md:text-[#444]"
@@ -152,7 +210,7 @@ function Dashboard() {
           ))}
         </div>
 
-        <div className="flex justify-center items-center mt-6 flex-wrap gap-2">
+        <div className="flex justify-center items-center mt-6 gap-2">
           <button
             onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1}
@@ -161,19 +219,25 @@ function Dashboard() {
             &laquo;
           </button>
 
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`px-3 py-1 rounded ${
-                page === currentPage
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200 hover:bg-gray-300'
-              }`}
-            >
-              {page}
-            </button>
-          ))}
+          {getPaginationNumbers().map((pageNum, index) =>
+            pageNum === '...' ? (
+              <span key={`dots-${index}`} className="px-3 py-1">
+                ...
+              </span>
+            ) : (
+              <button
+                key={pageNum}
+                onClick={() => setCurrentPage(Number(pageNum))}
+                className={`px-3 py-1 rounded ${
+                  pageNum === currentPage
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-200 hover:bg-gray-300'
+                }`}
+              >
+                {pageNum}
+              </button>
+            ),
+          )}
 
           <button
             onClick={() =>
