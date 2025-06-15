@@ -1,33 +1,45 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import blogs from '@/hooks/blogs/blogs'
 import ConfirmModal from '@/components/modals/modal'
 import UploadWidget from '@/components/uploadimage'
 
-interface BlogProps {
-  title: string
-  subTitle: string
-  slug: string
-  author: string
-  content: string
-  images: Array<string>
-  category: string
-  tags: Array<string>
-  share: {
-    facebook: string
-    linkedin: string
-    x: string
-    instagram: string
-  }
-  lawWays: string
-}
-
 export const Route = createFileRoute('/_authenticated/blogsForm')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const queryClient = useQueryClient()
+  const mutation = useMutation<
+    unknown,
+    Error,
+    {
+      title: string
+      subTitle: string
+      slug: string
+      author: string
+      content: string
+      images: Array<string>
+      category: string
+      tags: Array<string>
+      share: {
+        facebook: string
+        linkedin: string
+        x: string
+        instagram: string
+      }
+      lawWays: string
+    }
+  >({
+    mutationFn: (data) => blogs(data),
+    onError: (error) => {
+      throw new Error('mutation function is filed while fetching blogs', error)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogs'] })
+    },
+  })
   const [title, setTitle] = useState('')
   const [subTitle, setSubTitle] = useState('')
   const [slug, setSlug] = useState('')
@@ -36,51 +48,22 @@ function RouteComponent() {
   const [images, setImages] = useState<Array<string>>([])
   const [category, setCategory] = useState('')
   const [tags, setTags] = useState<Array<string>>([])
-  const [lawWays, setLawWays] = useState('')
-  const [showModal, setShowModal] = useState(false)
   const [fb, setFb] = useState('')
   const [linkedin, setLinkedin] = useState('')
   const [twitter, setTwitter] = useState('')
   const [instagram, setInstagram] = useState('')
-
-  const mutation = useMutation({
-    mutationFn: (data: BlogProps) => blogs(data),
-    onSuccess: (data) => {
-      console.log('✅ Blog posted successfully:', data)
-      // Reset fields if needed:
-      setTitle('')
-      setSubTitle('')
-      setSlug('')
-      setAuthor('')
-      setContent('')
-      setImages([])
-      setCategory('')
-      setTags([])
-      setLawWays('')
-      setFb('')
-      setLinkedin('')
-      setTwitter('')
-      setInstagram('')
-    },
-    onError: (error) => {
-      console.error('❌ Blog post failed:', error)
-    },
-  })
+  const [lawWays, setLawWays] = useState('')
+  const [showModal, setShowModal] = useState(false)
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setShowModal(true)
   }
-
-  function handleConfirm() {
-    const share = {
-      facebook: fb,
-      linkedin: linkedin,
-      x: twitter,
-      instagram: instagram,
-    }
-
-    const blogData: BlogProps = {
+  const handleCancel = () => {
+    setShowModal(false)
+  }
+  const handleConfirm = () => {
+    mutation.mutate({
       title,
       subTitle,
       slug,
@@ -89,24 +72,33 @@ function RouteComponent() {
       images,
       category,
       tags,
+      share: {
+        facebook: fb,
+        linkedin,
+        x: twitter,
+        instagram,
+      },
       lawWays,
-      share,
-    }
-
-    mutation.mutate(blogData)
+    })
     setShowModal(false)
-  }
 
-  function handleCancel() {
-    setShowModal(false)
-  }
-
-  function handleTagsChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const splitTags = e.target.value
-      .split(',')
-      .map((tag) => tag.trim())
-      .filter(Boolean)
-    setTags(splitTags)
+    console.log({
+      title,
+      subTitle,
+      slug,
+      author,
+      content,
+      images,
+      category,
+      tags,
+      share: {
+        facebook: fb,
+        linkedin,
+        x: twitter,
+        instagram,
+      },
+      lawWays,
+    })
   }
 
   return (
@@ -162,12 +154,24 @@ function RouteComponent() {
           className="w-full p-3 border rounded-lg"
           required
         />
-        <input
-          type="text"
-          placeholder="Tags (comma separated)"
-          onChange={handleTagsChange}
+
+        <select
+          multiple
+          value={tags}
+          onChange={(e) =>
+            setTags(
+              Array.from(e.target.selectedOptions, (option) => option.value),
+            )
+          }
           className="w-full p-3 border rounded-lg"
-        />
+        >
+          <option value="Advisory">Advisory</option>
+          <option value="Analysis">Analysis</option>
+          <option value="Business">Business</option>
+          <option value="Civil Law">Civil Law</option>
+          <option value="Profit">Profit</option>
+          <option value="Statistics">Statistics</option>
+        </select>
 
         <input
           type="url"
@@ -206,7 +210,7 @@ function RouteComponent() {
           className="w-full p-3 border rounded-lg"
         />
 
-        {/* <UploadWidget
+        <UploadWidget
           uwConfig={{
             cloudName: 'dpnmghmd5',
             uploadPreset: 'kkpartners',
@@ -220,8 +224,8 @@ function RouteComponent() {
             theme: 'light',
           }}
           setState={setImages}
-          widgetButtonText={['Upload Image']}
-        /> */}
+          widgetButtonText="Upload Image"
+        />
 
         <button
           type="submit"

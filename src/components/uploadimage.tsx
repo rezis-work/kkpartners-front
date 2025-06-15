@@ -10,7 +10,7 @@ interface CloudinaryUploadOptions {
   theme?: string
   maxImageFileSize?: number
   croppingShowBackButton?: boolean
-  folder?: string
+  folder?: string | Array<string>
 }
 
 interface UploadWidgetContextType {
@@ -19,7 +19,7 @@ interface UploadWidgetContextType {
 
 interface UploadWidgetProps {
   uwConfig: CloudinaryUploadOptions
-  setState: React.Dispatch<React.SetStateAction<string | null>>
+  setState: React.Dispatch<React.SetStateAction<Array<string>>>
   widgetButtonText: string
 }
 

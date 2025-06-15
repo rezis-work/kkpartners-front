@@ -110,6 +110,24 @@ function RouteComponent() {
               required
             />
           </div>
+          <div className="pt-4">
+            <UploadWidget
+              uwConfig={{
+                cloudName: 'dpnmghmd5',
+                uploadPreset: 'kkpartners',
+                multiple: false,
+                maxImageFileSize: 2000000,
+                folder: 'uploads',
+                sources: ['local', 'url', 'camera'],
+                croppingShowBackButton: true,
+                showAdvancedOptions: false,
+                cropping: true,
+                theme: 'light',
+              }}
+              setState={setImage}
+              widgetButtonText={'Upload Image'}
+            />
+          </div>
 
           {/* Link 1 */}
           <div>
@@ -152,24 +170,6 @@ function RouteComponent() {
           </div>
 
           {/* Upload Widget */}
-          <div className="pt-4">
-            <UploadWidget
-              uwConfig={{
-                cloudName: 'dpnmghmd5',
-                uploadPreset: 'kkpartners',
-                multiple: false,
-                maxImageFileSize: 2000000,
-                folder: 'uploads',
-                sources: ['local', 'url', 'camera'],
-                croppingShowBackButton: true,
-                showAdvancedOptions: false,
-                cropping: true,
-                theme: 'light',
-              }}
-              setState={setImage}
-              widgetButtonText={'Upload Image'}
-            />
-          </div>
 
           {/* Submit Button */}
           <button
