@@ -27,7 +27,6 @@ import { Route as TeamBioIndexImport } from './routes/team-bio/index'
 import { Route as TeamBioIdImport } from './routes/team-bio/$id'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedDashboardTeamMembersImport } from './routes/_authenticated/dashboard/team-members'
-import { Route as AuthenticatedDashboardLineImport } from './routes/_authenticated/dashboard/line'
 import { Route as AuthenticatedDashboardCreatePartnerImport } from './routes/_authenticated/dashboard/createPartner'
 
 // Create Virtual Routes
@@ -147,14 +146,6 @@ const AuthenticatedDashboardTeamMembersRoute =
     path: '/dashboard/team-members',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-
-const AuthenticatedDashboardLineRoute = AuthenticatedDashboardLineImport.update(
-  {
-    id: '/dashboard/line',
-    path: '/dashboard/line',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any,
-)
 
 const AuthenticatedDashboardCreatePartnerRoute =
   AuthenticatedDashboardCreatePartnerImport.update({
@@ -286,13 +277,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardCreatePartnerImport
       parentRoute: typeof AuthenticatedImport
     }
-    '/_authenticated/dashboard/line': {
-      id: '/_authenticated/dashboard/line'
-      path: '/dashboard/line'
-      fullPath: '/dashboard/line'
-      preLoaderRoute: typeof AuthenticatedDashboardLineImport
-      parentRoute: typeof AuthenticatedImport
-    }
     '/_authenticated/dashboard/team-members': {
       id: '/_authenticated/dashboard/team-members'
       path: '/dashboard/team-members'
@@ -314,7 +298,6 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardCreatePartnerRoute: typeof AuthenticatedDashboardCreatePartnerRoute
-  AuthenticatedDashboardLineRoute: typeof AuthenticatedDashboardLineRoute
   AuthenticatedDashboardTeamMembersRoute: typeof AuthenticatedDashboardTeamMembersRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
@@ -322,7 +305,6 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardCreatePartnerRoute:
     AuthenticatedDashboardCreatePartnerRoute,
-  AuthenticatedDashboardLineRoute: AuthenticatedDashboardLineRoute,
   AuthenticatedDashboardTeamMembersRoute:
     AuthenticatedDashboardTeamMembersRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
@@ -350,7 +332,6 @@ export interface FileRoutesByFullPath {
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
   '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
-  '/dashboard/line': typeof AuthenticatedDashboardLineRoute
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
@@ -373,7 +354,6 @@ export interface FileRoutesByTo {
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
   '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
-  '/dashboard/line': typeof AuthenticatedDashboardLineRoute
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
@@ -397,7 +377,6 @@ export interface FileRoutesById {
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio/': typeof TeamBioIndexRoute
   '/_authenticated/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
-  '/_authenticated/dashboard/line': typeof AuthenticatedDashboardLineRoute
   '/_authenticated/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
@@ -422,7 +401,6 @@ export interface FileRouteTypes {
     | '/team-bio/$id'
     | '/team-bio'
     | '/dashboard/createPartner'
-    | '/dashboard/line'
     | '/dashboard/team-members'
     | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
@@ -444,7 +422,6 @@ export interface FileRouteTypes {
     | '/team-bio/$id'
     | '/team-bio'
     | '/dashboard/createPartner'
-    | '/dashboard/line'
     | '/dashboard/team-members'
     | '/dashboard'
   id:
@@ -466,7 +443,6 @@ export interface FileRouteTypes {
     | '/team-bio/$id'
     | '/team-bio/'
     | '/_authenticated/dashboard/createPartner'
-    | '/_authenticated/dashboard/line'
     | '/_authenticated/dashboard/team-members'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
@@ -545,7 +521,6 @@ export const routeTree = rootRoute
       "filePath": "_authenticated.tsx",
       "children": [
         "/_authenticated/dashboard/createPartner",
-        "/_authenticated/dashboard/line",
         "/_authenticated/dashboard/team-members",
         "/_authenticated/dashboard/"
       ]
@@ -594,10 +569,6 @@ export const routeTree = rootRoute
     },
     "/_authenticated/dashboard/createPartner": {
       "filePath": "_authenticated/dashboard/createPartner.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/dashboard/line": {
-      "filePath": "_authenticated/dashboard/line.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/dashboard/team-members": {

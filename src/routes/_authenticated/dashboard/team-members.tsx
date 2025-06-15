@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
@@ -9,7 +9,6 @@ export const Route = createFileRoute('/_authenticated/dashboard/team-members')({
 })
 
 function Dashboard() {
-  const navigate = useNavigate()
   const { data, isLoading, isError } = useQuery({
     queryKey: ['dashboard'],
     queryFn: getPartners,
@@ -41,23 +40,16 @@ function Dashboard() {
             className="hover:text-gray-300 cursor-pointer"
             onClick={() => {
               setSidebarOpen(false)
-              navigate({ to: '/dashboard' })
             }}
           >
-            Home
+            <Link to="/dashboard">Home</Link>
           </div>
-          <div className="hover:text-gray-300 cursor-pointer">Law</div>
-          <div
-            className="hover:text-gray-300 cursor-pointer"
-            onClick={() => navigate({ to: '/create-partner' })}
-          >
-            Add Partner
+
+          <div className="hover:text-gray-300 cursor-pointer">
+            <Link to="/dashboard/createPartner">Add Partner</Link>
           </div>
-          <div
-            className="hover:text-gray-300 cursor-pointer"
-            onClick={() => navigate({ to: '/dashboard' })}
-          >
-            Dashboard
+          <div className="hover:text-gray-300 cursor-pointer">
+            <Link to="/dashboard/team-members">Team-Members</Link>
           </div>
         </nav>
       </aside>
@@ -82,29 +74,26 @@ function Dashboard() {
                 className="hover:text-gray-300 cursor-pointer"
                 onClick={() => {
                   setSidebarOpen(false)
-                  navigate({ to: '/layout' })
                 }}
               >
-                Home
+                <Link to="/dashboard">Home</Link>
               </div>
               <div className="hover:text-gray-300 cursor-pointer">Law</div>
               <div
                 className="hover:text-gray-300 cursor-pointer"
                 onClick={() => {
                   setSidebarOpen(false)
-                  navigate({ to: '/createPartner' })
                 }}
               >
-                Add Partner
+                <Link to="/dashboard/createPartner">Add Partner</Link>
               </div>
               <div
                 className="hover:text-gray-300 cursor-pointer"
                 onClick={() => {
                   setSidebarOpen(false)
-                  navigate({ to: '/dashboard' })
                 }}
               >
-                Dashboard
+                <Link to="/dashboard">Dashboard</Link>
               </div>
             </nav>
           </aside>
