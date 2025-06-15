@@ -17,16 +17,17 @@ function DesktopHeader({
     { pageName: 'Our Offices', pageLink: '/our-offices' },
     { pageName: 'Our Clients', pageLink: '/our-clients' },
     { pageName: 'FAQ Page', pageLink: '/faq-page' },
-    { pageName: 'Contact Us', pageLink: '/contact-us' },
+    { pageName: 'Contact Us', pageLink: '/contact' },
     { pageName: 'Coming Soon', pageLink: '/coming-soon' },
     { pageName: 'Dishboard', pageLink: '/_authenticated/dashboard' },
     { pageName: 'message', pageLink: '/_authenticated/message' },
+    { pageName: 'Dashboard', pageLink: '/dashboard' },
   ]
 
   const personelDropdownArray = [
     { pageName: 'Our Team', pageLink: '/our-team' },
     { pageName: 'Our Expertise', pageLink: '/our-expertise' },
-    { pageName: 'Team member', pageLink: '/team-meber' },
+    { pageName: 'Team member', pageLink: '/team-bio' },
   ]
   return (
     <>
@@ -36,23 +37,26 @@ function DesktopHeader({
         style={isBlured ? { backgroundColor: desktopHeaderBgColor } : {}}
       >
         <div className="flex items-center gap-2">
-          <p
-            className={`text-[15px] text-${desktopHeaderTextColor} cursor-pointer hover:underline`}
+          <Link
+            to="/our-team"
+            className={`text-[15px] text-${desktopHeaderTextColor} hover:underline`}
           >
             Our Attorneys
-          </p>
+          </Link>
           <p className="text-[15px] text-gray-500">|</p>
-          <p
-            className={`text-[15px] text-${desktopHeaderTextColor} cursor-pointer hover:underline`}
+          <Link
+            to="/faq-page"
+            className={`text-[15px] text-${desktopHeaderTextColor} hover:underline`}
           >
             FAQ
-          </p>
+          </Link>
           <p className="text-[15px] text-gray-500">|</p>
-          <p
-            className={`text-[15px] text-${desktopHeaderTextColor} cursor-pointer hover:underline`}
+          <Link
+            to="/our-expertise"
+            className={`text-[15px] text-${desktopHeaderTextColor} hover:underline`}
           >
             Our Expertise
-          </p>
+          </Link>
         </div>
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-1">
@@ -89,49 +93,68 @@ function DesktopHeader({
             style={{ color: desktopHeaderTextColor }}
             className="flex items-center gap-[40px] text-[18px] font-semibold"
           >
-            <Link to="/">
-              <p className="cursor-pointer hover:underline">Home</p>
+            <Link to="/" className="hover:underline">
+              Home
             </Link>
 
-            <p className="cursor-pointer hover:underline">Blog</p>
+            <Link to="/coming-soon" className="hover:underline">
+              Blog
+            </Link>
 
-            <div className="relative group cursor-pointer">
-              <p className="hover:underline leading-[80px]">Pages</p>
+            <div className="relative group">
+              <Link
+                to="/about-us"
+                className="hover:underline leading-[80px] block"
+              >
+                Pages
+              </Link>
 
               <div className="absolute left-0 top-full w-48 bg-white text-black shadow-md rounded p-3 opacity-1 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-[15px]">
                 {pagesDropdownArray.map((page) => (
-                  <Link to={page.pageLink} key={page.pageName}>
-                    <p className="hover:underline cursor-pointer py-1">
-                      {page.pageName}
-                    </p>
+                  <Link
+                    to={page.pageLink}
+                    key={page.pageName}
+                    className="block hover:underline py-1"
+                  >
+                    {page.pageName}
                   </Link>
                 ))}
               </div>
             </div>
 
-            <div className="relative group cursor-pointer">
-              <p className="hover:underline leading-[80px]">Personnel</p>
+            <div className="relative group">
+              <Link
+                to="/our-team"
+                className="hover:underline leading-[80px] block"
+              >
+                Personnel
+              </Link>
               <div className="absolute left-0 top-full w-48 bg-white text-black shadow-md rounded p-3 opacity-1 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 text-[15px]">
                 {personelDropdownArray.map((page) => (
-                  <Link to={page.pageLink} key={page.pageName}>
-                    <p className="hover:underline cursor-pointer py-1">
-                      {page.pageName}
-                    </p>
+                  <Link
+                    to={page.pageLink}
+                    key={page.pageName}
+                    className="block hover:underline py-1"
+                  >
+                    {page.pageName}
                   </Link>
                 ))}
               </div>
             </div>
-            <Link to="/auth">
-              <p className="cursor-pointer hover:underline">auth</p>
+            <Link to="/auth" className="hover:underline">
+              auth
             </Link>
 
-            <Link to="/dashboard">
-              <p className="cursor-pointer hover:underline">dashboard</p>
+            <Link to="/dashboard" className="hover:underline">
+              dashboard
             </Link>
           </div>
-          <button className="bg-white px-6 py-3 font-semibold text-[15px] cursor-pointer hover:underline">
+          <Link
+            to="/contact"
+            className="bg-white px-6 py-3 font-semibold text-[15px] hover:underline"
+          >
             Get in touch
-          </button>
+          </Link>
         </div>
       </div>
     </>

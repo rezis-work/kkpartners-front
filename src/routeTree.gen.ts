@@ -30,8 +30,8 @@ import { Route as AuthenticatedCommentsImport } from './routes/_authenticated/co
 import { Route as AuthenticatedCarouselImport } from './routes/_authenticated/carousel'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedDashboardTeamMembersImport } from './routes/_authenticated/dashboard/team-members'
-import { Route as AuthenticatedDashboardLineImport } from './routes/_authenticated/dashboard/line'
 import { Route as AuthenticatedDashboardCreatePartnerImport } from './routes/_authenticated/dashboard/createPartner'
+import { Route as AuthenticatedDashboardClientsPageImport } from './routes/_authenticated/dashboard/clients-page'
 
 // Create Virtual Routes
 
@@ -169,18 +169,17 @@ const AuthenticatedDashboardTeamMembersRoute =
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
-const AuthenticatedDashboardLineRoute = AuthenticatedDashboardLineImport.update(
-  {
-    id: '/dashboard/line',
-    path: '/dashboard/line',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any,
-)
-
 const AuthenticatedDashboardCreatePartnerRoute =
   AuthenticatedDashboardCreatePartnerImport.update({
     id: '/dashboard/createPartner',
     path: '/dashboard/createPartner',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedDashboardClientsPageRoute =
+  AuthenticatedDashboardClientsPageImport.update({
+    id: '/dashboard/clients-page',
+    path: '/dashboard/clients-page',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
@@ -321,18 +320,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamBioIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/dashboard/clients-page': {
+      id: '/_authenticated/dashboard/clients-page'
+      path: '/dashboard/clients-page'
+      fullPath: '/dashboard/clients-page'
+      preLoaderRoute: typeof AuthenticatedDashboardClientsPageImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/dashboard/createPartner': {
       id: '/_authenticated/dashboard/createPartner'
       path: '/dashboard/createPartner'
       fullPath: '/dashboard/createPartner'
       preLoaderRoute: typeof AuthenticatedDashboardCreatePartnerImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/dashboard/line': {
-      id: '/_authenticated/dashboard/line'
-      path: '/dashboard/line'
-      fullPath: '/dashboard/line'
-      preLoaderRoute: typeof AuthenticatedDashboardLineImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/dashboard/team-members': {
@@ -358,8 +357,8 @@ interface AuthenticatedRouteChildren {
   AuthenticatedCarouselRoute: typeof AuthenticatedCarouselRoute
   AuthenticatedCommentsRoute: typeof AuthenticatedCommentsRoute
   AuthenticatedMessageRoute: typeof AuthenticatedMessageRoute
+  AuthenticatedDashboardClientsPageRoute: typeof AuthenticatedDashboardClientsPageRoute
   AuthenticatedDashboardCreatePartnerRoute: typeof AuthenticatedDashboardCreatePartnerRoute
-  AuthenticatedDashboardLineRoute: typeof AuthenticatedDashboardLineRoute
   AuthenticatedDashboardTeamMembersRoute: typeof AuthenticatedDashboardTeamMembersRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
@@ -368,9 +367,10 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedCarouselRoute: AuthenticatedCarouselRoute,
   AuthenticatedCommentsRoute: AuthenticatedCommentsRoute,
   AuthenticatedMessageRoute: AuthenticatedMessageRoute,
+  AuthenticatedDashboardClientsPageRoute:
+    AuthenticatedDashboardClientsPageRoute,
   AuthenticatedDashboardCreatePartnerRoute:
     AuthenticatedDashboardCreatePartnerRoute,
-  AuthenticatedDashboardLineRoute: AuthenticatedDashboardLineRoute,
   AuthenticatedDashboardTeamMembersRoute:
     AuthenticatedDashboardTeamMembersRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
@@ -400,8 +400,8 @@ export interface FileRoutesByFullPath {
   '/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
-  '/dashboard/line': typeof AuthenticatedDashboardLineRoute
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
@@ -426,8 +426,8 @@ export interface FileRoutesByTo {
   '/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
-  '/dashboard/line': typeof AuthenticatedDashboardLineRoute
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
@@ -453,8 +453,8 @@ export interface FileRoutesById {
   '/_authenticated/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio/': typeof TeamBioIndexRoute
+  '/_authenticated/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/_authenticated/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
-  '/_authenticated/dashboard/line': typeof AuthenticatedDashboardLineRoute
   '/_authenticated/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
@@ -481,8 +481,8 @@ export interface FileRouteTypes {
     | '/message'
     | '/team-bio/$id'
     | '/team-bio'
+    | '/dashboard/clients-page'
     | '/dashboard/createPartner'
-    | '/dashboard/line'
     | '/dashboard/team-members'
     | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
@@ -506,8 +506,8 @@ export interface FileRouteTypes {
     | '/message'
     | '/team-bio/$id'
     | '/team-bio'
+    | '/dashboard/clients-page'
     | '/dashboard/createPartner'
-    | '/dashboard/line'
     | '/dashboard/team-members'
     | '/dashboard'
   id:
@@ -531,8 +531,8 @@ export interface FileRouteTypes {
     | '/_authenticated/message'
     | '/team-bio/$id'
     | '/team-bio/'
+    | '/_authenticated/dashboard/clients-page'
     | '/_authenticated/dashboard/createPartner'
-    | '/_authenticated/dashboard/line'
     | '/_authenticated/dashboard/team-members'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
@@ -613,8 +613,8 @@ export const routeTree = rootRoute
         "/_authenticated/carousel",
         "/_authenticated/comments",
         "/_authenticated/message",
+        "/_authenticated/dashboard/clients-page",
         "/_authenticated/dashboard/createPartner",
-        "/_authenticated/dashboard/line",
         "/_authenticated/dashboard/team-members",
         "/_authenticated/dashboard/"
       ]
@@ -673,12 +673,12 @@ export const routeTree = rootRoute
     "/team-bio/": {
       "filePath": "team-bio/index.tsx"
     },
-    "/_authenticated/dashboard/createPartner": {
-      "filePath": "_authenticated/dashboard/createPartner.tsx",
+    "/_authenticated/dashboard/clients-page": {
+      "filePath": "_authenticated/dashboard/clients-page.tsx",
       "parent": "/_authenticated"
     },
-    "/_authenticated/dashboard/line": {
-      "filePath": "_authenticated/dashboard/line.tsx",
+    "/_authenticated/dashboard/createPartner": {
+      "filePath": "_authenticated/dashboard/createPartner.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/dashboard/team-members": {
