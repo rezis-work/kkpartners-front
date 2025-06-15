@@ -25,11 +25,14 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeamBioIndexImport } from './routes/team-bio/index'
 import { Route as TeamBioIdImport } from './routes/team-bio/$id'
-import { Route as AuthenticatedMessageImport } from './routes/_authenticated/message'
-import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedCommentsImport } from './routes/_authenticated/comments'
-import { Route as AuthenticatedCarouselImport } from './routes/_authenticated/carousel'
-import { Route as AuthenticatedBlogsFormImport } from './routes/_authenticated/blogsForm'
+import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
+import { Route as AuthenticatedDashboardUserMessagesImport } from './routes/_authenticated/dashboard/userMessages'
+import { Route as AuthenticatedDashboardUserCommentsImport } from './routes/_authenticated/dashboard/userComments'
+import { Route as AuthenticatedDashboardTeamMembersImport } from './routes/_authenticated/dashboard/team-members'
+import { Route as AuthenticatedDashboardHomePageCarouselImport } from './routes/_authenticated/dashboard/homePageCarousel'
+import { Route as AuthenticatedDashboardCreatePartnerImport } from './routes/_authenticated/dashboard/createPartner'
+import { Route as AuthenticatedDashboardClientsPageImport } from './routes/_authenticated/dashboard/clients-page'
+import { Route as AuthenticatedDashboardBlogFormsImport } from './routes/_authenticated/dashboard/blogForms'
 
 // Create Virtual Routes
 
@@ -135,35 +138,61 @@ const TeamBioIdRoute = TeamBioIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticatedMessageRoute = AuthenticatedMessageImport.update({
-  id: '/message',
-  path: '/message',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
-const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedDashboardUserMessagesRoute =
+  AuthenticatedDashboardUserMessagesImport.update({
+    id: '/dashboard/userMessages',
+    path: '/dashboard/userMessages',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
-const AuthenticatedCommentsRoute = AuthenticatedCommentsImport.update({
-  id: '/comments',
-  path: '/comments',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedDashboardUserCommentsRoute =
+  AuthenticatedDashboardUserCommentsImport.update({
+    id: '/dashboard/userComments',
+    path: '/dashboard/userComments',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
-const AuthenticatedCarouselRoute = AuthenticatedCarouselImport.update({
-  id: '/carousel',
-  path: '/carousel',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedDashboardTeamMembersRoute =
+  AuthenticatedDashboardTeamMembersImport.update({
+    id: '/dashboard/team-members',
+    path: '/dashboard/team-members',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
-const AuthenticatedBlogsFormRoute = AuthenticatedBlogsFormImport.update({
-  id: '/blogsForm',
-  path: '/blogsForm',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
+const AuthenticatedDashboardHomePageCarouselRoute =
+  AuthenticatedDashboardHomePageCarouselImport.update({
+    id: '/dashboard/homePageCarousel',
+    path: '/dashboard/homePageCarousel',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedDashboardCreatePartnerRoute =
+  AuthenticatedDashboardCreatePartnerImport.update({
+    id: '/dashboard/createPartner',
+    path: '/dashboard/createPartner',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedDashboardClientsPageRoute =
+  AuthenticatedDashboardClientsPageImport.update({
+    id: '/dashboard/clients-page',
+    path: '/dashboard/clients-page',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedDashboardBlogFormsRoute =
+  AuthenticatedDashboardBlogFormsImport.update({
+    id: '/dashboard/blogForms',
+    path: '/dashboard/blogForms',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -267,41 +296,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/blogsForm': {
-      id: '/_authenticated/blogsForm'
-      path: '/blogsForm'
-      fullPath: '/blogsForm'
-      preLoaderRoute: typeof AuthenticatedBlogsFormImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/carousel': {
-      id: '/_authenticated/carousel'
-      path: '/carousel'
-      fullPath: '/carousel'
-      preLoaderRoute: typeof AuthenticatedCarouselImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/comments': {
-      id: '/_authenticated/comments'
-      path: '/comments'
-      fullPath: '/comments'
-      preLoaderRoute: typeof AuthenticatedCommentsImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardImport
-      parentRoute: typeof AuthenticatedImport
-    }
-    '/_authenticated/message': {
-      id: '/_authenticated/message'
-      path: '/message'
-      fullPath: '/message'
-      preLoaderRoute: typeof AuthenticatedMessageImport
-      parentRoute: typeof AuthenticatedImport
-    }
     '/team-bio/$id': {
       id: '/team-bio/$id'
       path: '/team-bio/$id'
@@ -316,25 +310,93 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamBioIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/dashboard/blogForms': {
+      id: '/_authenticated/dashboard/blogForms'
+      path: '/dashboard/blogForms'
+      fullPath: '/dashboard/blogForms'
+      preLoaderRoute: typeof AuthenticatedDashboardBlogFormsImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/clients-page': {
+      id: '/_authenticated/dashboard/clients-page'
+      path: '/dashboard/clients-page'
+      fullPath: '/dashboard/clients-page'
+      preLoaderRoute: typeof AuthenticatedDashboardClientsPageImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/createPartner': {
+      id: '/_authenticated/dashboard/createPartner'
+      path: '/dashboard/createPartner'
+      fullPath: '/dashboard/createPartner'
+      preLoaderRoute: typeof AuthenticatedDashboardCreatePartnerImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/homePageCarousel': {
+      id: '/_authenticated/dashboard/homePageCarousel'
+      path: '/dashboard/homePageCarousel'
+      fullPath: '/dashboard/homePageCarousel'
+      preLoaderRoute: typeof AuthenticatedDashboardHomePageCarouselImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/team-members': {
+      id: '/_authenticated/dashboard/team-members'
+      path: '/dashboard/team-members'
+      fullPath: '/dashboard/team-members'
+      preLoaderRoute: typeof AuthenticatedDashboardTeamMembersImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/userComments': {
+      id: '/_authenticated/dashboard/userComments'
+      path: '/dashboard/userComments'
+      fullPath: '/dashboard/userComments'
+      preLoaderRoute: typeof AuthenticatedDashboardUserCommentsImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/userMessages': {
+      id: '/_authenticated/dashboard/userMessages'
+      path: '/dashboard/userMessages'
+      fullPath: '/dashboard/userMessages'
+      preLoaderRoute: typeof AuthenticatedDashboardUserMessagesImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
   }
 }
 
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedBlogsFormRoute: typeof AuthenticatedBlogsFormRoute
-  AuthenticatedCarouselRoute: typeof AuthenticatedCarouselRoute
-  AuthenticatedCommentsRoute: typeof AuthenticatedCommentsRoute
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedMessageRoute: typeof AuthenticatedMessageRoute
+  AuthenticatedDashboardBlogFormsRoute: typeof AuthenticatedDashboardBlogFormsRoute
+  AuthenticatedDashboardClientsPageRoute: typeof AuthenticatedDashboardClientsPageRoute
+  AuthenticatedDashboardCreatePartnerRoute: typeof AuthenticatedDashboardCreatePartnerRoute
+  AuthenticatedDashboardHomePageCarouselRoute: typeof AuthenticatedDashboardHomePageCarouselRoute
+  AuthenticatedDashboardTeamMembersRoute: typeof AuthenticatedDashboardTeamMembersRoute
+  AuthenticatedDashboardUserCommentsRoute: typeof AuthenticatedDashboardUserCommentsRoute
+  AuthenticatedDashboardUserMessagesRoute: typeof AuthenticatedDashboardUserMessagesRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedBlogsFormRoute: AuthenticatedBlogsFormRoute,
-  AuthenticatedCarouselRoute: AuthenticatedCarouselRoute,
-  AuthenticatedCommentsRoute: AuthenticatedCommentsRoute,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedMessageRoute: AuthenticatedMessageRoute,
+  AuthenticatedDashboardBlogFormsRoute: AuthenticatedDashboardBlogFormsRoute,
+  AuthenticatedDashboardClientsPageRoute:
+    AuthenticatedDashboardClientsPageRoute,
+  AuthenticatedDashboardCreatePartnerRoute:
+    AuthenticatedDashboardCreatePartnerRoute,
+  AuthenticatedDashboardHomePageCarouselRoute:
+    AuthenticatedDashboardHomePageCarouselRoute,
+  AuthenticatedDashboardTeamMembersRoute:
+    AuthenticatedDashboardTeamMembersRoute,
+  AuthenticatedDashboardUserCommentsRoute:
+    AuthenticatedDashboardUserCommentsRoute,
+  AuthenticatedDashboardUserMessagesRoute:
+    AuthenticatedDashboardUserMessagesRoute,
+  AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -356,13 +418,16 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
-  '/blogsForm': typeof AuthenticatedBlogsFormRoute
-  '/carousel': typeof AuthenticatedCarouselRoute
-  '/comments': typeof AuthenticatedCommentsRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
+  '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
+  '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/dashboard/homePageCarousel': typeof AuthenticatedDashboardHomePageCarouselRoute
+  '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
+  '/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
+  '/dashboard/userMessages': typeof AuthenticatedDashboardUserMessagesRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -380,13 +445,16 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
-  '/blogsForm': typeof AuthenticatedBlogsFormRoute
-  '/carousel': typeof AuthenticatedCarouselRoute
-  '/comments': typeof AuthenticatedCommentsRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
+  '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
+  '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/dashboard/homePageCarousel': typeof AuthenticatedDashboardHomePageCarouselRoute
+  '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
+  '/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
+  '/dashboard/userMessages': typeof AuthenticatedDashboardUserMessagesRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 
 export interface FileRoutesById {
@@ -405,13 +473,16 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
-  '/_authenticated/blogsForm': typeof AuthenticatedBlogsFormRoute
-  '/_authenticated/carousel': typeof AuthenticatedCarouselRoute
-  '/_authenticated/comments': typeof AuthenticatedCommentsRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/message': typeof AuthenticatedMessageRoute
   '/team-bio/$id': typeof TeamBioIdRoute
   '/team-bio/': typeof TeamBioIndexRoute
+  '/_authenticated/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
+  '/_authenticated/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
+  '/_authenticated/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/_authenticated/dashboard/homePageCarousel': typeof AuthenticatedDashboardHomePageCarouselRoute
+  '/_authenticated/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
+  '/_authenticated/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
+  '/_authenticated/dashboard/userMessages': typeof AuthenticatedDashboardUserMessagesRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -431,13 +502,16 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
-    | '/blogsForm'
-    | '/carousel'
-    | '/comments'
-    | '/dashboard'
-    | '/message'
     | '/team-bio/$id'
     | '/team-bio'
+    | '/dashboard/blogForms'
+    | '/dashboard/clients-page'
+    | '/dashboard/createPartner'
+    | '/dashboard/homePageCarousel'
+    | '/dashboard/team-members'
+    | '/dashboard/userComments'
+    | '/dashboard/userMessages'
+    | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -454,13 +528,16 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
-    | '/blogsForm'
-    | '/carousel'
-    | '/comments'
-    | '/dashboard'
-    | '/message'
     | '/team-bio/$id'
     | '/team-bio'
+    | '/dashboard/blogForms'
+    | '/dashboard/clients-page'
+    | '/dashboard/createPartner'
+    | '/dashboard/homePageCarousel'
+    | '/dashboard/team-members'
+    | '/dashboard/userComments'
+    | '/dashboard/userMessages'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
@@ -477,13 +554,16 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
-    | '/_authenticated/blogsForm'
-    | '/_authenticated/carousel'
-    | '/_authenticated/comments'
-    | '/_authenticated/dashboard'
-    | '/_authenticated/message'
     | '/team-bio/$id'
     | '/team-bio/'
+    | '/_authenticated/dashboard/blogForms'
+    | '/_authenticated/dashboard/clients-page'
+    | '/_authenticated/dashboard/createPartner'
+    | '/_authenticated/dashboard/homePageCarousel'
+    | '/_authenticated/dashboard/team-members'
+    | '/_authenticated/dashboard/userComments'
+    | '/_authenticated/dashboard/userMessages'
+    | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
 
@@ -559,11 +639,14 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/blogsForm",
-        "/_authenticated/carousel",
-        "/_authenticated/comments",
-        "/_authenticated/dashboard",
-        "/_authenticated/message"
+        "/_authenticated/dashboard/blogForms",
+        "/_authenticated/dashboard/clients-page",
+        "/_authenticated/dashboard/createPartner",
+        "/_authenticated/dashboard/homePageCarousel",
+        "/_authenticated/dashboard/team-members",
+        "/_authenticated/dashboard/userComments",
+        "/_authenticated/dashboard/userMessages",
+        "/_authenticated/dashboard/"
       ]
     },
     "/about-me": {
@@ -602,31 +685,43 @@ export const routeTree = rootRoute
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
     },
-    "/_authenticated/blogsForm": {
-      "filePath": "_authenticated/blogsForm.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/carousel": {
-      "filePath": "_authenticated/carousel.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/comments": {
-      "filePath": "_authenticated/comments.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/dashboard": {
-      "filePath": "_authenticated/dashboard.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/message": {
-      "filePath": "_authenticated/message.tsx",
-      "parent": "/_authenticated"
-    },
     "/team-bio/$id": {
       "filePath": "team-bio/$id.tsx"
     },
     "/team-bio/": {
       "filePath": "team-bio/index.tsx"
+    },
+    "/_authenticated/dashboard/blogForms": {
+      "filePath": "_authenticated/dashboard/blogForms.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/clients-page": {
+      "filePath": "_authenticated/dashboard/clients-page.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/createPartner": {
+      "filePath": "_authenticated/dashboard/createPartner.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/homePageCarousel": {
+      "filePath": "_authenticated/dashboard/homePageCarousel.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/team-members": {
+      "filePath": "_authenticated/dashboard/team-members.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/userComments": {
+      "filePath": "_authenticated/dashboard/userComments.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/userMessages": {
+      "filePath": "_authenticated/dashboard/userMessages.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/": {
+      "filePath": "_authenticated/dashboard/index.tsx",
+      "parent": "/_authenticated"
     }
   }
 }

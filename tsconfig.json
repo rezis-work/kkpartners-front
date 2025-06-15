@@ -8,7 +8,7 @@
     "src/components/Footer/Footer.jsx",
     "src/components/FooterComponent/Footer_Top.js",
     "public/EmailKey.js"
-, "src/components/PartnerSkeleton.tsx"  ],
+, "src/components/PartnerSkeleton.tsx", "src/routes/_authenticated/create-partner.tsx"  ],
 
   "compilerOptions": {
     "target": "ES2022",

@@ -19,23 +19,41 @@ export interface Contact {
   email: string
 }
 
-  ////get partners
-  export const getPartners = async (): Promise<Partner[]> => {
-    try {
-      const response = await fetch(`http://localhost:4000/api/partner`)
-      const result = await response.json()
-      return result.data || []
-    } catch (error) {
-      console.error('Failed to fetch partners:', error)
-      return []
+export interface PaginatedResponse {
+  data: Array<Partner>
+  total: number
+  page: number
+  limit: number
+}
+
+export const getPartners = async (
+  page: number = 1,
+  limit: number = 5,
+): Promise<PaginatedResponse> => {
+  try {
+    const response = await fetch(
+      `http://localhost:4000/api/partner?page=${page}&limit=${limit}`,
+    )
+    const result = await response.json()
+    return {
+      data: result.data || [],
+      total: result.total || 0,
+      page: result.page || page,
+      limit: result.limit || limit,
+    }
+  } catch (error) {
+    console.error('Failed to fetch partners:', error)
+    return {
+      data: [],
+      total: 0,
+      page,
+      limit,
     }
   }
-//each partner info
-  export const getPartnerById = async (id: string): Promise<Partner | null> => {
-    const res = await fetch(`http://localhost:4000/api/partner/${id}`)
-    const result = await res.json()
-    return result.data || null
-  }
-  
- 
-  
+}
+
+export const getPartnerById = async (id: string): Promise<Partner | null> => {
+  const res = await fetch(`http://localhost:4000/api/partner/${id}`)
+  const result = await res.json()
+  return result.data || null
+}

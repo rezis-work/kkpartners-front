@@ -1,15 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import blogs from '@/hooks/blogs/blogs'
 import ConfirmModal from '@/components/modals/modal'
 import UploadWidget from '@/components/uploadimage'
 
-export const Route = createFileRoute('/_authenticated/blogsForm')({
+export const Route = createFileRoute('/_authenticated/dashboard/blogForms')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const navigate = useNavigate()
+  const [showmodale, setShowModale] = useState(false) // ეს არის დაშბოარდზე დსაბრუნებელი ღილაკისთვუს
+
   const queryClient = useQueryClient()
   const mutation = useMutation<
     unknown,
@@ -80,6 +83,7 @@ function RouteComponent() {
       },
       lawWays,
     })
+    restValues()
     setShowModal(false)
 
     console.log({
@@ -100,40 +104,71 @@ function RouteComponent() {
       lawWays,
     })
   }
+  function restValues() {
+    setTitle('')
+    setSubTitle('')
+    setSlug('')
+    setAuthor('')
+    setAuthor('')
+    setContent('')
+    setCategory('')
+    setTags([])
+    setFb('')
+    setLinkedin('')
+    setTwitter('')
+    setInstagram('')
+    setLawWays('')
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6">Create Blog Post</h2>
-      <form className="space-y-6" onSubmit={onSubmit}>
+      <button
+        onClick={() => setShowModal(true)}
+        className="flex ml-auto bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transitionn cursor-pointer"
+      >
+        Back to Dashboard
+      </button>
+      <form
+        className="max-w-3xl mx-auto mt-12 p-10 bg-white rounded-2xl shadow-lg space-y-6"
+        onSubmit={onSubmit}
+      >
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
+          Create New Blog
+        </h2>
+
         <input
           type="text"
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
           required
         />
+
         <input
           type="text"
           placeholder="Subtitle"
           value={subTitle}
           onChange={(e) => setSubTitle(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
         />
+
         <input
           type="text"
           placeholder="Slug"
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
           required
         />
+
         <input
           type="text"
           placeholder="Author"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
           required
         />
 
@@ -142,7 +177,7 @@ function RouteComponent() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           rows={6}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
           required
         />
 
@@ -151,55 +186,72 @@ function RouteComponent() {
           placeholder="Category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
           required
         />
 
-        <select
-          multiple
-          value={tags}
-          onChange={(e) =>
-            setTags(
-              Array.from(e.target.selectedOptions, (option) => option.value),
-            )
-          }
-          className="w-full p-3 border rounded-lg"
-        >
-          <option value="Advisory">Advisory</option>
-          <option value="Analysis">Analysis</option>
-          <option value="Business">Business</option>
-          <option value="Civil Law">Civil Law</option>
-          <option value="Profit">Profit</option>
-          <option value="Statistics">Statistics</option>
-        </select>
-
+        {/* Multiselect with styling */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Tags
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              'Advisory',
+              'Analysis',
+              'Business',
+              'Civil Law',
+              'Profit',
+              'Statistics',
+            ].map((tag) => (
+              <label key={tag} className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  value={tag}
+                  checked={tags.includes(tag)}
+                  onChange={(e) => {
+                    const checked = e.target.checked
+                    if (checked) {
+                      setTags([...tags, tag])
+                    } else {
+                      setTags(tags.filter((t) => t !== tag))
+                    }
+                  }}
+                  className="accent-blue-600 w-4 h-4"
+                />
+                <span className="text-gray-700">{tag}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+        {/* Social Media */}
         <input
           type="url"
           placeholder="Facebook URL"
           value={fb}
           onChange={(e) => setFb(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
         />
         <input
           type="url"
           placeholder="LinkedIn URL"
           value={linkedin}
           onChange={(e) => setLinkedin(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
         />
         <input
           type="url"
           placeholder="Twitter (X) URL"
           value={twitter}
           onChange={(e) => setTwitter(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
         />
         <input
           type="url"
           placeholder="Instagram URL"
           value={instagram}
           onChange={(e) => setInstagram(e.target.value)}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
         <textarea
@@ -207,31 +259,35 @@ function RouteComponent() {
           value={lawWays}
           onChange={(e) => setLawWays(e.target.value)}
           rows={4}
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
-        <UploadWidget
-          uwConfig={{
-            cloudName: 'dpnmghmd5',
-            uploadPreset: 'kkpartners',
-            multiple: false,
-            maxImageFileSize: 2000000,
-            folder: 'uploads',
-            sources: ['local', 'url', 'camera'],
-            croppingShowBackButton: true,
-            showAdvancedOptions: false,
-            cropping: true,
-            theme: 'light',
-          }}
-          setState={setImages}
-          widgetButtonText="Upload Image"
-        />
+        {/* Upload Widget */}
+        <div className="pt-4">
+          <UploadWidget
+            uwConfig={{
+              cloudName: 'dpnmghmd5',
+              uploadPreset: 'kkpartners',
+              multiple: false,
+              maxImageFileSize: 2000000,
+              folder: 'uploads',
+              sources: ['local', 'url', 'camera'],
+              croppingShowBackButton: true,
+              showAdvancedOptions: false,
+              cropping: true,
+              theme: 'light',
+            }}
+            setState={setImages}
+            widgetButtonText="Upload Image"
+          />
+        </div>
 
+        {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white font-semibold py-4 rounded-xl hover:bg-blue-700 transition"
         >
-          Add new blog
+          Add New Blog
         </button>
       </form>
 
@@ -240,6 +296,15 @@ function RouteComponent() {
         onConfirm={handleConfirm}
         onCancel={handleCancel}
         qusestion="Do you want to add new blog?"
+      />
+      <ConfirmModal
+        visible={showmodale}
+        onConfirm={() => {
+          setShowModale(false)
+          navigate({ to: '/dashboard' })
+        }}
+        onCancel={() => setShowModale(false)}
+        qusestion="Are you sure you want back to Dashboard?"
       />
     </div>
   )
