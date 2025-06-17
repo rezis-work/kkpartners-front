@@ -87,13 +87,9 @@ function Dashboard() {
           <div className="hover:text-gray-300 cursor-pointer">
             <Link to="/dashboard/team-members">Team-Members</Link>
           </div>
-          <Link
-            to="/dashboard/clients-page"
-            className="hover:text-gray-300 cursor-pointer block"
-            onClick={() => setSidebarOpen(false)}
-          >
-            Clients-Page
-          </Link>
+          <div className="hover:text-gray-300 cursor-pointer">
+            <Link to="/dashboard/clients-page">Clients-Page</Link>
+          </div>
         </nav>
       </aside>
 
@@ -121,7 +117,6 @@ function Dashboard() {
               >
                 <Link to="/dashboard">Home</Link>
               </div>
-              <div className="hover:text-gray-300 cursor-pointer">Law</div>
               <div
                 className="hover:text-gray-300 cursor-pointer"
                 onClick={() => {
@@ -136,7 +131,7 @@ function Dashboard() {
                   setSidebarOpen(false)
                 }}
               >
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/dashboard/team-members">Team-Members</Link>
               </div>
               <div
                 className="hover:text-gray-300 cursor-pointer"
@@ -144,15 +139,8 @@ function Dashboard() {
                   setSidebarOpen(false)
                 }}
               >
-                <Link to="/dashboard"></Link>
+                <Link to="/dashboard/clients-page">Clients-Page</Link>
               </div>
-              <Link
-                to="/dashboard/clients-page"
-                className="hover:text-gray-300 cursor-pointer block"
-                onClick={() => setSidebarOpen(false)}
-              >
-                Clients-Page
-              </Link>
             </nav>
           </aside>
         </div>

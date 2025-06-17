@@ -186,7 +186,6 @@ function RouteComponent() {
           <h1 className="text-3xl font-bold text-gray-900">Manage Clients</h1>
         </div>
 
-        {/* Form */}
         <div
           className={`bg-white rounded-xl shadow-lg p-6 mb-8 transition-all duration-300 ${isEditing ? 'border-2 border-blue-500' : ''}`}
         >
@@ -285,7 +284,6 @@ function RouteComponent() {
           </form>
         </div>
 
-        {/* Clients Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {clients.map((client) => (
             <div
