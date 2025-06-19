@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
 
 import UploadWidget from '@/components/UploadWidget'
@@ -10,15 +10,13 @@ export const Route = createFileRoute('/_authenticated/dashboard/createPartner')(
 )
 
 function Navbar() {
-  const navigate = useNavigate()
-
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <button
-              onClick={() => navigate({ to: '/dashboard' })}
+            <Link
+              to="/dashboard"
               className="flex items-center space-x-2 text-gray-800 hover:text-blue-600 transition-colors"
             >
               <svg
@@ -35,21 +33,18 @@ function Navbar() {
                 />
               </svg>
               <span className="font-semibold">Dashboard</span>
-            </button>
+            </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <button
-              onClick={() => navigate({ to: '/dashboard/team-members' })}
-              className="text-gray-600 hover:text-blue-600 transition-colors"
-            >
-              Team Members
-            </button>
-            <button
-              onClick={() => navigate({ to: '/dashboard/createPartner' })}
+            <Link to="/dashboard/team-members" search={{ page: 1 }}>
+              Team-Members
+            </Link>
+            <Link
+              to="/dashboard/createPartner"
               className="text-gray-600 hover:text-blue-600 transition-colors"
             >
               Create Partner
-            </button>
+            </Link>
           </div>
         </div>
       </div>

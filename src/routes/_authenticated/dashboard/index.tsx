@@ -30,20 +30,17 @@ function layout() {
           >
             Add Partner
           </Link>
-          <Link
-            to="/dashboard/team-members"
-            className="hover:text-gray-300 cursor-pointer block"
-            onClick={() => setSidebarOpen(false)}
-          >
+          <Link to="/dashboard/team-members" search={{ page: 1 }}>
             Team-Members
           </Link>
-          <Link
-            to="/dashboard/clients-page"
-            className="hover:text-gray-300 cursor-pointer block"
-            onClick={() => setSidebarOpen(false)}
+          <div
+            className="hover:text-gray-300 cursor-pointer mt-2"
+            onClick={() => {
+              setSidebarOpen(false)
+            }}
           >
-            Clients-Page
-          </Link>
+            <Link to="/dashboard/clients-page">Clients-Page</Link>
+          </div>
         </nav>
       </aside>
 

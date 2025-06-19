@@ -1,4 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+  useSearch,
+} from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
@@ -7,10 +12,17 @@ import type { Partner, PaginatedResponse } from '@/api/getOurPartners'
 
 export const Route = createFileRoute('/_authenticated/dashboard/team-members')({
   component: Dashboard,
+  validateSearch: (search) => {
+    return {
+      page: Number(search.page) > 0 ? Number(search.page) : 1,
+    }
+  },
 })
 
 function Dashboard() {
-  const [currentPage, setCurrentPage] = useState(1)
+  const { page } = useSearch({ from: '/_authenticated/dashboard/team-members' })
+  const navigate = useNavigate()
+  const currentPage = page || 1
   const itemsPerPage = 5
 
   const { data, isLoading, isError } = useQuery<PaginatedResponse>({
@@ -36,35 +48,32 @@ function Dashboard() {
     const maxVisiblePages = 3
 
     if (totalPages <= maxVisiblePages) {
-      // If total pages are less than or equal to 3, show all pages
       for (let i = 1; i <= totalPages; i++) {
         numbers.push(i)
       }
     } else {
-      // Always show first page
       numbers.push(1)
-
-      // Show current page and one page before and after if possible
       const start = Math.max(2, currentPage - 1)
       const end = Math.min(currentPage + 1, totalPages - 1)
-
       if (start > 2) {
         numbers.push('...')
       }
-
       for (let i = start; i <= end; i++) {
         numbers.push(i)
       }
-
       if (end < totalPages - 1) {
         numbers.push('...')
       }
-
-      // Always show last page
       numbers.push(totalPages)
     }
-
     return numbers
+  }
+
+  const setPage = (newPage: number) => {
+    navigate({
+      search: { page: newPage } as any,
+      replace: false,
+    })
   }
 
   return (
@@ -85,7 +94,9 @@ function Dashboard() {
             <Link to="/dashboard/createPartner">Add Partner</Link>
           </div>
           <div className="hover:text-gray-300 cursor-pointer">
-            <Link to="/dashboard/team-members">Team-Members</Link>
+            <Link to="/dashboard/team-members" search={{ page: 1 }}>
+              Team-Members
+            </Link>
           </div>
           <div className="hover:text-gray-300 cursor-pointer">
             <Link to="/dashboard/clients-page">Clients-Page</Link>
@@ -131,7 +142,9 @@ function Dashboard() {
                   setSidebarOpen(false)
                 }}
               >
-                <Link to="/dashboard/team-members">Team-Members</Link>
+                <Link to="/dashboard/team-members" search={{ page: 1 }}>
+                  Team-Members
+                </Link>
               </div>
               <div
                 className="hover:text-gray-300 cursor-pointer"
@@ -200,7 +213,7 @@ function Dashboard() {
 
         <div className="flex justify-center items-center mt-6 gap-2">
           <button
-            onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
+            onClick={() => setPage(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1}
             className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
           >
@@ -215,7 +228,7 @@ function Dashboard() {
             ) : (
               <button
                 key={pageNum}
-                onClick={() => setCurrentPage(Number(pageNum))}
+                onClick={() => setPage(Number(pageNum))}
                 className={`px-3 py-1 rounded ${
                   pageNum === currentPage
                     ? 'bg-blue-500 text-white'
@@ -228,9 +241,7 @@ function Dashboard() {
           )}
 
           <button
-            onClick={() =>
-              setCurrentPage(Math.min(currentPage + 1, totalPages))
-            }
+            onClick={() => setPage(Math.min(currentPage + 1, totalPages))}
             disabled={currentPage === totalPages}
             className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
           >
