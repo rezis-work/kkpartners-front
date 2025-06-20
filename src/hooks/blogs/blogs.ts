@@ -31,6 +31,15 @@ async function blogs(upload: BlogProps) {
   }
   const data = await responce.json()
 
+  if (typeof data.images === 'string') {
+    try {
+      data.images = JSON.parse(data.images)
+    } catch (e) {
+      console.error('failed to parse images string', data.images)
+      data.images = []
+    }
+  }
+
   return data
 }
 

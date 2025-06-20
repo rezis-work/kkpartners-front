@@ -25,7 +25,9 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeamBioIndexImport } from './routes/team-bio/index'
 import { Route as TeamBioIdImport } from './routes/team-bio/$id'
+import { Route as AuthenticatedTeamsIndexImport } from './routes/_authenticated/teams/index'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
+import { Route as AuthenticatedTeamsIdImport } from './routes/_authenticated/teams/$id'
 import { Route as AuthenticatedDashboardUserMessagesImport } from './routes/_authenticated/dashboard/userMessages'
 import { Route as AuthenticatedDashboardUserCommentsImport } from './routes/_authenticated/dashboard/userComments'
 import { Route as AuthenticatedDashboardTeamMembersImport } from './routes/_authenticated/dashboard/team-members'
@@ -138,12 +140,24 @@ const TeamBioIdRoute = TeamBioIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthenticatedTeamsIndexRoute = AuthenticatedTeamsIndexImport.update({
+  id: '/teams/',
+  path: '/teams/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexImport.update({
     id: '/dashboard/',
     path: '/dashboard/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+
+const AuthenticatedTeamsIdRoute = AuthenticatedTeamsIdImport.update({
+  id: '/teams/$id',
+  path: '/teams/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 const AuthenticatedDashboardUserMessagesRoute =
   AuthenticatedDashboardUserMessagesImport.update({
@@ -359,11 +373,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardUserMessagesImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/teams/$id': {
+      id: '/_authenticated/teams/$id'
+      path: '/teams/$id'
+      fullPath: '/teams/$id'
+      preLoaderRoute: typeof AuthenticatedTeamsIdImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardIndexImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/teams/': {
+      id: '/_authenticated/teams/'
+      path: '/teams'
+      fullPath: '/teams'
+      preLoaderRoute: typeof AuthenticatedTeamsIndexImport
       parentRoute: typeof AuthenticatedImport
     }
   }
@@ -379,7 +407,9 @@ interface AuthenticatedRouteChildren {
   AuthenticatedDashboardTeamMembersRoute: typeof AuthenticatedDashboardTeamMembersRoute
   AuthenticatedDashboardUserCommentsRoute: typeof AuthenticatedDashboardUserCommentsRoute
   AuthenticatedDashboardUserMessagesRoute: typeof AuthenticatedDashboardUserMessagesRoute
+  AuthenticatedTeamsIdRoute: typeof AuthenticatedTeamsIdRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedTeamsIndexRoute: typeof AuthenticatedTeamsIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -396,7 +426,9 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
     AuthenticatedDashboardUserCommentsRoute,
   AuthenticatedDashboardUserMessagesRoute:
     AuthenticatedDashboardUserMessagesRoute,
+  AuthenticatedTeamsIdRoute: AuthenticatedTeamsIdRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedTeamsIndexRoute: AuthenticatedTeamsIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -427,7 +459,9 @@ export interface FileRoutesByFullPath {
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
   '/dashboard/userMessages': typeof AuthenticatedDashboardUserMessagesRoute
+  '/teams/$id': typeof AuthenticatedTeamsIdRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/teams': typeof AuthenticatedTeamsIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -454,7 +488,9 @@ export interface FileRoutesByTo {
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
   '/dashboard/userMessages': typeof AuthenticatedDashboardUserMessagesRoute
+  '/teams/$id': typeof AuthenticatedTeamsIdRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/teams': typeof AuthenticatedTeamsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -482,7 +518,9 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/_authenticated/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
   '/_authenticated/dashboard/userMessages': typeof AuthenticatedDashboardUserMessagesRoute
+  '/_authenticated/teams/$id': typeof AuthenticatedTeamsIdRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/teams/': typeof AuthenticatedTeamsIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -511,7 +549,9 @@ export interface FileRouteTypes {
     | '/dashboard/team-members'
     | '/dashboard/userComments'
     | '/dashboard/userMessages'
+    | '/teams/$id'
     | '/dashboard'
+    | '/teams'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -537,7 +577,9 @@ export interface FileRouteTypes {
     | '/dashboard/team-members'
     | '/dashboard/userComments'
     | '/dashboard/userMessages'
+    | '/teams/$id'
     | '/dashboard'
+    | '/teams'
   id:
     | '__root__'
     | '/'
@@ -563,7 +605,9 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/team-members'
     | '/_authenticated/dashboard/userComments'
     | '/_authenticated/dashboard/userMessages'
+    | '/_authenticated/teams/$id'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/teams/'
   fileRoutesById: FileRoutesById
 }
 
@@ -646,7 +690,9 @@ export const routeTree = rootRoute
         "/_authenticated/dashboard/team-members",
         "/_authenticated/dashboard/userComments",
         "/_authenticated/dashboard/userMessages",
-        "/_authenticated/dashboard/"
+        "/_authenticated/teams/$id",
+        "/_authenticated/dashboard/",
+        "/_authenticated/teams/"
       ]
     },
     "/about-me": {
@@ -719,8 +765,16 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/dashboard/userMessages.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/teams/$id": {
+      "filePath": "_authenticated/teams/$id.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/dashboard/": {
       "filePath": "_authenticated/dashboard/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/teams/": {
+      "filePath": "_authenticated/teams/index.tsx",
       "parent": "/_authenticated"
     }
   }

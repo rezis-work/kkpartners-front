@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getClients } from '@/api/getClients'
 import { useQuery } from '@tanstack/react-query'
+import { getClients } from '@/api/getClients'
 
 export const Route = createFileRoute('/_authenticated/dashboard/clients-page')({
   component: RouteComponent,

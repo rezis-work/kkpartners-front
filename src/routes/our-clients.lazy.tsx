@@ -21,7 +21,7 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="w-screen bg-[#041E22]">
+      <div className="w-full bg-[#041E22]">
         <HeaderMain
           bgColor={'transparent'}
           darkOrLight="light"

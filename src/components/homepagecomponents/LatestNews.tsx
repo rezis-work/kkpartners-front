@@ -45,11 +45,20 @@ function LatestNewsBlogs() {
         {data.map((blogs: Blog, _id: number) => {
           return (
             <div key={_id} className="px-10 py-10 ">
-              <img
-                className="mt-auto flex justify-center w-full"
-                src={blogs.images}
-                alt={blogs._id}
-              />
+              {blogs.images ? (
+                <img
+                  className="mt-auto flex justify-center w-full"
+                  src={blogs.images}
+                  alt={blogs._id}
+                />
+              ) : (
+                <img
+                  className="mt-auto flex justify-center w-full"
+                  src="https://www.vecteezy.com/free-vector/default-user"
+                  alt={blogs._id}
+                />
+              )}
+
               <div id="content" className="flex gap-5 text-white px-5 py-5">
                 <h4 className="text-white ">{blogs.author}</h4>
                 <h3>{blogs.subTitle}</h3>

@@ -1,8 +1,7 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+
 import getMessages from '@/hooks/getUsersMessages'
-import ConfirmModal from '@/components/modals/modal'
 
 export const Route = createFileRoute('/_authenticated/dashboard/userMessages')({
   component: RouteComponent,
@@ -15,9 +14,6 @@ interface UserInfo {
 }
 
 function RouteComponent() {
-  const navigate = useNavigate()
-  const [showmodale, setShowModal] = useState(false)
-
   const { data, isLoading } = useQuery({
     queryKey: ['contact'],
     queryFn: getMessages,
@@ -36,12 +32,11 @@ function RouteComponent() {
         <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-8">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-gray-800">📨 Messages</h2>
-            <button
-              onClick={() => setShowModal(true)}
-              className="inline-block bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition"
-            >
-              Back to Dashboard
-            </button>
+            <Link to="/dashboard">
+              <button className="inline-block bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition cursor-pointer">
+                Back to Dashboard
+              </button>
+            </Link>
           </div>
 
           <div className="space-y-5 max-h-[70vh] overflow-y-auto pr-2">
@@ -72,15 +67,6 @@ function RouteComponent() {
             )}
           </div>
         </div>
-        <ConfirmModal
-          visible={showmodale}
-          onConfirm={() => {
-            setShowModal(false)
-            navigate({ to: '/dashboard' })
-          }}
-          onCancel={() => setShowModal(false)}
-          qusestion="Are you sure you want back to Dashboard?"
-        />
       </div>
     </>
   )

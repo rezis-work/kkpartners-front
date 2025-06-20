@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import blogs from '@/hooks/blogs/blogs'
 import ConfirmModal from '@/components/modals/modal'
@@ -10,9 +10,6 @@ export const Route = createFileRoute('/_authenticated/dashboard/blogForms')({
 })
 
 function RouteComponent() {
-  const navigate = useNavigate()
-  const [showmodale, setShowModale] = useState(false) // ეს არის დაშბოარდზე დსაბრუნებელი ღილაკისთვუს
-
   const queryClient = useQueryClient()
   const mutation = useMutation<
     unknown,
@@ -72,7 +69,7 @@ function RouteComponent() {
       slug,
       author,
       content,
-      images,
+      images: Array.isArray(images) ? images : [images],
       category,
       tags,
       share: {
@@ -123,12 +120,11 @@ function RouteComponent() {
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6">Create Blog Post</h2>
-      <button
-        onClick={() => setShowModal(true)}
-        className="flex ml-auto bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transitionn cursor-pointer"
-      >
-        Back to Dashboard
-      </button>
+      <Link to="/dashboard">
+        <button className="flex ml-auto bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transitionn cursor-pointer">
+          Back to Dashboard
+        </button>
+      </Link>
       <form
         className="max-w-3xl mx-auto mt-12 p-10 bg-white rounded-2xl shadow-lg space-y-6"
         onSubmit={onSubmit}
@@ -278,7 +274,7 @@ function RouteComponent() {
               theme: 'light',
             }}
             setState={setImages}
-            widgetButtonText="Upload Image"
+            widgetButtonText={'Upload Image'}
           />
         </div>
 
@@ -296,15 +292,6 @@ function RouteComponent() {
         onConfirm={handleConfirm}
         onCancel={handleCancel}
         qusestion="Do you want to add new blog?"
-      />
-      <ConfirmModal
-        visible={showmodale}
-        onConfirm={() => {
-          setShowModale(false)
-          navigate({ to: '/dashboard' })
-        }}
-        onCancel={() => setShowModale(false)}
-        qusestion="Are you sure you want back to Dashboard?"
       />
     </div>
   )

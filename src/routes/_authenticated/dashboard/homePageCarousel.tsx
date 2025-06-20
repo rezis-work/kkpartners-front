@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import updateCarousel from '@/hooks/carouselServices/carousel'
 import ConfirmModal from '@/components/modals/modal'
@@ -66,18 +66,15 @@ function RouteComponent() {
 
     setShowModal(false)
   }
-  const navigate = useNavigate()
-  const [showmodale, setShowModale] = useState(false)
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-8">
-        <button
-          onClick={() => setShowModale(true)}
-          className="flex ml-auto bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition cursor-pointer"
-        >
-          Back to Dashboard
-        </button>
+        <Link to="/dashboard">
+          <button className="flex ml-auto bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition cursor-pointer">
+            Back to Dashboard
+          </button>
+        </Link>
         <form className="space-y-6 pt-10" onSubmit={submitedForm}>
           {/* Title */}
           <div>
@@ -198,15 +195,6 @@ function RouteComponent() {
         onConfirm={handleConfirm}
         onCancel={handleCancel}
         qusestion="Do you want to change carousel?"
-      />
-      <ConfirmModal
-        visible={showmodale}
-        onConfirm={() => {
-          setShowModale(false)
-          navigate({ to: '/dashboard' })
-        }}
-        onCancel={() => setShowModale(false)}
-        qusestion="Are you sure you want back to Dashboard?"
       />
     </div>
   )

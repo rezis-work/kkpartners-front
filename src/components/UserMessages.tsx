@@ -89,6 +89,10 @@ function UserMessages() {
           >
             Send a message
           </button>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
+          voluptatum magni, qui odio aliquam nisi voluptates aliquid praesentium
+          quo consectetur minima ea quia ipsa in repudiandae soluta eaque eos
+          non!
         </form>
       </div>
 

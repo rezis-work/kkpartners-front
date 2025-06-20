@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import userComents from '@/hooks/commentsHooks/UserComments'
 import ConfirmModal from '@/components/modals/modal'
@@ -20,14 +20,12 @@ function RouteComponent() {
       throw new Error('mutation in comments component does not working', error)
     },
   })
-  const navigate = useNavigate()
 
   const [quote, setQuote] = useState('')
   const [rating, setRating] = useState(0)
   const [fullname, setFullname] = useState('')
   const [position, setPosition] = useState('')
   const [showModal, setShowModal] = useState(false)
-  const [showmodale, setShowModale] = useState(false)
 
   // ღილაკზე დაჭერისას ვაჩვენებთ მოდალს
   const onSubmit = (e: React.FormEvent) => {
@@ -63,12 +61,11 @@ function RouteComponent() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10 relative">
       {/* Dashboard Button */}
       <div className="absolute top-6 right-6">
-        <button
-          onClick={() => setShowModale(true)}
-          className="inline-block bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition cursor-pointer"
-        >
-          Back to Dashboard
-        </button>
+        <Link to="/dashboard">
+          <button className="inline-block bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition cursor-pointer">
+            Back to Dashboard
+          </button>
+        </Link>
       </div>
 
       {/* Form */}
@@ -179,15 +176,6 @@ function RouteComponent() {
         onConfirm={handleConfirm}
         onCancel={handleCancel}
         qusestion="Do you want to add new quote?"
-      />
-      <ConfirmModal
-        visible={showmodale}
-        onConfirm={() => {
-          setShowModale(false)
-          navigate({ to: '/dashboard' })
-        }}
-        onCancel={() => setShowModale(false)}
-        qusestion="Are you sure you want back to Dashboard?"
       />
     </div>
   )
