@@ -1,5 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getClients } from '@/api/getClients'
+import {
+  getClients,
+  createClient,
+  updateClient,
+  deleteClient,
+} from '@/api/getClients'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
@@ -43,14 +48,7 @@ function RouteComponent() {
   })
 
   const createMutation = useMutation<Client, Error, FormData>({
-    mutationFn: async (newClient) => {
-      const response = await fetch('/api/clients', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newClient),
-      })
-      return response.json()
-    },
+    mutationFn: createClient,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] })
       resetForm()
@@ -58,14 +56,8 @@ function RouteComponent() {
   })
 
   const updateMutation = useMutation<Client, Error, Client>({
-    mutationFn: async (updatedClient) => {
-      const response = await fetch(`/api/clients/${updatedClient.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedClient),
-      })
-      return response.json()
-    },
+    mutationFn: (updatedClient) =>
+      updateClient(updatedClient.id, updatedClient),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] })
       resetForm()
@@ -74,10 +66,7 @@ function RouteComponent() {
 
   const deleteMutation = useMutation<void, Error, string>({
     mutationFn: async (clientId) => {
-      const response = await fetch(`/api/clients/${clientId}`, {
-        method: 'DELETE',
-      })
-      return response.json()
+      await deleteClient(clientId)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['clients'] })
@@ -172,6 +161,7 @@ function RouteComponent() {
                 <Link
                   to="/dashboard/team-members"
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  search={undefined}
                 >
                   Team Members
                 </Link>
@@ -186,7 +176,6 @@ function RouteComponent() {
           <h1 className="text-3xl font-bold text-gray-900">Manage Clients</h1>
         </div>
 
-        {/* Form */}
         <div
           className={`bg-white rounded-xl shadow-lg p-6 mb-8 transition-all duration-300 ${isEditing ? 'border-2 border-blue-500' : ''}`}
         >
@@ -285,7 +274,6 @@ function RouteComponent() {
           </form>
         </div>
 
-        {/* Clients Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {clients.map((client) => (
             <div

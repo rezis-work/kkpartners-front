@@ -23,7 +23,7 @@ export default function HeaderMain({
   return (
     <div
       style={{ backgroundColor: bgColor }}
-      className="absolute w-full z-100 mt-[-1px]"
+      className="absolute w-full z-999 mt-[-1px]"
     >
       <MobileHeader darkOrLight={darkOrLight} iconColor={iconColor} />
       <DesktopHeader

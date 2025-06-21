@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, Link } from '@tanstack/react-router'
+import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Layout as Menu, X } from 'lucide-react'
 
@@ -43,6 +43,34 @@ function layout() {
             onClick={() => setSidebarOpen(false)}
           >
             Clients-Page
+          </Link>
+          <Link
+            to="/dashboard/blogForms"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add blogs
+          </Link>
+          <Link
+            to="/dashboard/userMessages"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Users Messages
+          </Link>
+          <Link
+            to="/dashboard/userComments"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add comments
+          </Link>
+          <Link
+            to="/dashboard/homePageCarousel"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add Banners
           </Link>
         </nav>
       </aside>
@@ -91,6 +119,34 @@ function layout() {
                 onClick={() => setSidebarOpen(false)}
               >
                 Dashboard
+              </Link>
+              <Link
+                to="/dashboard/blogForms"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Add Blogs
+              </Link>
+              <Link
+                to="/dashboard/userMessages"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Users Messages
+              </Link>
+              <Link
+                to="/dashboard/userComments"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Add comments
+              </Link>
+              <Link
+                to="/dashboard/homePageCarousel"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Add Banners
               </Link>
             </nav>
           </aside>

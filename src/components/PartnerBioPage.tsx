@@ -1,11 +1,11 @@
 import { useParams } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
+import { RiArrowRightUpLine } from 'react-icons/ri'
 import { getPartnerById } from '../api/getOurPartners'
-import EmailSend from './EmailSend'
 import HeaderMain from './header/HeaderMain'
 import Footer from './Footer'
+
 import PartnerSkeleton from './PartnerSkeleton'
-import { RiArrowRightUpLine } from 'react-icons/ri'
 
 export function PartnerBioPage() {
   const { id } = useParams({ from: '/team-bio/$id' })
@@ -37,7 +37,7 @@ export function PartnerBioPage() {
   }
 
   return (
-    <div className="w-screen h-screen overflow-x-hidden relative">
+    <div className="w-full h-full overflow-x-hidden relative">
       <HeaderMain
         bgColor={'transparent'}
         darkOrLight="light"
@@ -59,7 +59,7 @@ export function PartnerBioPage() {
             <img
               src={partner.image}
               alt={partner.fullname}
-              className="w-50 sm:w-72 md:w-80 h-[300px] sm:h-[400px] md:h-[500px] object-cover lg:absolute lg:top-40 lg:right-20"
+              className="w-50 bg-no-repeat  sm:w-72 md:w-80 h-[300px] sm:h-[400px] md:h-[500px] object-cover lg:absolute lg:top-40 lg:right-20 lg:bg-no-repeat "
             />
           </div>
 
@@ -107,7 +107,9 @@ export function PartnerBioPage() {
           {/* Bio */}
           <section>
             <h3 className="text-2xl font-semibold mb-4">Biography</h3>
-            <p className="text-base leading-relaxed flex flex-col-reverse">{partner.biography}</p>
+            <p className="text-base leading-relaxed flex flex-col-reverse">
+              {partner.biography}
+            </p>
           </section>
 
           {/* Contact & Links */}
@@ -182,7 +184,7 @@ export function PartnerBioPage() {
           </section>
 
           {/* services */}
-          {partner.services && partner.services.length > 0 && (
+          {partner.services.length > 0 && (
             <section className="space-y-2  border-b border-t pt-10 border-gray-300 pb-10  ">
               <h3 className="text-2xl font-semibold mb-2">Services</h3>
               <ul className="list-disc pl-5 space-y-1">
@@ -194,7 +196,6 @@ export function PartnerBioPage() {
           )}
         </div>
       </div>
-      <EmailSend />
       <Footer />
     </div>
   )

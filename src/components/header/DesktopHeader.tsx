@@ -19,9 +19,6 @@ function DesktopHeader({
     { pageName: 'FAQ Page', pageLink: '/faq-page' },
     { pageName: 'Contact Us', pageLink: '/contact' },
     { pageName: 'Coming Soon', pageLink: '/coming-soon' },
-    { pageName: 'Dishboard', pageLink: '/_authenticated/dashboard' },
-    { pageName: 'message', pageLink: '/_authenticated/message' },
-    { pageName: 'Dashboard', pageLink: '/dashboard' },
   ]
 
   const personelDropdownArray = [
@@ -97,7 +94,7 @@ function DesktopHeader({
               Home
             </Link>
 
-            <Link to="/coming-soon" className="hover:underline">
+            <Link to="/" className="hover:underline">
               Blog
             </Link>
 
@@ -144,10 +141,7 @@ function DesktopHeader({
             <Link to="/auth" className="hover:underline">
               auth
             </Link>
-
-            <Link to="/dashboard" className="hover:underline">
-              dashboard
-            </Link>
+            <Link to="/teams" className="hover:underline"></Link>
           </div>
           <Link
             to="/contact"

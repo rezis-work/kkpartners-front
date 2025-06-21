@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { getHomePartners } from '../../api/getHomePartners'
+import { Link } from '@tanstack/react-router'
+import { getTeam } from '@/hooks/homeTeam'
 
 const HomeTeam = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['homePartners'],
-    queryFn: getHomePartners,
+    queryFn: getTeam,
   })
 
   if (isLoading) return <div className="text-center py-8">Loading...</div>
@@ -38,18 +39,20 @@ const HomeTeam = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:w-2/3">
             {data.map((partner) => (
-              <div key={partner._id} className="text-center">
-                <div className="overflow-hidden">
-                  <img
-                    src={partner.image}
-                    alt={partner.fullname}
-                    className="w-full h-[320px] object-cover"
-                  />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-[#2d2a2a]">
-                  {partner.fullname}
-                </h3>
-                <p className="text-[#6b6b6b] text-sm">{partner.position}</p>
+              <div key={partner._id} className="text-center cursor-pointer">
+                <Link to="/teams/$id" params={{ id: partner._id }}>
+                  <div className="overflow-hidden">
+                    <img
+                      src={partner.image}
+                      alt={partner.fullname}
+                      className="w-full h-[320px] object-cover"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold text-[#2d2a2a]">
+                    {partner.fullname}
+                  </h3>
+                  <p className="text-[#6b6b6b] text-sm">{partner.position}</p>
+                </Link>
               </div>
             ))}
           </div>

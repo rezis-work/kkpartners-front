@@ -3,6 +3,7 @@ import HeaderMain from '@/components/header/HeaderMain'
 import AboutMeBlock from '@/components/AboutExperience'
 import ExperienceBlock from '@/components/ExperienceBlock'
 import { experiences } from '@/data/about-me-data'
+import FooterComponent from '@/components/Footer'
 
 export const Route = createFileRoute('/about-me')({
   component: RouteComponent,
@@ -10,7 +11,7 @@ export const Route = createFileRoute('/about-me')({
 
 function RouteComponent() {
   return (
-    <div className="w-screen ">
+    <div className="w-full ">
       <HeaderMain
         bgColor={'transparent'}
         darkOrLight="light"
@@ -39,6 +40,7 @@ function RouteComponent() {
           <ExperienceBlock key={idx} {...exp} />
         ))}
       </div>
+      <FooterComponent />
     </div>
   )
 }

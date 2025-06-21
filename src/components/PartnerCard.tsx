@@ -1,17 +1,15 @@
-import { Link } from "@tanstack/react-router"
+import { Link } from '@tanstack/react-router'
 
 type Props = {
-    id: string
-    image: string
-    fullname: string
-    position: string
-  }
-  
-  export default function PartnerCard({ image, fullname, position , id}: Props) {
-    return (
-      <Link to="/team-bio/$id"
-       params={{ id }}
-      >
+  id: string
+  image: string
+  fullname: string
+  position: string
+}
+
+export default function PartnerCard({ image, fullname, position, id }: Props) {
+  return (
+    <Link to="/team-bio/$id" params={{ id }}>
       <div className="transition duration-500 group block cursor-default">
         <div className="overflow-hidden">
           <img
@@ -25,7 +23,6 @@ type Props = {
         </h3>
         <p className="text-[#291616]">{position}</p>
       </div>
-      </Link>
-    )
-  }
-  
+    </Link>
+  )
+}

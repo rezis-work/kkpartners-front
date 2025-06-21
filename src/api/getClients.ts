@@ -1,7 +1,8 @@
 export interface Client {
   id: string
   name: string
-  // Add other client properties as needed
+  image: string
+  icon: string
 }
 
 export async function getClients() {
@@ -49,7 +50,7 @@ export async function updateClient(id: string, clientData: Partial<Client>) {
   return data.data
 }
 
-export async function deleteClient(id: string) {
+export async function deleteClient(id: string): Promise<void> {
   const response = await fetch(`http://localhost:4000/api/business/${id}`, {
     method: 'DELETE',
   })
@@ -57,6 +58,4 @@ export async function deleteClient(id: string) {
   if (!response.ok) {
     throw new Error('Failed to delete client')
   }
-
-  return true
 }

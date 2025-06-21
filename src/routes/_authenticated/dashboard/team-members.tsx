@@ -1,9 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import type { PaginatedResponse, Partner } from '@/api/getOurPartners'
 import { getPartners } from '@/api/getOurPartners'
-import type { Partner, PaginatedResponse } from '@/api/getOurPartners'
 
 export const Route = createFileRoute('/_authenticated/dashboard/team-members')({
   component: Dashboard,
@@ -21,7 +21,7 @@ function Dashboard() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  if (isLoading && !data)
+  if (!isLoading && !data)
     return <div className="text-center py-8">Loading...</div>
   if (isError)
     return (

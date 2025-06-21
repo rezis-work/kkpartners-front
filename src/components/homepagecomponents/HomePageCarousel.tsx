@@ -1,22 +1,33 @@
 import { useQuery } from '@tanstack/react-query'
-import { getCarouselData } from '@/api/getCarouselData'
+
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import '../../globalStyles.css'
-import { Autoplay, Pagination, Navigation } from 'swiper/modules'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { RiArrowRightUpLine } from 'react-icons/ri'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import type { Swiper as SwiperType } from 'swiper'
 import { Link } from '@tanstack/react-router'
+
+import type { Swiper as SwiperType } from 'swiper'
+import carouseldata from '@/hooks/carouselServices/carouseldata'
+
+interface Sliedr {
+  _id: string
+  title: string
+  subtitle: string
+  image: string
+  link1: string
+  link2: string
+}
 
 function HomePageCarousel() {
   const [activeIndex, setActiveIndex] = useState(0)
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['carousel'],
-    queryFn: getCarouselData,
+    queryFn: carouseldata,
   })
 
   if (isLoading) return <div>Loading...</div>
@@ -26,7 +37,7 @@ function HomePageCarousel() {
   const handleSlideChange = (swiper: SwiperType) => {
     setActiveIndex(swiper.activeIndex)
   }
-
+  console.log(data)
   return (
     <div>
       <Swiper
@@ -44,8 +55,8 @@ function HomePageCarousel() {
         className="mySwiper"
         onSlideChange={handleSlideChange}
       >
-        {data.map((slide, index) => (
-          <SwiperSlide key={slide.id}>
+        {data.map((slide: Sliedr, index) => (
+          <SwiperSlide key={slide._id}>
             <img src={slide.image} alt={slide.title} />
             <motion.div
               className="absolute top-[150px] left-6 right-6 z-10 flex flex-col items-start xl:left-12 xl:right-12 xl:top-[200px]"

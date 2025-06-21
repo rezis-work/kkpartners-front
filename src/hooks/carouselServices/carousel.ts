@@ -9,12 +9,12 @@ async function updateCarousel(
     method: 'POST',
 
     headers: {
-      'Content-Type': 'application/son',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       title: title,
-      image: image,
       subtitle: subtitle,
+      image: image,
       link1: link1,
       link2: link2,
     }),
@@ -23,7 +23,9 @@ async function updateCarousel(
   if (!response.ok) {
     throw new Error('failed updateCarousel component ')
   }
+
   const data = await response.json()
 
   return data
 }
+export default updateCarousel

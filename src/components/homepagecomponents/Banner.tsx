@@ -20,54 +20,50 @@ function Banners() {
   if (!data) return <div>no data found</div>
 
   return (
-    <section className="w-full bg-[#F9F5F0] grid grid-cols-1 pl-10 pr-10 pb-15  xl:flex gap-10 pt-15  ">
-      <div className=" w-full xl:w-1/3 p">
-        <h3 className="pt-20 text-3xl ">
+    <section className="w-full bg-[#F9F5F0] px-10 py-20 xl:flex gap-10">
+      {/* Left Section */}
+      <div className="w-full xl:w-1/3">
+        <h3 className="text-3xl font-semibold mb-6">
           Contributing important global initiatives
         </h3>
-        <p className=" w-full pr-0 sm:w-[80%] lg:flex items-center  text-xl lg:pr-20 pt-7  ">
+        <p className="text-xl leading-relaxed">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* Right Section - Banner Grid */}
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10 xl:mt-0">
         {data.map((banner: Banner, index: number) => (
           <div
             key={index}
-            className="relative w-full h-100 overflow-hidden rounded-xl group"
+            className="relative w-full h-80 rounded-xl overflow-hidden group"
           >
-            {/* Image */}
             <img
               src={banner.image}
               alt={banner.title}
-              className="w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
             />
 
-            {/* Title */}
+            {index === 0 && (
+              <div className="absolute top-4 left-5 z-20 text-white text-6xl font-extrabold opacity-30 select-none pointer-events-none md:text-8xl">
+                {banner.revenue}
+              </div>
+            )}
 
-            <div className="absolute inset-0 flex items-end justify-start pb-20 pl-6">
-              <h4 className="text-white text-xl md:text-2xl font-medium drop-shadow-lg max-w-[70%]">
+            {/* Title */}
+            <div className="absolute bottom-16 left-6 z-20">
+              <h4 className="text-white text-xl md:text-2xl font-medium drop-shadow-lg max-w-[80%]">
                 {banner.title}
               </h4>
             </div>
 
-            {/* Link bottom-left */}
-            <Link
-              to={banner.link}
-              className="absolute bottom-6 left-6 text-2xl"
-            >
-              <p className="text-white underline-offset-4 group-hover:underline transition drop-shadow">
+            {/* Link */}
+            <Link to="/what-we-do" className="absolute bottom-6 left-6 z-20">
+              <p className="text-white text-base underline underline-offset-4 group-hover:opacity-90 transition-all">
                 Visit →
               </p>
             </Link>
-
-            {/* Revenue მხოლოდ პირველ ბანერზე */}
-            {index === 0 && (
-              <div className="absolute top-4 left-5 text-white text-6xl items-start font-extrabold opacity-30 select-none pointer-events-none md:absolute md:top-4 md:left-5 md:text-8xl md:items-start md:font-extrabold md:opacity-30 md:select-none md:pointer-events-none">
-                {banner.revenue}
-              </div>
-            )}
           </div>
         ))}
       </div>
