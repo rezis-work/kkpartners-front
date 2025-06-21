@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { getPartners } from '../api/getOurPartners'
 import PartnerCard from './PartnerCard'
 import HeaderMain from './header/HeaderMain'
@@ -7,11 +7,12 @@ import type { Partner as ApiPartner } from '../api/getOurPartners'
 type Partner = ApiPartner
 
 export function TeamPage() {
-  const [partners, setPartners] = useState<Array<Partner>>([])
+  const { data: partnersData } = useQuery({
+    queryKey: ['partners'],
+    queryFn: () => getPartners(1, 100),
+  })
 
-  useEffect(() => {
-    getPartners().then(setPartners)
-  }, [])
+  const partners = partnersData?.data || []
 
   return (
     <>
