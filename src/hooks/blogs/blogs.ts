@@ -1,22 +1,6 @@
-interface BlogProps {
-  title: string
-  subTitle: string
-  slug: string
-  content: string
-  images: Array<string>
-  category: string
-  tags: Array<string>
-  author: string
-  share: {
-    facebook: string
-    linkedin: string
-    x: string
-    instagram: string
-  }
-  lawWays: string
-}
+import type { BlogProps } from '@/types'
 
-async function blogs(upload: BlogProps) {
+export async function blogs(upload: BlogProps) {
   const responce = await fetch('http://localhost:4000/api/blogs', {
     method: 'POST',
     headers: {
@@ -43,4 +27,10 @@ async function blogs(upload: BlogProps) {
   return data
 }
 
-export default blogs
+export async function blogsSlag(slag: string): Promise<{ data: BlogProps }> {
+  const res = await fetch(`http://localhost:4000/api/blogs/${slag}`)
+  if (!res.ok) {
+    throw new Error('failed fetching blogs with slug')
+  }
+  return await res.json()
+}
