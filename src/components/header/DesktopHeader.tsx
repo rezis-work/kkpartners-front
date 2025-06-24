@@ -94,7 +94,7 @@ function DesktopHeader({
               Home
             </Link>
 
-            <Link to="/" className="hover:underline">
+            <Link to="/blogs" className="hover:underline">
               Blog
             </Link>
 
@@ -142,6 +142,7 @@ function DesktopHeader({
               auth
             </Link>
             <Link to="/teams" className="hover:underline"></Link>
+            <Link to="/blogsId" className="hover:underline"></Link>
           </div>
           <Link
             to="/contact"

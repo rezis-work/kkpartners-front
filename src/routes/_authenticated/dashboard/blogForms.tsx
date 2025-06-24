@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
-import blogs from '@/hooks/blogs/blogs'
+import { blogs } from '@/hooks/blogs/blogs'
 import ConfirmModal from '@/components/modals/modal'
 import UploadWidget from '@/components/uploadimage'
 

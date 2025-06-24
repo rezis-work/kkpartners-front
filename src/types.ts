@@ -20,3 +20,22 @@ export interface EachTeamMemeber {
   }
   services: [string]
 }
+
+export interface BlogProps {
+  id: string
+  title: string
+  subTitle: string
+  slug: string
+  content: string
+  images: Array<string>
+  category: string
+  tags: Array<string>
+  author: string
+  share: {
+    facebook: string
+    linkedin: string
+    x: string
+    instagram: string
+  }
+  lawWays: string
+}

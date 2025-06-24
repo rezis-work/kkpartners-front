@@ -17,6 +17,7 @@ import { Route as OurTeamImport } from './routes/our-team'
 import { Route as OurOfficesImport } from './routes/our-offices'
 import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
+import { Route as BlogsImport } from './routes/blogs'
 import { Route as AuthImport } from './routes/auth'
 import { Route as AdminSettingsImport } from './routes/admin-settings'
 import { Route as AboutUsImport } from './routes/about-us'
@@ -24,7 +25,9 @@ import { Route as AboutMeImport } from './routes/about-me'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeamBioIndexImport } from './routes/team-bio/index'
+import { Route as BlogsIdIndexImport } from './routes/blogsId/index'
 import { Route as TeamBioIdImport } from './routes/team-bio/$id'
+import { Route as BlogsIdIdImport } from './routes/blogsId/$id'
 import { Route as AuthenticatedTeamsIndexImport } from './routes/_authenticated/teams/index'
 import { Route as AuthenticatedDashboardIndexImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedTeamsIdImport } from './routes/_authenticated/teams/$id'
@@ -93,6 +96,12 @@ const ComingSoonRoute = ComingSoonImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const BlogsRoute = BlogsImport.update({
+  id: '/blogs',
+  path: '/blogs',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AuthRoute = AuthImport.update({
   id: '/auth',
   path: '/auth',
@@ -134,9 +143,21 @@ const TeamBioIndexRoute = TeamBioIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const BlogsIdIndexRoute = BlogsIdIndexImport.update({
+  id: '/blogsId/',
+  path: '/blogsId/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const TeamBioIdRoute = TeamBioIdImport.update({
   id: '/team-bio/$id',
   path: '/team-bio/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BlogsIdIdRoute = BlogsIdIdImport.update({
+  id: '/blogsId/$id',
+  path: '/blogsId/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -254,6 +275,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/blogs': {
+      id: '/blogs'
+      path: '/blogs'
+      fullPath: '/blogs'
+      preLoaderRoute: typeof BlogsImport
+      parentRoute: typeof rootRoute
+    }
     '/coming-soon': {
       id: '/coming-soon'
       path: '/coming-soon'
@@ -310,11 +338,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatWeDoLazyImport
       parentRoute: typeof rootRoute
     }
+    '/blogsId/$id': {
+      id: '/blogsId/$id'
+      path: '/blogsId/$id'
+      fullPath: '/blogsId/$id'
+      preLoaderRoute: typeof BlogsIdIdImport
+      parentRoute: typeof rootRoute
+    }
     '/team-bio/$id': {
       id: '/team-bio/$id'
       path: '/team-bio/$id'
       fullPath: '/team-bio/$id'
       preLoaderRoute: typeof TeamBioIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/blogsId/': {
+      id: '/blogsId/'
+      path: '/blogsId'
+      fullPath: '/blogsId'
+      preLoaderRoute: typeof BlogsIdIndexImport
       parentRoute: typeof rootRoute
     }
     '/team-bio/': {
@@ -442,6 +484,7 @@ export interface FileRoutesByFullPath {
   '/about-us': typeof AboutUsRoute
   '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
+  '/blogs': typeof BlogsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -450,7 +493,9 @@ export interface FileRoutesByFullPath {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/blogsId/$id': typeof BlogsIdIdRoute
   '/team-bio/$id': typeof TeamBioIdRoute
+  '/blogsId': typeof BlogsIdIndexRoute
   '/team-bio': typeof TeamBioIndexRoute
   '/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
   '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
@@ -471,6 +516,7 @@ export interface FileRoutesByTo {
   '/about-us': typeof AboutUsRoute
   '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
+  '/blogs': typeof BlogsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -479,7 +525,9 @@ export interface FileRoutesByTo {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/blogsId/$id': typeof BlogsIdIdRoute
   '/team-bio/$id': typeof TeamBioIdRoute
+  '/blogsId': typeof BlogsIdIndexRoute
   '/team-bio': typeof TeamBioIndexRoute
   '/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
   '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
@@ -501,6 +549,7 @@ export interface FileRoutesById {
   '/about-us': typeof AboutUsRoute
   '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
+  '/blogs': typeof BlogsRoute
   '/coming-soon': typeof ComingSoonRoute
   '/contact': typeof ContactRoute
   '/our-offices': typeof OurOfficesRoute
@@ -509,7 +558,9 @@ export interface FileRoutesById {
   '/our-clients': typeof OurClientsLazyRoute
   '/our-expertise': typeof OurExpertiseLazyRoute
   '/what-we-do': typeof WhatWeDoLazyRoute
+  '/blogsId/$id': typeof BlogsIdIdRoute
   '/team-bio/$id': typeof TeamBioIdRoute
+  '/blogsId/': typeof BlogsIdIndexRoute
   '/team-bio/': typeof TeamBioIndexRoute
   '/_authenticated/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
   '/_authenticated/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
@@ -532,6 +583,7 @@ export interface FileRouteTypes {
     | '/about-us'
     | '/admin-settings'
     | '/auth'
+    | '/blogs'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -540,7 +592,9 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/blogsId/$id'
     | '/team-bio/$id'
+    | '/blogsId'
     | '/team-bio'
     | '/dashboard/blogForms'
     | '/dashboard/clients-page'
@@ -560,6 +614,7 @@ export interface FileRouteTypes {
     | '/about-us'
     | '/admin-settings'
     | '/auth'
+    | '/blogs'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -568,7 +623,9 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/blogsId/$id'
     | '/team-bio/$id'
+    | '/blogsId'
     | '/team-bio'
     | '/dashboard/blogForms'
     | '/dashboard/clients-page'
@@ -588,6 +645,7 @@ export interface FileRouteTypes {
     | '/about-us'
     | '/admin-settings'
     | '/auth'
+    | '/blogs'
     | '/coming-soon'
     | '/contact'
     | '/our-offices'
@@ -596,7 +654,9 @@ export interface FileRouteTypes {
     | '/our-clients'
     | '/our-expertise'
     | '/what-we-do'
+    | '/blogsId/$id'
     | '/team-bio/$id'
+    | '/blogsId/'
     | '/team-bio/'
     | '/_authenticated/dashboard/blogForms'
     | '/_authenticated/dashboard/clients-page'
@@ -618,6 +678,7 @@ export interface RootRouteChildren {
   AboutUsRoute: typeof AboutUsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AuthRoute: typeof AuthRoute
+  BlogsRoute: typeof BlogsRoute
   ComingSoonRoute: typeof ComingSoonRoute
   ContactRoute: typeof ContactRoute
   OurOfficesRoute: typeof OurOfficesRoute
@@ -626,7 +687,9 @@ export interface RootRouteChildren {
   OurClientsLazyRoute: typeof OurClientsLazyRoute
   OurExpertiseLazyRoute: typeof OurExpertiseLazyRoute
   WhatWeDoLazyRoute: typeof WhatWeDoLazyRoute
+  BlogsIdIdRoute: typeof BlogsIdIdRoute
   TeamBioIdRoute: typeof TeamBioIdRoute
+  BlogsIdIndexRoute: typeof BlogsIdIndexRoute
   TeamBioIndexRoute: typeof TeamBioIndexRoute
 }
 
@@ -637,6 +700,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutUsRoute: AboutUsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AuthRoute: AuthRoute,
+  BlogsRoute: BlogsRoute,
   ComingSoonRoute: ComingSoonRoute,
   ContactRoute: ContactRoute,
   OurOfficesRoute: OurOfficesRoute,
@@ -645,7 +709,9 @@ const rootRouteChildren: RootRouteChildren = {
   OurClientsLazyRoute: OurClientsLazyRoute,
   OurExpertiseLazyRoute: OurExpertiseLazyRoute,
   WhatWeDoLazyRoute: WhatWeDoLazyRoute,
+  BlogsIdIdRoute: BlogsIdIdRoute,
   TeamBioIdRoute: TeamBioIdRoute,
+  BlogsIdIndexRoute: BlogsIdIndexRoute,
   TeamBioIndexRoute: TeamBioIndexRoute,
 }
 
@@ -665,6 +731,7 @@ export const routeTree = rootRoute
         "/about-us",
         "/admin-settings",
         "/auth",
+        "/blogs",
         "/coming-soon",
         "/contact",
         "/our-offices",
@@ -673,7 +740,9 @@ export const routeTree = rootRoute
         "/our-clients",
         "/our-expertise",
         "/what-we-do",
+        "/blogsId/$id",
         "/team-bio/$id",
+        "/blogsId/",
         "/team-bio/"
       ]
     },
@@ -707,6 +776,9 @@ export const routeTree = rootRoute
     "/auth": {
       "filePath": "auth.tsx"
     },
+    "/blogs": {
+      "filePath": "blogs.tsx"
+    },
     "/coming-soon": {
       "filePath": "coming-soon.tsx"
     },
@@ -731,8 +803,14 @@ export const routeTree = rootRoute
     "/what-we-do": {
       "filePath": "what-we-do.lazy.tsx"
     },
+    "/blogsId/$id": {
+      "filePath": "blogsId/$id.tsx"
+    },
     "/team-bio/$id": {
       "filePath": "team-bio/$id.tsx"
+    },
+    "/blogsId/": {
+      "filePath": "blogsId/index.tsx"
     },
     "/team-bio/": {
       "filePath": "team-bio/index.tsx"
