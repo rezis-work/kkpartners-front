@@ -45,6 +45,62 @@ function layout() {
           >
             <Link to="/dashboard/clients-page">Clients-Page</Link>
           </div>
+          <Link
+            to="/"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            to="/about-us"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            About Us
+          </Link>
+          <Link
+            to="/dashboard/createPartner"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add Partner
+          </Link>
+          <Link
+            to="/dashboard"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Dashboard
+          </Link>
+          <Link
+            to={BlogFormsRoute.to}
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add Blogs
+          </Link>
+          <Link
+            to={UserMessagesRoute.to}
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Users Messages
+          </Link>
+          <Link
+            to={UserCommentsRoute.to}
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add comments
+          </Link>
+          <Link
+            to={HomePageCarouselRoute.to}
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add Banners
+          </Link>
         </nav>
       </aside>
 
@@ -65,6 +121,32 @@ function layout() {
               </button>
             </div>
             <nav className="space-y-2">
+              <Link
+                to="/"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Home
+              </Link>
+
+              <Link
+                to="/dashboard/createPartner"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Add Partner
+              </Link>
+              <Link to="/dashboard/team-members" search={{ page: 1 }}>
+                Team-Members
+              </Link>
+              <div
+                className="hover:text-gray-300 cursor-pointer mt-2"
+                onClick={() => {
+                  setSidebarOpen(false)
+                }}
+              >
+                <Link to="/dashboard/clients-page">Clients-Page</Link>
+              </div>
               <Link
                 to="/"
                 className="hover:text-gray-300 cursor-pointer block"
