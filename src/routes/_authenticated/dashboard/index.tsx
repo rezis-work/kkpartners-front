@@ -72,6 +72,20 @@ function layout() {
           >
             Add Banners
           </Link>
+          <Link
+            to="/dashboard/faq-page"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            FAQ Page
+          </Link>
+          <Link
+            to="/dashboard/admin-settings"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add New Admin
+          </Link>
         </nav>
       </aside>
 
@@ -148,6 +162,20 @@ function layout() {
               >
                 Add Banners
               </Link>
+              <Link
+            to="/dashboard/faq-page"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            FAQ Page
+          </Link>
+          <Link
+            to="/dashboard/admin-settings"
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Add New Admin
+          </Link>
             </nav>
           </aside>
         </div>

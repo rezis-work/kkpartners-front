@@ -10,7 +10,9 @@ export function TeamPage() {
   const [partners, setPartners] = useState<Array<Partner>>([])
 
   useEffect(() => {
-    getPartners().then(setPartners)
+    getPartners().then((data) => {
+      setPartners(data.data)
+    })
   }, [])
 
   return (
