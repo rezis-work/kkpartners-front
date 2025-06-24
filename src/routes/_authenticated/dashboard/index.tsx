@@ -5,6 +5,7 @@ import { Route as BlogFormsRoute } from './blogForms'
 import { Route as UserMessagesRoute } from './userMessages'
 import { Route as UserCommentsRoute } from './userComments'
 import { Route as HomePageCarouselRoute } from './homePageCarousel'
+import { Route as UpdateBlogsRoute } from './updateBlogs'
 
 export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: layout,
@@ -66,6 +67,7 @@ function layout() {
           >
             Add Partner
           </Link>
+
           <Link
             to="/dashboard"
             className="hover:text-gray-300 cursor-pointer block"
@@ -79,6 +81,13 @@ function layout() {
             onClick={() => setSidebarOpen(false)}
           >
             Add Blogs
+          </Link>
+          <Link
+            to={UpdateBlogsRoute.to}
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Update Blogs
           </Link>
           <Link
             to={UserMessagesRoute.to}
@@ -181,6 +190,13 @@ function layout() {
                 onClick={() => setSidebarOpen(false)}
               >
                 Add Blogs
+              </Link>
+              <Link
+                to={UpdateBlogsRoute.to}
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Update Blogs
               </Link>
               <Link
                 to={UserMessagesRoute.to}
