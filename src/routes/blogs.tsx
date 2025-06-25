@@ -1,5 +1,6 @@
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
+import React, { useState } from 'react'
 
 import {
   FaFacebookF,
@@ -7,6 +8,7 @@ import {
   FaLinkedinIn,
   FaSearch,
   FaTwitter,
+  FaTimes,
 } from 'react-icons/fa'
 import HeaderMain from '@/components/header/HeaderMain'
 
@@ -45,6 +47,8 @@ interface Blog {
 function RouteComponent() {
   const navigate = useNavigate()
   const { page } = Route.useSearch()
+  const [searchInput, setSearchInput] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['blogs', page],
@@ -53,6 +57,20 @@ function RouteComponent() {
 
   const setPage = (newPage: number) => {
     navigate({ search: { page: newPage } })
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
+  }
+
+  const handleSearch = () => {
+    setSearchTerm(searchInput)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setSearchTerm(searchInput)
+    }
   }
 
   if (isLoading) {
@@ -92,6 +110,14 @@ function RouteComponent() {
   if (!data) {
     return null
   }
+
+  const filteredBlogs = data.data.filter(
+    (blog: Blog) =>
+      blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.subTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.content.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
+
   return (
     <div className="w-full h-full" id="blogsMain">
       {/* Header */}
@@ -116,10 +142,10 @@ function RouteComponent() {
       <div className="w-full pt-20 px-6 grid grid-cols-1 lg:grid-cols-10 gap-10 pb-10 lg:px-20">
         {/* LEFT: Blogs */}
         <div className="col-span-7 space-y-10">
-          {data.data.map((blogs: Blog, index: number) => {
+          {filteredBlogs.map((blogs: Blog, index: number) => {
             return (
-              <>
-                <Link key={index} to="/blogsId/$id" params={{ id: blogs.slug }}>
+              <React.Fragment key={index}>
+                <Link to="/blogsId/$id" params={{ id: blogs.slug }}>
                   <div className="space-y-4 pb-10">
                     {/* Show first image if exists */}
                     {blogs.images.length > 0 && (
@@ -195,7 +221,7 @@ function RouteComponent() {
                     </div>
                   </div>
                 </div>
-              </>
+              </React.Fragment>
             )
           })}
           <div className="flex justify-center gap-4 pt-6">
@@ -219,13 +245,23 @@ function RouteComponent() {
 
         <div className="col-span-3 space-y-10">
           {/* Search */}
-          <div className="relative w-full">
+          <div className="relative w-full flex items-center">
             <input
               type="search"
+              value={searchInput}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               placeholder="Search blog..."
-              className="w-full text-black border-0 border-b border-black focus:outline-none focus:border-black transition-all pr-10 py- sm:w-1/2"
+              className="w-full text-black border-0 border-b border-black focus:outline-none focus:border-black transition-all pr-10 py-2"
+              style={{ height: '44px' }}
             />
-            <FaSearch className="absolute right-2 top-1/2 -translate-y-1/2 text-black sm:w-8/8" />
+            <button
+              onClick={handleSearch}
+              className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition-all"
+              style={{ height: '36px' }}
+            >
+              Search
+            </button>
           </div>
 
           {/* Categories */}
