@@ -7,6 +7,7 @@ import type { User } from '@/hooks/getUser'
 import ErrorBoundary from '@/components/ErrorBoundaries'
 import NotFound from '@/components/NotFound'
 
+
 const query = new QueryClient()
 
 export const Route = createRootRouteWithContext<User>()({

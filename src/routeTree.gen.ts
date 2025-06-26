@@ -19,7 +19,6 @@ import { Route as ContactImport } from './routes/contact'
 import { Route as ComingSoonImport } from './routes/coming-soon'
 import { Route as BlogsImport } from './routes/blogs'
 import { Route as AuthImport } from './routes/auth'
-import { Route as AdminSettingsImport } from './routes/admin-settings'
 import { Route as AboutUsImport } from './routes/about-us'
 import { Route as AboutMeImport } from './routes/about-me'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
@@ -35,9 +34,11 @@ import { Route as AuthenticatedDashboardUserMessagesImport } from './routes/_aut
 import { Route as AuthenticatedDashboardUserCommentsImport } from './routes/_authenticated/dashboard/userComments'
 import { Route as AuthenticatedDashboardTeamMembersImport } from './routes/_authenticated/dashboard/team-members'
 import { Route as AuthenticatedDashboardHomePageCarouselImport } from './routes/_authenticated/dashboard/homePageCarousel'
+import { Route as AuthenticatedDashboardFaqPageImport } from './routes/_authenticated/dashboard/faq-page'
 import { Route as AuthenticatedDashboardCreatePartnerImport } from './routes/_authenticated/dashboard/createPartner'
 import { Route as AuthenticatedDashboardClientsPageImport } from './routes/_authenticated/dashboard/clients-page'
 import { Route as AuthenticatedDashboardBlogFormsImport } from './routes/_authenticated/dashboard/blogForms'
+import { Route as AuthenticatedDashboardAdminSettingsImport } from './routes/_authenticated/dashboard/admin-settings'
 
 // Create Virtual Routes
 
@@ -105,12 +106,6 @@ const BlogsRoute = BlogsImport.update({
 const AuthRoute = AuthImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AdminSettingsRoute = AdminSettingsImport.update({
-  id: '/admin-settings',
-  path: '/admin-settings',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -208,6 +203,13 @@ const AuthenticatedDashboardHomePageCarouselRoute =
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
+const AuthenticatedDashboardFaqPageRoute =
+  AuthenticatedDashboardFaqPageImport.update({
+    id: '/dashboard/faq-page',
+    path: '/dashboard/faq-page',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
 const AuthenticatedDashboardCreatePartnerRoute =
   AuthenticatedDashboardCreatePartnerImport.update({
     id: '/dashboard/createPartner',
@@ -226,6 +228,13 @@ const AuthenticatedDashboardBlogFormsRoute =
   AuthenticatedDashboardBlogFormsImport.update({
     id: '/dashboard/blogForms',
     path: '/dashboard/blogForms',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedDashboardAdminSettingsRoute =
+  AuthenticatedDashboardAdminSettingsImport.update({
+    id: '/dashboard/admin-settings',
+    path: '/dashboard/admin-settings',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
@@ -259,13 +268,6 @@ declare module '@tanstack/react-router' {
       path: '/about-us'
       fullPath: '/about-us'
       preLoaderRoute: typeof AboutUsImport
-      parentRoute: typeof rootRoute
-    }
-    '/admin-settings': {
-      id: '/admin-settings'
-      path: '/admin-settings'
-      fullPath: '/admin-settings'
-      preLoaderRoute: typeof AdminSettingsImport
       parentRoute: typeof rootRoute
     }
     '/auth': {
@@ -366,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamBioIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/dashboard/admin-settings': {
+      id: '/_authenticated/dashboard/admin-settings'
+      path: '/dashboard/admin-settings'
+      fullPath: '/dashboard/admin-settings'
+      preLoaderRoute: typeof AuthenticatedDashboardAdminSettingsImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/dashboard/blogForms': {
       id: '/_authenticated/dashboard/blogForms'
       path: '/dashboard/blogForms'
@@ -385,6 +394,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/createPartner'
       fullPath: '/dashboard/createPartner'
       preLoaderRoute: typeof AuthenticatedDashboardCreatePartnerImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/dashboard/faq-page': {
+      id: '/_authenticated/dashboard/faq-page'
+      path: '/dashboard/faq-page'
+      fullPath: '/dashboard/faq-page'
+      preLoaderRoute: typeof AuthenticatedDashboardFaqPageImport
       parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/dashboard/homePageCarousel': {
@@ -442,9 +458,11 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedDashboardAdminSettingsRoute: typeof AuthenticatedDashboardAdminSettingsRoute
   AuthenticatedDashboardBlogFormsRoute: typeof AuthenticatedDashboardBlogFormsRoute
   AuthenticatedDashboardClientsPageRoute: typeof AuthenticatedDashboardClientsPageRoute
   AuthenticatedDashboardCreatePartnerRoute: typeof AuthenticatedDashboardCreatePartnerRoute
+  AuthenticatedDashboardFaqPageRoute: typeof AuthenticatedDashboardFaqPageRoute
   AuthenticatedDashboardHomePageCarouselRoute: typeof AuthenticatedDashboardHomePageCarouselRoute
   AuthenticatedDashboardTeamMembersRoute: typeof AuthenticatedDashboardTeamMembersRoute
   AuthenticatedDashboardUserCommentsRoute: typeof AuthenticatedDashboardUserCommentsRoute
@@ -455,11 +473,14 @@ interface AuthenticatedRouteChildren {
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedDashboardAdminSettingsRoute:
+    AuthenticatedDashboardAdminSettingsRoute,
   AuthenticatedDashboardBlogFormsRoute: AuthenticatedDashboardBlogFormsRoute,
   AuthenticatedDashboardClientsPageRoute:
     AuthenticatedDashboardClientsPageRoute,
   AuthenticatedDashboardCreatePartnerRoute:
     AuthenticatedDashboardCreatePartnerRoute,
+  AuthenticatedDashboardFaqPageRoute: AuthenticatedDashboardFaqPageRoute,
   AuthenticatedDashboardHomePageCarouselRoute:
     AuthenticatedDashboardHomePageCarouselRoute,
   AuthenticatedDashboardTeamMembersRoute:
@@ -482,7 +503,6 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
-  '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
   '/blogs': typeof BlogsRoute
   '/coming-soon': typeof ComingSoonRoute
@@ -497,9 +517,11 @@ export interface FileRoutesByFullPath {
   '/team-bio/$id': typeof TeamBioIdRoute
   '/blogsId': typeof BlogsIdIndexRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/admin-settings': typeof AuthenticatedDashboardAdminSettingsRoute
   '/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
   '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/dashboard/faq-page': typeof AuthenticatedDashboardFaqPageRoute
   '/dashboard/homePageCarousel': typeof AuthenticatedDashboardHomePageCarouselRoute
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
@@ -514,7 +536,6 @@ export interface FileRoutesByTo {
   '': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
-  '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
   '/blogs': typeof BlogsRoute
   '/coming-soon': typeof ComingSoonRoute
@@ -529,9 +550,11 @@ export interface FileRoutesByTo {
   '/team-bio/$id': typeof TeamBioIdRoute
   '/blogsId': typeof BlogsIdIndexRoute
   '/team-bio': typeof TeamBioIndexRoute
+  '/dashboard/admin-settings': typeof AuthenticatedDashboardAdminSettingsRoute
   '/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
   '/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/dashboard/faq-page': typeof AuthenticatedDashboardFaqPageRoute
   '/dashboard/homePageCarousel': typeof AuthenticatedDashboardHomePageCarouselRoute
   '/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
@@ -547,7 +570,6 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about-me': typeof AboutMeRoute
   '/about-us': typeof AboutUsRoute
-  '/admin-settings': typeof AdminSettingsRoute
   '/auth': typeof AuthRoute
   '/blogs': typeof BlogsRoute
   '/coming-soon': typeof ComingSoonRoute
@@ -562,9 +584,11 @@ export interface FileRoutesById {
   '/team-bio/$id': typeof TeamBioIdRoute
   '/blogsId/': typeof BlogsIdIndexRoute
   '/team-bio/': typeof TeamBioIndexRoute
+  '/_authenticated/dashboard/admin-settings': typeof AuthenticatedDashboardAdminSettingsRoute
   '/_authenticated/dashboard/blogForms': typeof AuthenticatedDashboardBlogFormsRoute
   '/_authenticated/dashboard/clients-page': typeof AuthenticatedDashboardClientsPageRoute
   '/_authenticated/dashboard/createPartner': typeof AuthenticatedDashboardCreatePartnerRoute
+  '/_authenticated/dashboard/faq-page': typeof AuthenticatedDashboardFaqPageRoute
   '/_authenticated/dashboard/homePageCarousel': typeof AuthenticatedDashboardHomePageCarouselRoute
   '/_authenticated/dashboard/team-members': typeof AuthenticatedDashboardTeamMembersRoute
   '/_authenticated/dashboard/userComments': typeof AuthenticatedDashboardUserCommentsRoute
@@ -581,7 +605,6 @@ export interface FileRouteTypes {
     | ''
     | '/about-me'
     | '/about-us'
-    | '/admin-settings'
     | '/auth'
     | '/blogs'
     | '/coming-soon'
@@ -596,9 +619,11 @@ export interface FileRouteTypes {
     | '/team-bio/$id'
     | '/blogsId'
     | '/team-bio'
+    | '/dashboard/admin-settings'
     | '/dashboard/blogForms'
     | '/dashboard/clients-page'
     | '/dashboard/createPartner'
+    | '/dashboard/faq-page'
     | '/dashboard/homePageCarousel'
     | '/dashboard/team-members'
     | '/dashboard/userComments'
@@ -612,7 +637,6 @@ export interface FileRouteTypes {
     | ''
     | '/about-me'
     | '/about-us'
-    | '/admin-settings'
     | '/auth'
     | '/blogs'
     | '/coming-soon'
@@ -627,9 +651,11 @@ export interface FileRouteTypes {
     | '/team-bio/$id'
     | '/blogsId'
     | '/team-bio'
+    | '/dashboard/admin-settings'
     | '/dashboard/blogForms'
     | '/dashboard/clients-page'
     | '/dashboard/createPartner'
+    | '/dashboard/faq-page'
     | '/dashboard/homePageCarousel'
     | '/dashboard/team-members'
     | '/dashboard/userComments'
@@ -643,7 +669,6 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about-me'
     | '/about-us'
-    | '/admin-settings'
     | '/auth'
     | '/blogs'
     | '/coming-soon'
@@ -658,9 +683,11 @@ export interface FileRouteTypes {
     | '/team-bio/$id'
     | '/blogsId/'
     | '/team-bio/'
+    | '/_authenticated/dashboard/admin-settings'
     | '/_authenticated/dashboard/blogForms'
     | '/_authenticated/dashboard/clients-page'
     | '/_authenticated/dashboard/createPartner'
+    | '/_authenticated/dashboard/faq-page'
     | '/_authenticated/dashboard/homePageCarousel'
     | '/_authenticated/dashboard/team-members'
     | '/_authenticated/dashboard/userComments'
@@ -676,7 +703,6 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutMeRoute: typeof AboutMeRoute
   AboutUsRoute: typeof AboutUsRoute
-  AdminSettingsRoute: typeof AdminSettingsRoute
   AuthRoute: typeof AuthRoute
   BlogsRoute: typeof BlogsRoute
   ComingSoonRoute: typeof ComingSoonRoute
@@ -698,7 +724,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutMeRoute: AboutMeRoute,
   AboutUsRoute: AboutUsRoute,
-  AdminSettingsRoute: AdminSettingsRoute,
   AuthRoute: AuthRoute,
   BlogsRoute: BlogsRoute,
   ComingSoonRoute: ComingSoonRoute,
@@ -729,7 +754,6 @@ export const routeTree = rootRoute
         "/_authenticated",
         "/about-me",
         "/about-us",
-        "/admin-settings",
         "/auth",
         "/blogs",
         "/coming-soon",
@@ -752,9 +776,11 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/dashboard/admin-settings",
         "/_authenticated/dashboard/blogForms",
         "/_authenticated/dashboard/clients-page",
         "/_authenticated/dashboard/createPartner",
+        "/_authenticated/dashboard/faq-page",
         "/_authenticated/dashboard/homePageCarousel",
         "/_authenticated/dashboard/team-members",
         "/_authenticated/dashboard/userComments",
@@ -769,9 +795,6 @@ export const routeTree = rootRoute
     },
     "/about-us": {
       "filePath": "about-us.tsx"
-    },
-    "/admin-settings": {
-      "filePath": "admin-settings.tsx"
     },
     "/auth": {
       "filePath": "auth.tsx"
@@ -815,6 +838,10 @@ export const routeTree = rootRoute
     "/team-bio/": {
       "filePath": "team-bio/index.tsx"
     },
+    "/_authenticated/dashboard/admin-settings": {
+      "filePath": "_authenticated/dashboard/admin-settings.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/dashboard/blogForms": {
       "filePath": "_authenticated/dashboard/blogForms.tsx",
       "parent": "/_authenticated"
@@ -825,6 +852,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/dashboard/createPartner": {
       "filePath": "_authenticated/dashboard/createPartner.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/dashboard/faq-page": {
+      "filePath": "_authenticated/dashboard/faq-page.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/dashboard/homePageCarousel": {
