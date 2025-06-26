@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { useState } from 'react'
-import { useCreateFaq } from '@/hooks/faq-adm/useCreateFaq'
+import { useCreateFaq } from '@/hooks/faqHooks'
 import { X } from 'lucide-react'
 import { toast } from 'react-hot-toast' 
 
@@ -19,7 +19,7 @@ export default function FaqAddModal({ onClose }: FaqAddModalProps) {
       { question, answer },
       {
         onSuccess: () => {
-          toast.success('FAQ added successfully') 
+           toast.success('FAQ added successfully') 
           onClose()
         },
         onError: (err: any) => {
@@ -37,7 +37,7 @@ export default function FaqAddModal({ onClose }: FaqAddModalProps) {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold text-gray-800">Add New FAQ</h2>
             <button onClick={onClose}>
-              <X className="w-5 h-5 text-gray-500 hover:text-gray-800" />
+              <X className="cursor-pointer w-5 h-5 text-gray-500 hover:text-gray-800" />
             </button>
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -61,13 +61,13 @@ export default function FaqAddModal({ onClose }: FaqAddModalProps) {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl border border-gray-400 hover:bg-gray-100 transition"
+                className="cursor-pointer px-4 py-2 rounded-xl border border-gray-400 hover:bg-gray-100 transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition"
+                className="cursor-pointer px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition"
                 disabled={addFaq.isPending}
               >
                 {addFaq.isPending ? 'Saving...' : 'Save'}

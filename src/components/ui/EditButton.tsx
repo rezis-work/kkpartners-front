@@ -1,5 +1,4 @@
 import { Edit2Icon } from 'lucide-react'
-
 interface EditButtonProps {
   onClick: () => void
 }

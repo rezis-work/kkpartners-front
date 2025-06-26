@@ -16,6 +16,7 @@ function App() {
   return (
     <div className="w-screen h-screen overflow-x-hidden relative">
       <div id="section-first" className="w-full">
+        
         <HeaderMain
           bgColor={'transparent'}
           darkOrLight="light"

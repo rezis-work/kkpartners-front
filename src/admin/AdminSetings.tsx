@@ -4,6 +4,9 @@ import { toast } from "react-hot-toast";
 import { validateAdminInputs } from "./validateAdmin";
 import { registerAdmin } from "./registerAdmin";
 
+import { useNavigate } from "@tanstack/react-router";
+import BackButton from "@/components/ui/BackButton";
+
 function debounce<Func extends (...args: any[]) => void>(func: Func, wait: number) {
   let timeout: ReturnType<typeof setTimeout>;
   return (...args: Parameters<Func>) => {
@@ -21,6 +24,12 @@ export default function AdminSettings() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate()
+
+  const handleBackToDashboard = () => {
+    navigate({ to: '/dashboard' })
+  }
 
   const debouncedValidate = useCallback(
     debounce((emailVal: string, passVal: string, confirmVal: string) => {
@@ -62,6 +71,8 @@ export default function AdminSettings() {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
+      <BackButton label="Back to Dashboard" onClick={handleBackToDashboard} />
+      
       <h2 className="text-2xl font-bold mb-6 text-center">Add New Admin</h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
