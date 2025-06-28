@@ -1,8 +1,10 @@
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { useAuth } from '../hooks/auth' // იმპორტი თქვენი useAuth ფუნქციისთვის
+import { useAuth } from '../hooks/auth' 
+
+import {clearRememberEmail, getRememberEmail, setRememberEmail } from '../utils/storage'
 
 export const Route = createFileRoute('/auth')({
   component: Auth,
@@ -11,7 +13,18 @@ export const Route = createFileRoute('/auth')({
 function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const [rememberMe, setRememberMe] = useState(false)
+
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const savedEmail = getRememberEmail()
+    if (savedEmail) {
+      setEmail(savedEmail)
+      setRememberMe(true)
+    }
+  }, [])
 
   const mutation = useMutation<
     unknown,
@@ -32,8 +45,19 @@ function Auth() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
+
+    // tu monishnulia rom sheinaxos
+  if (rememberMe){
+    setRememberEmail(email);
+  } else{
+    clearRememberEmail();
+  }
+
     mutation.mutate({ email, password })
   }
+
+
+  
 
   return (
     <div className="w-full h-screen overflow-hidden">
@@ -87,8 +111,14 @@ function Auth() {
                 </Link>
               </div>
 
+              {/* ganaxlebuli Remember Me  */}
               <label className="flex items-center space-x-2 text-black text-sm">
-                <input type="checkbox" className="accent-black w-4 h-4" />
+                <input
+                  type="checkbox"
+                  className="accent-black w-4 h-4"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
                 <span>Remember me</span>
               </label>
 

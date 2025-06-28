@@ -1,17 +1,32 @@
-import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
+import {
+  Link,
+  Outlet,
+  createFileRoute,
+  useNavigate,
+} from '@tanstack/react-router'
 import { useState } from 'react'
 import { Layout as Menu, X } from 'lucide-react'
 import { Route as BlogFormsRoute } from './blogForms'
 import { Route as UserMessagesRoute } from './userMessages'
 import { Route as UserCommentsRoute } from './userComments'
 import { Route as HomePageCarouselRoute } from './homePageCarousel'
+import { logout } from '@/hooks/auth'
 
 export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: layout,
 })
 
+
+
+
 function layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    await logout(false) // false = არ წაშალოს იმეილი localStorage-დან
+    navigate({ to: '/auth' }) // დაბრუნება ლოგინ გვერდზე
+  };
 
   return (
     <div className="min-h-screen md:grid md:grid-cols-[240px_1fr] bg-gray-100">
@@ -115,6 +130,14 @@ function layout() {
           >
             Add New Admin
           </Link>
+
+          {/*logout btn*/}
+          <button
+            onClick={handleLogout}
+            className="mt-4 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded w-full text-left"
+          >
+            Logout
+          </button>
         </nav>
       </aside>
 
@@ -218,19 +241,28 @@ function layout() {
                 Add Banners
               </Link>
               <Link
-            to="/dashboard/faq-page"
-            className="hover:text-gray-300 cursor-pointer block"
-            onClick={() => setSidebarOpen(false)}
-          >
-            FAQ Page
-          </Link>
-          <Link
-            to="/dashboard/admin-settings"
-            className="hover:text-gray-300 cursor-pointer block"
-            onClick={() => setSidebarOpen(false)}
-          >
-            Add New Admin
-          </Link>
+                to="/dashboard/faq-page"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                FAQ Page
+              </Link>
+              <Link
+                to="/dashboard/admin-settings"
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Add New Admin
+              </Link>
+
+              {/*logout btn*/}
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="mt-4 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded w-full text-left"
+              >
+                Logout
+              </button>
             </nav>
           </aside>
         </div>
