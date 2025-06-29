@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 
 import {
   FaFacebookF,
@@ -51,34 +51,49 @@ function RouteComponent() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedTag, setSelectedTag] = useState('')
+  const [searchLoading, setSearchLoading] = useState(false)
 
   // Build search parameters for the API call
   const searchParams = useMemo(() => {
-    const params: any = { page: currentPage }
-
-    if (searchTerm.trim()) params.search = searchTerm.trim()
-    if (selectedCategory) params.category = selectedCategory
-    if (selectedTag) params.tags = selectedTag
+    const params = {
+      page: currentPage,
+      search: searchTerm?.trim() || '',
+      category: selectedCategory || '',
+      tags: selectedTag || '',
+    }
 
     console.log('Search params:', params) // Debug log
     return params
   }, [currentPage, searchTerm, selectedCategory, selectedTag])
 
-  // Use useQuery with search parameters - this is what your senior developer wants
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['blogs', searchParams],
-    queryFn: () => getBlogs(searchParams),
+    queryFn: () => {
+      // Filter out empty parameters
+      const filteredParams = Object.fromEntries(
+        Object.entries(searchParams).filter(
+          ([_, value]) => value !== '' && value !== undefined,
+        ),
+      )
+      return getBlogs(filteredParams)
+    },
+    enabled: true, // Always enable the query
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false,
   })
 
   // Fetch all available tags
   const { data: tagsData, isLoading: tagsLoading } = useQuery({
     queryKey: ['tags'],
     queryFn: getAllTags,
+    staleTime: 10 * 60 * 1000, // 10 minutes
   })
 
   console.log('Current search params:', searchParams)
   console.log('Query result:', { data, isLoading, isError, error })
   console.log('Tags data:', tagsData)
+  console.log('Search term:', searchTerm)
+  console.log('Search input:', searchInput)
 
   const setPage = (newPage: number) => {
     setCurrentPage(newPage)
@@ -88,25 +103,30 @@ function RouteComponent() {
     setSearchInput(e.target.value)
   }
 
-  const handleSearch = () => {
-    if (searchInput.trim()) {
-      setSearchTerm(searchInput.trim())
-      // Reset to page 1 when searching
-      if (currentPage !== 1) {
-        setPage(1)
-      }
+  const handleSearch = useCallback(() => {
+    console.log('Search button clicked! Input value:', searchInput) // Debug log
+    const trimmedInput = searchInput.trim()
+
+    // Set search loading state
+    setSearchLoading(true)
+
+    // Update the search term immediately - this will trigger useQuery to refetch
+    setSearchTerm(trimmedInput)
+
+    // Reset to page 1 when searching
+    if (currentPage !== 1) {
+      setPage(1)
     }
-  }
+
+    // Reset search loading state after a short delay
+    setTimeout(() => {
+      setSearchLoading(false)
+    }, 100)
+  }, [searchInput, currentPage])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (searchInput.trim()) {
-        setSearchTerm(searchInput.trim())
-        // Reset to page 1 when searching
-        if (currentPage !== 1) {
-          setPage(1)
-        }
-      }
+      handleSearch()
     }
   }
 
@@ -359,16 +379,43 @@ function RouteComponent() {
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Search blog..."
-              className="w-full text-black border-0 border-b border-black focus:outline-none focus:border-black transition-all pr-10 py-2"
+              disabled={searchLoading}
+              className="w-full text-black border-0 border-b border-black focus:outline-none focus:border-black transition-all pr-10 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ height: '44px' }}
+              aria-label="Search blogs"
             />
             <button
+              type="button"
               onClick={handleSearch}
-              className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition-all flex items-center gap-2"
+              disabled={searchLoading}
+              className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ height: '36px' }}
             >
-              <FaSearch size={14} />
-              Search
+              {searchLoading ? (
+                <svg
+                  className="animate-spin h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+              ) : (
+                <FaSearch size={14} />
+              )}
+              {searchLoading ? 'Searching...' : 'Search'}
             </button>
           </div>
 
@@ -394,7 +441,10 @@ function RouteComponent() {
                     Search: "{searchTerm}"
                   </span>
                   <button
-                    onClick={() => setSearchTerm('')}
+                    onClick={() => {
+                      setSearchTerm('')
+                      setSearchInput('')
+                    }}
                     className="text-red-500 hover:text-red-700"
                   >
                     <FaTimes size={12} />
