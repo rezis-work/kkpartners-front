@@ -12,6 +12,7 @@ import { fetchAddresses } from '../api/address'
 import 'leaflet/dist/leaflet.css'
 import HeaderMain from '@/components/header/HeaderMain'
 import FooterComponent from '@/components/Footer'
+import ScrollButt from '@/components/scrollButt'
 
 export const Route = createFileRoute('/our-offices')({
   component: RouteComponent,
@@ -29,7 +30,7 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="w-full h-full">
+      <div className="w-full h-full" id="office">
         <div className="w-full ">
           <HeaderMain
             bgColor={'transparent'}
@@ -94,6 +95,7 @@ function RouteComponent() {
         <div className="mt-30 pb-5s">
           <Map />
         </div>
+        <ScrollButt id="office" />
         <FooterComponent />
       </div>
     </>

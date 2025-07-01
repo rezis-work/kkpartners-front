@@ -1,5 +1,6 @@
 import HeaderMain from '../header/HeaderMain'
-// import CommentsForBlog from './commentsForBlog'
+import CommentsForBlog from './commentsForBlog'
+
 import type { BlogProps } from '@/types'
 
 interface SingleBlogs {
@@ -53,7 +54,7 @@ export default function EachBlog({ slags }: SingleBlogs) {
           </p>
         </div>
       </div>
-      {/* <CommentsForBlog  /> */}
+      <CommentsForBlog blogId={slags._id} />
     </div>
   )
 }

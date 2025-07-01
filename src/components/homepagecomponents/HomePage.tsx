@@ -10,11 +10,20 @@ import HistorySlider from './swiper/historySlide'
 import HomeTeam from './HomeTeam'
 
 import LatestNewsBlogs from './LatestNews'
+import ScrollButt from '../scrollButt'
+import FooterComponent from '../Footer'
 
 function HomePage() {
+  const scrollToTop = () => {
+    const element = document.getElementById('homepage')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <>
-      <main>
+      <main id="homepage">
         <div className="w-full">
           <Banners />
         </div>
@@ -52,9 +61,7 @@ function HomePage() {
         </div>
         <HomeSlider />
         <HomeTeam />
-
         <HistorySlider />
-
         <LatestNewsBlogs />
         <div
           style={{
@@ -85,7 +92,20 @@ function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* Scroll to top button at bottom left */}
+
+        <ScrollButt id="homepage" />
       </main>
+      <div className="fixed bottom-20 right-4 z-50 ">
+        <button
+          onClick={scrollToTop}
+          className="bg-amber-950  text-white px-4 py-2 shadow-lg transition cursor-pointer w-[60px] h-[60px] text-2xl"
+        >
+          ↑
+        </button>
+      </div>
+      <FooterComponent />
     </>
   )
 }

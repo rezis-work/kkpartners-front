@@ -5,6 +5,7 @@ import HeaderMain from '@/components/header/HeaderMain'
 import FooterComponent from '@/components/Footer'
 import { getClients } from '@/api/getClients'
 import '../globalStyles.css'
+import ScrollButt from '@/components/scrollButt'
 
 export const Route = createLazyFileRoute('/our-clients')({
   component: RouteComponent,
@@ -21,7 +22,7 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="w-full bg-[#041E22]">
+      <div className="w-full bg-[#041E22]" id="our-clients">
         <HeaderMain
           bgColor={'transparent'}
           darkOrLight="light"
@@ -63,6 +64,7 @@ function RouteComponent() {
             ))}
           </div>
         </div>
+        <ScrollButt id="our-clients" />
         <FooterComponent />
       </div>
     </>

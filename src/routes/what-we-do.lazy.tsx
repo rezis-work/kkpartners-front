@@ -7,6 +7,7 @@ import { getPracticeAreas } from '@/api/getPracticeAreas'
 import HeaderMain from '@/components/header/HeaderMain'
 import WhatWeDoGridLayout from '@/components/WhatWeDo/WhatWeDoGridLayout'
 import WhatWeDoCardsMobile from '@/components/WhatWeDo/WhatWeDoCardsMobile'
+import ScrollButt from '@/components/scrollButt'
 
 export const Route = createLazyFileRoute('/what-we-do')({
   component: RouteComponent,
@@ -35,7 +36,7 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full" id="what-we-do">
         <HeaderMain
           bgColor={'transparent'}
           darkOrLight="light"
@@ -70,6 +71,7 @@ function RouteComponent() {
           activeCardIndex={activeCardIndex}
           toggleDesktopCard={toggleDesktopCard}
         />
+        <ScrollButt id="what-we-do" />
         <FooterComponent />
       </div>
     </>

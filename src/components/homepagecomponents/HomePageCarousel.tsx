@@ -37,7 +37,7 @@ function HomePageCarousel() {
   const handleSlideChange = (swiper: SwiperType) => {
     setActiveIndex(swiper.activeIndex)
   }
-  console.log(data)
+
   return (
     <div>
       <Swiper
