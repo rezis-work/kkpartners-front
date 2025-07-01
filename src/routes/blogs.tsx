@@ -53,47 +53,62 @@ function RouteComponent() {
   const [selectedTag, setSelectedTag] = useState('')
   const [searchLoading, setSearchLoading] = useState(false)
 
-  // Build search parameters for the API call
+  // Build search parameters for the API call - this is what gets sent to the server
   const searchParams = useMemo(() => {
-    const params = {
+    const params: any = {
       page: currentPage,
-      search: searchTerm?.trim() || '',
-      category: selectedCategory || '',
-      tags: selectedTag || '',
+      limit: 10, // You can adjust this
     }
 
-    console.log('Search params:', params) // Debug log
+    // Only add non-empty parameters to avoid sending empty strings
+    if (searchTerm.trim()) {
+      params.search = searchTerm.trim()
+    }
+    if (selectedCategory) {
+      params.category = selectedCategory
+    }
+    if (selectedTag) {
+      params.tags = selectedTag
+    }
+
+    console.log('Search params being sent to server:', params)
     return params
   }, [currentPage, searchTerm, selectedCategory, selectedTag])
 
-  const { data, isLoading, isError, error, refetch } = useQuery({
+  // Main blogs query - this fetches filtered data from the server
+  const {
+    data: blogsData,
+    isLoading: blogsLoading,
+    isError: blogsError,
+    error: blogsErrorData,
+  } = useQuery({
     queryKey: ['blogs', searchParams],
-    queryFn: () => {
-      // Filter out empty parameters
-      const filteredParams = Object.fromEntries(
-        Object.entries(searchParams).filter(
-          ([_, value]) => value !== '' && value !== undefined,
-        ),
-      )
-      return getBlogs(filteredParams)
-    },
-    enabled: true, // Always enable the query
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    queryFn: () => getBlogs(searchParams),
+    enabled: true,
     refetchOnWindowFocus: false,
   })
 
-  // Fetch all available tags
+  // Tags query - fetches all available tags
   const { data: tagsData, isLoading: tagsLoading } = useQuery({
     queryKey: ['tags'],
     queryFn: getAllTags,
-    staleTime: 10 * 60 * 1000, // 10 minutes
   })
 
+  // Categories query - extracts unique categories from blogs data
+  const categories = useMemo(() => {
+    if (!blogsData?.data) return []
+    const uniqueCategories = [
+      ...new Set(blogsData.data.map((blog: Blog) => blog.category)),
+    ]
+    return uniqueCategories.filter((category): category is string =>
+      Boolean(category),
+    ) // Remove empty categories and ensure type safety
+  }, [blogsData?.data])
+
   console.log('Current search params:', searchParams)
-  console.log('Query result:', { data, isLoading, isError, error })
+  console.log('Blogs data:', blogsData)
   console.log('Tags data:', tagsData)
-  console.log('Search term:', searchTerm)
-  console.log('Search input:', searchInput)
+  console.log('Categories:', categories)
 
   const setPage = (newPage: number) => {
     setCurrentPage(newPage)
@@ -104,13 +119,12 @@ function RouteComponent() {
   }
 
   const handleSearch = useCallback(() => {
-    console.log('Search button clicked! Input value:', searchInput) // Debug log
+    console.log('Search button clicked! Input value:', searchInput)
     const trimmedInput = searchInput.trim()
 
-    // Set search loading state
     setSearchLoading(true)
 
-    // Update the search term immediately - this will trigger useQuery to refetch
+    // Update search term - this will trigger useQuery to refetch
     setSearchTerm(trimmedInput)
 
     // Reset to page 1 when searching
@@ -118,10 +132,8 @@ function RouteComponent() {
       setPage(1)
     }
 
-    // Reset search loading state after a short delay
-    setTimeout(() => {
-      setSearchLoading(false)
-    }, 100)
+    // Reset loading state immediately
+    setSearchLoading(false)
   }, [searchInput, currentPage])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -161,7 +173,8 @@ function RouteComponent() {
     }
   }
 
-  if (isLoading) {
+  // Loading state
+  if (blogsLoading) {
     return (
       <div className="flex items-center justify-center w-full h-full py-10">
         <svg
@@ -184,23 +197,27 @@ function RouteComponent() {
             d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
           ></path>
         </svg>
-        <span className="text-blue-600 text-lg font-medium">Loading...</span>
+        <span className="text-blue-600 text-lg font-medium">
+          Loading blogs...
+        </span>
       </div>
     )
   }
 
-  if (isError) {
+  // Error state
+  if (blogsError) {
     throw new Error(
-      `Something went wrong in BlogsMain page: ${error instanceof Error ? error.message : ''}`,
+      `Something went wrong in BlogsMain page: ${blogsErrorData instanceof Error ? blogsErrorData.message : ''}`,
     )
   }
 
-  if (!data) {
+  if (!blogsData) {
     return null
   }
 
-  // Server already filtered the data - no need for client-side filtering
-  const blogs = data.data
+  const blogs = blogsData.data
+  const totalPages = blogsData.totalPages || 1
+  const total = blogsData.total || 0
 
   return (
     <div className="w-full h-full" id="blogsMain">
@@ -227,11 +244,10 @@ function RouteComponent() {
         {/* LEFT: Blogs */}
         <div className="col-span-7 space-y-10">
           {/* Results counter */}
-          {(searchTerm || selectedCategory || selectedTag) && data && (
+          {(searchTerm || selectedCategory || selectedTag) && (
             <div className="text-sm text-gray-600 mb-4">
-              Found {data.data.length} blog{data.data.length !== 1 ? 's' : ''}
-              {data.totalPages > 1 &&
-                ` (Page ${currentPage} of ${data.totalPages})`}
+              Found {total} blog{total !== 1 ? 's' : ''}
+              {totalPages > 1 && ` (Page ${currentPage} of ${totalPages})`}
             </div>
           )}
 
@@ -264,33 +280,32 @@ function RouteComponent() {
               )}
             </div>
           ) : (
-            blogs.map((blogs: Blog, index: number) => {
+            blogs.map((blog: Blog, index: number) => {
               return (
-                <React.Fragment key={index}>
-                  <a href={`/blogsId/${blogs.slug}`}>
+                <React.Fragment key={blog._id || index}>
+                  <a href={`/blogsId/${blog.slug}`}>
                     <div className="space-y-4 pb-10">
                       {/* Show first image if exists */}
-                      {blogs.images.length > 0 && (
+                      {blog.images && blog.images.length > 0 && (
                         <img
                           className="w-full object-cover rounded-md"
-                          src={blogs.images[0]}
-                          alt={blogs.title}
+                          src={blog.images[0]}
+                          alt={blog.title}
                         />
                       )}
                       {/* Blog Info */}
                       <div className="flex gap-3 text-lg text-gray-600">
-                        <span>{blogs.author}</span>
-                        <span>{blogs.slug}</span>
-                        <span>{blogs.category}</span>
+                        <span>{blog.author}</span>
+                        <span>{blog.slug}</span>
+                        <span>{blog.category}</span>
                       </div>
-                      <h2 className="text-4xl font-bold">{blogs.subTitle}</h2>
-                      <p className="text-lg text-gray-800">{blogs.content}</p>
-                      {/* Read more & Share */}
+                      <h2 className="text-4xl font-bold">{blog.subTitle}</h2>
+                      <p className="text-lg text-gray-800">{blog.content}</p>
                     </div>
                   </a>
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-6">
                     <a
-                      href={`/blogsId/${blogs.slug}`}
+                      href={`/blogsId/${blog.slug}`}
                       className="text-xl font-semibold hover:underline underline-offset-4"
                     >
                       Read More
@@ -308,7 +323,7 @@ function RouteComponent() {
                md:left-auto md:right-full md:pr-2"
                         >
                           <a
-                            href={blogs.share.facebook}
+                            href={blog.share.facebook}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:scale-110 transition-transform"
@@ -316,7 +331,7 @@ function RouteComponent() {
                             <FaFacebookF size={20} />
                           </a>
                           <a
-                            href={blogs.share.x}
+                            href={blog.share.x}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:scale-110 transition-transform"
@@ -324,7 +339,7 @@ function RouteComponent() {
                             <FaTwitter size={20} />
                           </a>
                           <a
-                            href={blogs.share.linkedin}
+                            href={blog.share.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-700 hover:scale-110 transition-transform"
@@ -332,7 +347,7 @@ function RouteComponent() {
                             <FaLinkedinIn size={20} />
                           </a>
                           <a
-                            href={blogs.share.instagram}
+                            href={blog.share.instagram}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-pink-500 hover:scale-110 transition-transform"
@@ -349,7 +364,7 @@ function RouteComponent() {
           )}
 
           {/* Pagination - only show if there are results */}
-          {blogs.length > 0 && (
+          {blogs.length > 0 && totalPages > 1 && (
             <div className="flex justify-center gap-4 pt-6">
               <button
                 className="px-4 py-2 border rounded disabled:opacity-50 cursor-pointer"
@@ -358,11 +373,13 @@ function RouteComponent() {
               >
                 Previous
               </button>
-              <span className="px-4 py-2">{currentPage}</span>
+              <span className="px-4 py-2">
+                {currentPage} of {totalPages}
+              </span>
               <button
                 className="px-4 py-2 border rounded disabled:opacity-50 cursor-pointer"
                 onClick={() => setPage(currentPage + 1)}
-                disabled={currentPage >= data.totalPages}
+                disabled={currentPage >= totalPages}
               >
                 Next
               </button>
@@ -483,24 +500,26 @@ function RouteComponent() {
           {/* Categories */}
           <div className="space-y-1">
             <h2 className="text-xl font-bold">Categories</h2>
-            {[
-              ...(new Set(
-                data.data.map((blog: Blog) => blog.category),
-              ) as unknown as Array<string>),
-            ].map((category, index: number) => (
-              <div key={index} className="text-lg text-gray-700">
-                <button
-                  onClick={() => handleCategoryClick(category)}
-                  className={`flex font-semibold hover:underline underline-offset-4 cursor-pointer transition-all ${
-                    selectedCategory === category
-                      ? 'text-blue-600 underline'
-                      : 'text-gray-700'
-                  }`}
-                >
-                  {category}
-                </button>
+            {categories.length > 0 ? (
+              categories.map((category, index: number) => (
+                <div key={index} className="text-lg text-gray-700">
+                  <button
+                    onClick={() => handleCategoryClick(category)}
+                    className={`flex font-semibold hover:underline underline-offset-4 cursor-pointer transition-all ${
+                      selectedCategory === category
+                        ? 'text-blue-600 underline'
+                        : 'text-gray-700'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="text-gray-500 text-center py-4">
+                No categories available
               </div>
-            ))}
+            )}
           </div>
 
           {/* Tags */}
@@ -533,10 +552,10 @@ function RouteComponent() {
             ) : tagsData?.data ? (
               <div className="flex flex-wrap gap-2">
                 {tagsData.data.map((tag: string, index: number) => {
-                  // Count how many blogs have this tag
-                  const tagCount =
-                    data?.data?.filter((blog: Blog) => blog.tags.includes(tag))
-                      .length || 0
+                  // Count how many blogs have this tag from the current filtered results
+                  const tagCount = blogs.filter(
+                    (blog: Blog) => blog.tags && blog.tags.includes(tag),
+                  ).length
 
                   return (
                     <button
