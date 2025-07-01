@@ -522,14 +522,11 @@ function RouteComponent() {
               </div>
             )}
           </div>
-<<<<<<< HEAD
 
           {/* Tags */}
-=======
           <Link to="/">
             <LatestNewsBlogs limit={3} layout="vertical" width="100px" />
           </Link>
->>>>>>> 973e830c4861ab30c5b6c2db7eefdb24ceb99f99
           <div className="space-y-1">
             <h1 className="text-4xl pt-1 pb-4">Tags</h1>
             {tagsLoading ? (
