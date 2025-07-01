@@ -2,6 +2,7 @@ import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import HeaderMain from '@/components/header/HeaderMain'
 import Experts from '@/hooks/experts'
+import ScrollButt from '@/components/scrollButt'
 
 export const Route = createLazyFileRoute('/our-expertise')({
   component: RouteComponent,
@@ -38,7 +39,7 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="bg-[#041D21] w-full h-full ">
+      <div className="bg-[#041D21] w-full h-full " id="our-expertise">
         <HeaderMain
           bgColor={'transparent'}
           darkOrLight="light"
@@ -86,6 +87,7 @@ function RouteComponent() {
             )
           })}
         </div>
+        <ScrollButt id="our-expertise" />
       </div>
     </>
   )

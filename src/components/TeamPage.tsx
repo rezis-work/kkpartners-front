@@ -3,6 +3,7 @@ import { getPartners } from '../api/getOurPartners'
 import PartnerCard from './PartnerCard'
 import HeaderMain from './header/HeaderMain'
 import type { Partner as ApiPartner } from '../api/getOurPartners'
+import ScrollButt from './scrollButt'
 
 type Partner = ApiPartner
 
@@ -27,7 +28,7 @@ export function TeamPage() {
           desktopHeaderBgColor2="transparent"
         />
 
-        <div className="p-6 w-full h-full  max-w-6xl pt-24 mx-auto">
+        <div className="p-6 w-full h-full  max-w-6xl pt-24 mx-auto" id="team">
           <div className="text-center mb-10">
             <h1 className="text-5xl text-[#291616] font-semibold mb-4">
               Meet our team
@@ -95,6 +96,7 @@ export function TeamPage() {
             </div>
           </div>
         </div>
+        <ScrollButt id="team" />
       </div>
     </>
   )

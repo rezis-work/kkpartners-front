@@ -1,4 +1,5 @@
 import HeaderMain from '../header/HeaderMain'
+import ScrollButt from '../scrollButt'
 
 export function AboutUs() {
   return (
@@ -21,7 +22,7 @@ export function AboutUs() {
         }}
         className="h-[600px]"
       ></div>
-      <div className="grid grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4" id="about">
         {[
           { title: 'Adaptibility', delay: '0' },
           { title: 'Customer Rights', delay: '75' },
@@ -76,6 +77,7 @@ export function AboutUs() {
           </div>
         </div>
       </div>
+      <ScrollButt id="about" />
     </div>
   )
 }

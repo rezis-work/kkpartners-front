@@ -14,6 +14,7 @@ import type { Address } from '../api/address'
 import 'leaflet/dist/leaflet.css'
 import HeaderMain from '@/components/header/HeaderMain'
 import FooterComponent from '@/components/Footer'
+import ScrollButt from '@/components/scrollButt'
 
 export const Route = createRoute({
   getParentRoute: () => rootRoute,
@@ -34,7 +35,7 @@ function Contact() {
   }, [])
 
   return (
-    <div className="text-black w-full z-10 h-full ">
+    <div className="text-black w-full z-10 h-full " id="contact">
       <div className="w-full z-10">
         <HeaderMain
           bgColor={'transparent'}
@@ -85,6 +86,7 @@ function Contact() {
           </div>
         </div>
       </div>
+      <ScrollButt id="contact" />
       <FooterComponent />
     </div>
   )

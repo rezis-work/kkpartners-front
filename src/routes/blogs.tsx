@@ -14,6 +14,7 @@ import getBlogs from '@/hooks/blogs/getBlogs'
 
 import FooterComponent from '@/components/Footer'
 import ScrollButt from '@/components/scrollButt'
+import LatestNewsBlogs from '@/components/homepagecomponents/LatestNews'
 
 export const Route = createFileRoute('/blogs')({
   component: RouteComponent,
@@ -109,7 +110,7 @@ function RouteComponent() {
       {/* Banner Image */}
       <img
         src="/public/images/coming-soon.jpg"
-        alt=""
+        alt="coming soon"
         className="h-[600px] w-full object-cover"
       />
       {/* Layout */}
@@ -245,6 +246,9 @@ function RouteComponent() {
               </Link>
             ))}
           </div>
+          <Link to="/">
+            <LatestNewsBlogs limit={3} layout="vertical" width="100px" />
+          </Link>
           <div className="space-y-1">
             <h1 className="text-4xl pt-1 pb-4">Tags</h1>
             {[
@@ -263,6 +267,7 @@ function RouteComponent() {
           </div>
         </div>
       </div>
+
       <FooterComponent />
       <ScrollButt id="blogsMain" />
     </div>

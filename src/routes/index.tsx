@@ -3,10 +3,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import 'leaflet/dist/leaflet.css'
 
 import HeaderMain from '../components/header/HeaderMain'
-import FooterComponent from '@/components/Footer'
 
-import HomePage from '@/components/homepagecomponents/HomePage'
 import HomePageCarousel from '@/components/homepagecomponents/HomePageCarousel'
+import HomePage from '@/components/homepagecomponents/HomePage'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -28,8 +27,6 @@ function App() {
         />
         <HomePageCarousel />
         <HomePage />
-
-        <FooterComponent />
       </div>
     </div>
   )
