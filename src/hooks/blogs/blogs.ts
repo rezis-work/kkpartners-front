@@ -34,3 +34,29 @@ export async function blogsSlag(slag: string): Promise<{ data: BlogProps }> {
   }
   return await res.json()
 }
+
+export async function updateBlog(id: string, update: Partial<BlogProps>) {
+  const response = await fetch(`http://localhost:4000/api/blogs/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(update),
+    credentials: 'include',
+  })
+  if (!response.ok) {
+    throw new Error('Failed to update blog')
+  }
+  return await response.json()
+}
+
+export async function deleteBlog(id: string) {
+  const response = await fetch(`http://localhost:4000/api/blogs/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+  if (!response.ok) {
+    throw new Error('Failed to delete blog')
+  }
+  return await response.json()
+}

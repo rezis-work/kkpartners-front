@@ -11,13 +11,11 @@ import { Route as UserMessagesRoute } from './userMessages'
 import { Route as UserCommentsRoute } from './userComments'
 import { Route as HomePageCarouselRoute } from './homePageCarousel'
 import { logout } from '@/hooks/auth'
+import { Route as UpdateBlogsRoute } from './updateBlogs'
 
 export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: layout,
 })
-
-
-
 
 function layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -26,7 +24,7 @@ function layout() {
   const handleLogout = async () => {
     await logout(false) // false = არ წაშალოს იმეილი localStorage-დან
     navigate({ to: '/auth' }) // დაბრუნება ლოგინ გვერდზე
-  };
+  }
 
   return (
     <div className="min-h-screen md:grid md:grid-cols-[240px_1fr] bg-gray-100">
@@ -81,6 +79,7 @@ function layout() {
           >
             Add Partner
           </Link>
+
           <Link
             to="/dashboard"
             className="hover:text-gray-300 cursor-pointer block"
@@ -94,6 +93,13 @@ function layout() {
             onClick={() => setSidebarOpen(false)}
           >
             Add Blogs
+          </Link>
+          <Link
+            to={UpdateBlogsRoute.to}
+            className="hover:text-gray-300 cursor-pointer block"
+            onClick={() => setSidebarOpen(false)}
+          >
+            Update Blogs
           </Link>
           <Link
             to={UserMessagesRoute.to}
@@ -218,6 +224,13 @@ function layout() {
                 onClick={() => setSidebarOpen(false)}
               >
                 Add Blogs
+              </Link>
+              <Link
+                to={UpdateBlogsRoute.to}
+                className="hover:text-gray-300 cursor-pointer block"
+                onClick={() => setSidebarOpen(false)}
+              >
+                Update Blogs
               </Link>
               <Link
                 to={UserMessagesRoute.to}
