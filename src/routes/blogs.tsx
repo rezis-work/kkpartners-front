@@ -524,6 +524,9 @@ function RouteComponent() {
           </div>
 
           {/* Tags */}
+          <Link to="/">
+            <LatestNewsBlogs limit={3} layout="vertical" width="100px" />
+          </Link>
           <div className="space-y-1">
             <h1 className="text-4xl pt-1 pb-4">Tags</h1>
             {tagsLoading ? (
