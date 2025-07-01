@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getFaqs } from '@/api/getFaqs'
 import { useState } from 'react'
 import FaqTitle from '@/components/FaqTitle'
+import ScrollButt from '@/components/scrollButt'
 export const Route = createLazyFileRoute('/faq-page')({
   component: RouteComponent,
 })
@@ -21,7 +22,7 @@ function RouteComponent() {
   if (isError) return <div>Error: {error.message}</div>
   if (!data || !Array.isArray(data)) return <div>No data available</div>
   return (
-    <div className="w-full">
+    <div className="w-full" id="faq">
       <HeaderMain
         bgColor={'transparent'}
         darkOrLight="light"
@@ -84,6 +85,7 @@ function RouteComponent() {
           </div>
         </div>
       </div>
+      <ScrollButt id="faq" />
       <FooterComponent />
     </div>
   )

@@ -32,7 +32,7 @@ export default function ScrollButt({ id }: ScrollButtProps) {
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-30 right-4 z-50 bg-amber-950  text-white px-4 py-2 shadow-lg transition cursor-pointer w-[60px] h-[60px] text-2xl
+      className="fixed bottom-30 right-4 z-1000 bg-amber-950  text-white px-4 py-2 shadow-lg transition cursor-pointer w-[60px] h-[60px] text-2xl 
       "
     >
       ↑

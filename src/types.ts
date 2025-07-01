@@ -22,6 +22,7 @@ export interface EachTeamMemeber {
 }
 
 export interface BlogProps {
+  _id: string
   id: string
   title: string
   subTitle: string
